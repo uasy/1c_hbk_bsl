@@ -67,12 +67,15 @@ logs/
 # Temporary files
 tmp/
 .tmp/
+.artifacts/
+vscode-extension/out-test/
 .tmp_format_cmp/
 ._tmp_debug/
 ._tmp_mcp_debug/
 ._tmp_mcp_debug2/
 .nosync/
 target/
+site/
 
 # Local work directories (not for public distribution)
 loadtest-results/

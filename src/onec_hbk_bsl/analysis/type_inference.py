@@ -371,7 +371,9 @@ class BslTypeEngine:
                     best_size = size
         return best if best is not None else self._module_scope
 
-    def infer(self, var_name: str, line0: int, metadata_only: bool = False) -> str | list[str] | None:
+    def infer(
+        self, var_name: str, line0: int, metadata_only: bool = False
+    ) -> str | list[str] | None:
         """
         Infer the type of *var_name* visible at *line0*.
 
@@ -393,6 +395,35 @@ class BslTypeEngine:
         if len(specific) == 1:
             return f"{type_name}.{next(iter(specific))}"
         return sorted(f"{type_name}.{name}" for name in specific)
+
+    def infer_node(
+        self,
+        node: Any,
+        line0: int,
+        metadata_only: bool = False,
+    ) -> str | list[str] | None:
+        """Resolve an existing CST expression/access node without adding heuristics."""
+        generic, specific = self.infer_node_types(node, line0)
+        return specific if metadata_only else generic
+
+    def infer_node_types(
+        self,
+        node: Any,
+        line0: int,
+    ) -> tuple[str | None, str | list[str] | None]:
+        """Return generic and metadata-specific types from one existing CST resolution."""
+        scope = self.scope_at_line(line0)
+        if getattr(node, "type", None) in {"access", "call_expression", "property_access"}:
+            type_name, specific = self._resolve_access_chain(node, scope)
+        else:
+            type_name, specific = self._resolve_expr(node, scope)
+        generic = type_name or None
+        if not specific or not type_name:
+            return generic, None
+        if len(specific) == 1:
+            return generic, f"{type_name}.{next(iter(specific))}"
+        return generic, sorted(f"{type_name}.{name}" for name in specific)
+
 
     # ------------------------------------------------------------------
     # Implicit object/record-set module variables (Ссылка / ЭтотОбъект)
@@ -766,11 +797,12 @@ class BslTypeEngine:
             return "", None
 
         base_name = steps[0][1]
-        scoped_type = scope.get(base_name)
+        scoped_type, scoped_specific = scope.get_full(base_name)
         global_type = _GLOBAL_MANAGER_TYPES.get(base_name.casefold())
         if scoped_type is not None:
             # A local value shadows a same-named platform collection.
             current_type = scoped_type
+            specific = scoped_specific
             remaining = steps[1:]
         elif global_type and len(steps) > 1 and steps[1][0] == "prop":
             # Справочники.Организации... — the specific catalog/document

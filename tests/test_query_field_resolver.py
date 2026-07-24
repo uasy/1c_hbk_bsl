@@ -8,13 +8,17 @@ from onec_hbk_bsl.analysis.document_snapshot import _SDBL_LANGUAGE, _parse_sdbl_
 from onec_hbk_bsl.analysis.query_field_resolver import (
     QueryTypeRef,
     SymbolIndexFieldLookup,
+    _split_top_level,
     normalize_type_info,
     prepare_query_text,
     resolve_query_field_uses,
     resolve_query_text_uses,
 )
 
-pytestmark = pytest.mark.skipif(_SDBL_LANGUAGE is None, reason="SDBL tree-sitter unavailable")
+pytestmark = [
+    pytest.mark.platform,
+    pytest.mark.skipif(_SDBL_LANGUAGE is None, reason="SDBL tree-sitter unavailable"),
+]
 
 
 class FakeLookup:
@@ -211,6 +215,16 @@ class TestVirtualTable:
             "Справочник.Организации.ГоловнаяОрганизация",
         )
 
+    def test_virtual_table_suffix_field_is_conservatively_unknown(self) -> None:
+        query = """
+        ВЫБРАТЬ
+            Остатки.КоличествоОстаток
+        ИЗ
+            РегистрНакопления.УплаченныйНДФЛ.Остатки() КАК Остатки
+        """
+        use = _by_text(_uses(query), "Остатки.КоличествоОстаток")
+        assert use.resolution.status == "unknown"
+
 
 class TestTempTables:
     QUERY = """
@@ -252,10 +266,10 @@ class TestCompositeTypes:
         """
         use = _by_text(_uses(query), "Договор.Владелец.ИНН")
         assert use.resolution.status == "ambiguous"
-        assert set(use.resolution.candidates) == {
-            "Справочник.Организации.ИНН",
+        assert use.resolution.candidates == (
             "Справочник.Контрагенты.ИНН",
-        }
+            "Справочник.Организации.ИНН",
+        )
 
     def test_field_on_single_target_disambiguates(self) -> None:
         query = """
@@ -370,6 +384,56 @@ class TestCastFieldAccess:
         assert use.resolution.identities == ("Справочник.Организации.ИНН",)
 
 
+class TestParser011Integration:
+    def test_tuple_membership_fields_resolve(self) -> None:
+        query = """
+        ВЫБРАТЬ
+            Орг.ИНН
+        ИЗ
+            Справочник.Организации КАК Орг
+        ГДЕ
+            (Орг.ИНН, Орг.ГоловнаяОрганизация) В
+            (ВЫБРАТЬ Контр.ИНН, Контр.ИНН
+             ИЗ Справочник.Контрагенты КАК Контр)
+        """
+        uses = _uses(query)
+        assert _by_text(uses, "Орг.ГоловнаяОрганизация").resolution.status == "resolved"
+        assert _by_text(uses, "Контр.ИНН").resolution.status == "resolved"
+
+    def test_destroy_statement_keeps_package_field_uses(self) -> None:
+        query = """
+        ВЫБРАТЬ
+            Орг.ИНН
+        ПОМЕСТИТЬ ВТ
+        ИЗ
+            Справочник.Организации КАК Орг
+        ;
+        УНИЧТОЖИТЬ ВТ
+        """
+        use = _by_text(resolve_query_text_uses(query, LOOKUP), "Орг.ИНН")
+        assert use.resolution.status == "resolved"
+
+    def test_nested_joins_keep_each_alias_binding(self) -> None:
+        query = """
+        ВЫБРАТЬ
+            Орг.ГоловнаяОрганизация
+        ИЗ
+            Справочник.Организации КАК Орг
+                ЛЕВОЕ СОЕДИНЕНИЕ Справочник.Сотрудники КАК Сотр
+                ЛЕВОЕ СОЕДИНЕНИЕ Справочник.Контрагенты КАК Контр
+                ПО Сотр.ГоловнаяОрганизация = Контр.ИНН
+                ПО Орг.ГоловнаяОрганизация = Сотр.ГоловнаяОрганизация
+        """
+        uses = _uses(query)
+        assert _by_text(uses, "Орг.ГоловнаяОрганизация").resolution.identities == (
+            "Справочник.Организации.ГоловнаяОрганизация",
+        )
+        assert _by_text(uses, "Сотр.ГоловнаяОрганизация").resolution.identities == (
+            "Справочник.Сотрудники.ГоловнаяОрганизация",
+        )
+        assert _by_text(uses, "Контр.ИНН").resolution.identities == ("Справочник.Контрагенты.ИНН",)
+
+
 class TestUnknowns:
     def test_unknown_alias(self) -> None:
         query = """
@@ -477,8 +541,12 @@ class TestSymbolIndexAdapter:
     class _FakeIndex:
         def __init__(self, members: list[dict[str, str]]) -> None:
             self._members = members
+            self.requested_kind: str | None = None
 
-        def get_meta_members(self, object_name: str) -> list[dict[str, str]]:
+        def get_meta_members(
+            self, object_name: str, *, object_kind: str | None = None
+        ) -> list[dict[str, str]]:
+            self.requested_kind = object_kind
             return self._members
 
     def test_kind_mismatch_is_unknown(self) -> None:
@@ -493,6 +561,7 @@ class TestSymbolIndexAdapter:
             ]
         )
         assert SymbolIndexFieldLookup(index).object_fields("Catalog", "Организации") is None
+        assert index.requested_kind == "Catalog"
 
     def test_only_attributes_become_fields(self) -> None:
         index = self._FakeIndex(
@@ -514,3 +583,22 @@ class TestSymbolIndexAdapter:
         fields = SymbolIndexFieldLookup(index).object_fields("Catalog", "Организации")
         assert fields is not None
         assert set(fields) == {"головнаяорганизация"}
+
+
+class TestTopLevelSplit:
+    def test_semicolons_inside_strings_and_parentheses_are_not_separators(self) -> None:
+        text = 'ВЫБРАТЬ "а;""б", Функция(1; 2);\nВЫБРАТЬ 2'
+
+        assert _split_top_level(text, by_union=False) == [
+            (0, 'ВЫБРАТЬ "а;""б", Функция(1; 2)'),
+            (0, "\nВЫБРАТЬ 2"),
+        ]
+
+    def test_union_split_preserves_row_offsets_and_ignores_nested_union(self) -> None:
+        text = "ВЫБРАТЬ Функция(UNION)\nОБЪЕДИНИТЬ ВСЕ\nВЫБРАТЬ 2\nUNION\nSELECT 3"
+
+        assert _split_top_level(text, by_union=True) == [
+            (0, "ВЫБРАТЬ Функция(UNION)\n"),
+            (1, "\nВЫБРАТЬ 2\n"),
+            (3, "\nSELECT 3"),
+        ]

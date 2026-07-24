@@ -49,6 +49,21 @@ class TestUriHelpers:
 
 
 class TestBslLanguageServerInit:
+    def test_lsp_diagnostic_code_is_canonical_bsl_id(self) -> None:
+        from onec_hbk_bsl.lsp.server import _lsp_diagnostic_code_fields
+
+        code, description = _lsp_diagnostic_code_fields("BSL009")
+        assert code == "BSL009"
+        assert description is not None
+        assert description.href == ("https://mussolene.github.io/1c_hbk_bsl/rule-contracts/BSL009/")
+
+    def test_lsp_internal_diagnostic_has_no_broken_public_link(self) -> None:
+        from onec_hbk_bsl.lsp.server import _lsp_diagnostic_code_fields
+
+        code, description = _lsp_diagnostic_code_fields("BSL-LSP-ERR")
+        assert code == "BSL-LSP-ERR"
+        assert description is None
+
     def test_diagnostics_enabled_environment_switch(self, monkeypatch) -> None:
         from onec_hbk_bsl.lsp.server import _diagnostics_enabled
 
@@ -72,6 +87,13 @@ class TestBslLanguageServerInit:
 
         ls = BslLanguageServer()
         assert isinstance(ls.diagnostics_engine, DiagnosticEngine)
+
+    def test_server_version_uses_package_version(self, tmp_path: Path, monkeypatch: object) -> None:
+        monkeypatch.setenv("INDEX_DB_PATH", str(tmp_path / "idx.sqlite"))
+        from onec_hbk_bsl import __version__
+        from onec_hbk_bsl.lsp.server import BslLanguageServer
+
+        assert BslLanguageServer().version == __version__
 
     def test_server_defaults_diagnostics_to_all_public_rules(
         self, tmp_path: Path, monkeypatch: object
@@ -104,6 +126,63 @@ class TestBslLanguageServerInit:
         ls.close()
         ls.symbol_index.close.assert_called_once()
 
+    def test_initialize_replaces_workspace_index_for_every_dependent_service(
+        self, tmp_path: Path, monkeypatch
+    ) -> None:
+        from unittest.mock import MagicMock
+
+        from lsprotocol.types import ClientCapabilities, InitializeParams
+
+        import onec_hbk_bsl.lsp.server as srv
+
+        monkeypatch.setenv("INDEX_DB_PATH", str(tmp_path / "initial.sqlite"))
+        ls = srv.BslLanguageServer()
+        roots = (tmp_path / "workspace-a", tmp_path / "workspace-b")
+        for root in roots:
+            root.mkdir()
+
+        created: list[object] = []
+
+        class _FakeIndex:
+            def __init__(self, db_path: str, max_size_bytes: int) -> None:
+                self.db_path = db_path
+                self.max_size_bytes = max_size_bytes
+                self.close = MagicMock()
+                created.append(self)
+
+        monkeypatch.setattr(srv, "SymbolIndex", _FakeIndex)
+        monkeypatch.setattr(srv, "resolve_index_db_path", lambda root: f"{root}/index.sqlite")
+        monkeypatch.setattr(srv, "_schedule_workspace_reindex", lambda *_args, **_kwargs: None)
+        monkeypatch.setattr(srv, "_start_branch_watcher", lambda *_args, **_kwargs: None)
+
+        srv.on_initialize(
+            ls,
+            InitializeParams(capabilities=ClientCapabilities(), root_path=str(roots[0])),
+        )
+        context_a = ls.workspace_run_context()
+        ls.doc_state.diag_result_cache["file:///stale.bsl"] = (object(), [])
+        ls.doc_state.indexed_snapshot_cache["file:///stale.bsl"] = 1
+        srv.on_initialize(
+            ls,
+            InitializeParams(capabilities=ClientCapabilities(), root_path=str(roots[1])),
+        )
+        context_b = ls.workspace_run_context()
+
+        assert len(created) == 2
+        assert context_a.symbol_index is created[0]
+        assert context_b.symbol_index is created[1]
+        assert context_b.indexer.index is context_b.symbol_index
+        assert context_b.diagnostics_engine._symbol_index is context_b.symbol_index
+        # Revisions are root-local: a newly configured root starts its own
+        # monotonic sequence instead of inheriting another root's generation.
+        assert context_a.revisions.index == context_b.revisions.index == 1
+        assert context_a.revisions.metadata == context_b.revisions.metadata == 1
+        assert context_a.revisions.config == context_b.revisions.config == 1
+        assert ls.doc_state.diag_result_cache == {}
+        assert ls.doc_state.indexed_snapshot_cache == {}
+        created[0].close.assert_called_once()
+        created[1].close.assert_not_called()
+
 
 # ---------------------------------------------------------------------------
 # Document state service boundary
@@ -123,6 +202,9 @@ class TestDocumentDiagnosticsState:
         state.diag_timers[uri] = timer
         state.diag_last_time[uri] = 0.12
         state.diag_result_cache[uri] = (123, [])
+        state.doc_generations[uri] = 7
+        state.indexed_snapshot_cache[uri] = (7, 123)
+        state.published_diagnostics[uri] = (7, 123)
 
         popped = state.close_document(uri)
 
@@ -131,6 +213,9 @@ class TestDocumentDiagnosticsState:
         assert uri not in state.diag_timers
         assert uri not in state.diag_last_time
         assert uri not in state.diag_result_cache
+        assert uri not in state.doc_generations
+        assert uri not in state.indexed_snapshot_cache
+        assert uri not in state.published_diagnostics
 
     def test_diag_cache_roundtrip(self) -> None:
         from onec_hbk_bsl.lsp.document_state import DocumentDiagnosticsState
@@ -144,6 +229,422 @@ class TestDocumentDiagnosticsState:
         assert cached[0] == 99
         assert cached[1] is payload
 
+    def test_semantic_cache_key_includes_workspace_revisions(self) -> None:
+        from onec_hbk_bsl.lsp.document_state import (
+            DiagnosticCacheKey,
+            DocumentDiagnosticsState,
+            WorkspaceRevisions,
+        )
+
+        first = DiagnosticCacheKey(99, WorkspaceRevisions(index=1, metadata=1, config=1))
+        changed_keys = (
+            DiagnosticCacheKey(99, WorkspaceRevisions(index=2, metadata=1, config=1)),
+            DiagnosticCacheKey(99, WorkspaceRevisions(index=1, metadata=2, config=1)),
+            DiagnosticCacheKey(99, WorkspaceRevisions(index=1, metadata=1, config=2)),
+        )
+
+        for changed in changed_keys:
+            state = DocumentDiagnosticsState()
+            uri = "file:///module.bsl"
+            state.set_diag_cache(uri, first, [])
+            assert state.begin_diag_run(uri, first)[0] == "cached"
+            assert state.begin_diag_run(uri, changed)[0] == "run"
+
+    def test_stale_generation_cannot_commit_index_or_publish(self) -> None:
+        import threading
+
+        from onec_hbk_bsl.lsp.document_state import DocumentDiagnosticsState
+
+        state = DocumentDiagnosticsState()
+        uri = "file:///module.bsl"
+        old_generation = state.set_doc(uri, "Старое = 1;")
+        action, old_run = state.begin_diag_run(uri, "old", old_generation)
+        assert action == "run"
+        assert old_run is not None
+
+        old_started = threading.Event()
+        allow_old_finish = threading.Event()
+        old_finished = threading.Event()
+        effects: list[str] = []
+
+        def _finish_old() -> None:
+            old_started.set()
+            assert allow_old_finish.wait(timeout=5)
+            assert not state.finish_diag_run(uri, old_run, diagnostics=["old"])
+            assert not state.index_if_current(
+                uri,
+                old_generation,
+                hash("Старое = 1;"),
+                lambda: effects.append("old-index"),
+            )
+            assert not state.publish_if_current(
+                uri,
+                old_generation,
+                "old",
+                lambda: effects.append("old-publish"),
+            )
+            old_finished.set()
+
+        old_thread = threading.Thread(target=_finish_old)
+        old_thread.start()
+        assert old_started.wait(timeout=5)
+
+        new_generation = state.set_doc(uri, "Новое = 2;")
+        action, new_run = state.begin_diag_run(uri, "new", new_generation)
+        assert action == "run"
+        assert new_run is not None
+        assert state.finish_diag_run(uri, new_run, diagnostics=["new"])
+        assert state.index_if_current(
+            uri,
+            new_generation,
+            hash("Новое = 2;"),
+            lambda: effects.append("new-index"),
+        )
+        assert state.publish_if_current(
+            uri,
+            new_generation,
+            "new",
+            lambda: effects.append("new-publish"),
+        )
+        assert not state.publish_if_current(
+            uri,
+            new_generation,
+            "new",
+            lambda: effects.append("duplicate-publish"),
+        )
+
+        allow_old_finish.set()
+        assert old_finished.wait(timeout=5)
+        old_thread.join(timeout=5)
+        assert not old_thread.is_alive()
+
+        assert state.get_diag_cache(uri) == ("new", ["new"])
+        assert effects == ["new-index", "new-publish"]
+
+    def test_workspace_state_replaces_services_and_closes_each_index_once(self) -> None:
+        from types import SimpleNamespace
+        from unittest.mock import MagicMock
+
+        from onec_hbk_bsl.lsp.document_state import WorkspaceState
+
+        index_a = SimpleNamespace(close=MagicMock())
+        index_b = SimpleNamespace(close=MagicMock())
+        indexer_a = object()
+        indexer_b = object()
+        engine = SimpleNamespace(_symbol_index=index_a)
+        invalidations: list[str] = []
+        state = WorkspaceState(
+            symbol_index=index_a,
+            indexer=indexer_a,
+            diagnostics_engine=engine,
+            invalidate_caches=invalidations.append,
+        )
+
+        before = state.snapshot()
+        after = state.replace_index(symbol_index=index_b, indexer=indexer_b)
+        unchanged = state.replace_index(symbol_index=index_b, indexer=indexer_b)
+        state.close()
+        state.close()
+
+        assert before.symbol_index is index_a
+        assert after.symbol_index is index_b
+        assert after.indexer is indexer_b
+        assert after.diagnostics_engine._symbol_index is index_b
+        assert after.revisions.index == before.revisions.index + 1
+        assert after.revisions.metadata == before.revisions.metadata + 1
+        assert unchanged.revisions == after.revisions
+        assert invalidations == ["replace"]
+        index_a.close.assert_called_once()
+        index_b.close.assert_called_once()
+
+    def test_workspace_revisions_are_monotonic_and_ignore_stale_writers(self) -> None:
+        from types import SimpleNamespace
+
+        from onec_hbk_bsl.lsp.document_state import WorkspaceState
+
+        index = SimpleNamespace(close=lambda: None)
+        engine = SimpleNamespace(_symbol_index=index)
+        invalidations: list[str] = []
+        state = WorkspaceState(
+            symbol_index=index,
+            indexer=object(),
+            diagnostics_engine=engine,
+            invalidate_caches=invalidations.append,
+        )
+        initial = state.snapshot().revisions
+        index_only = state.mark_index_changed(expected_index=index)
+        with_metadata = state.mark_index_changed(
+            expected_index=index,
+            metadata_changed=True,
+        )
+        with_config = state.mark_config_changed()
+
+        assert index_only is not None
+        assert with_metadata is not None
+        assert index_only.index == initial.index + 1
+        assert index_only.metadata == initial.metadata
+        assert with_metadata.index == index_only.index + 1
+        assert with_metadata.metadata == index_only.metadata + 1
+        assert with_config.config == with_metadata.config + 1
+        assert state.mark_index_changed(expected_index=object()) is None
+        assert state.snapshot().revisions == with_config
+        assert invalidations == ["index", "metadata", "config"]
+
+    def test_clear_config_caches_refreshes_filesystem_views(self, tmp_path: Path) -> None:
+        from onec_hbk_bsl.analysis.diagnostic.helpers.config_helpers import (
+            clear_config_caches,
+            read_text_cached,
+        )
+
+        config_file = tmp_path / "Configuration.xml"
+        config_file.write_text("A", encoding="utf-8")
+        assert read_text_cached(str(config_file)) == "A"
+        config_file.write_text("B", encoding="utf-8")
+        assert read_text_cached(str(config_file)) == "A"
+
+        clear_config_caches()
+
+        assert read_text_cached(str(config_file)) == "B"
+
+
+class TestWorkspaceRegistryMultiRoot:
+    @staticmethod
+    def _entry(root: Path, label: str):
+        from types import SimpleNamespace
+        from unittest.mock import MagicMock
+
+        from onec_hbk_bsl.lsp.document_state import (
+            WorkspaceEntry,
+            WorkspaceId,
+            WorkspaceState,
+        )
+
+        index = SimpleNamespace(close=MagicMock(), label=label, db_path=":memory:")
+        state = WorkspaceState(
+            symbol_index=index,
+            indexer=SimpleNamespace(index=index),
+            diagnostics_engine=SimpleNamespace(_symbol_index=index),
+            invalidate_caches=lambda _reason: None,
+        )
+        return WorkspaceEntry(
+            workspace_id=WorkspaceId.from_root(str(root)),
+            state=state,
+            config=SimpleNamespace(label=label),
+            index_mode="full",
+        )
+
+    def test_nested_root_owns_its_files_and_states_are_isolated(self, tmp_path: Path) -> None:
+        from onec_hbk_bsl.lsp.document_state import WorkspaceRegistry
+
+        parent_root = tmp_path / "parent"
+        child_root = parent_root / "nested"
+        child_root.mkdir(parents=True)
+        parent = self._entry(parent_root, "parent")
+        child = self._entry(child_root, "child")
+        registry = WorkspaceRegistry()
+        registry.add(parent)
+        registry.add(child)
+
+        assert registry.owner_for_path(str(parent_root / "a.bsl")) is parent
+        assert registry.owner_for_path(str(child_root / "b.bsl")) is child
+        assert parent.state.snapshot().symbol_index is not child.state.snapshot().symbol_index
+        assert parent.config is not child.config
+
+    def test_remove_closes_index_and_rejects_stale_publication(self, tmp_path: Path) -> None:
+        from onec_hbk_bsl.lsp.document_state import WorkspaceRegistry
+
+        entry = self._entry(tmp_path / "removed", "removed")
+        registry = WorkspaceRegistry()
+        registry.add(entry)
+        context = entry.state.snapshot()
+        effects: list[str] = []
+
+        registry.remove(entry.workspace_id)
+
+        assert not entry.state.run_if_current(context, lambda: effects.append("stale"))
+        assert effects == []
+        context.symbol_index.close.assert_called_once()
+
+    def test_duplicate_or_aliased_root_is_rejected(self, tmp_path: Path) -> None:
+        import pytest
+
+        from onec_hbk_bsl.lsp.document_state import WorkspaceRegistry
+
+        root = tmp_path / "same"
+        root.mkdir()
+        registry = WorkspaceRegistry()
+        registry.add(self._entry(root, "first"))
+
+        with pytest.raises(ValueError, match="already registered"):
+            registry.add(self._entry(root / ".", "second"))
+
+    def test_registry_access_errors_and_close_retire_all_roots(self, tmp_path: Path) -> None:
+        import pytest
+
+        from onec_hbk_bsl.lsp.document_state import WorkspaceId, WorkspaceRegistry
+
+        first = self._entry(tmp_path / "first", "first")
+        second = self._entry(tmp_path / "second", "second")
+        missing = WorkspaceId.from_root(str(tmp_path / "missing"))
+        registry = WorkspaceRegistry()
+        registry.add(first)
+        registry.add(second)
+
+        assert registry.get(first.workspace_id) is first
+        with pytest.raises(KeyError, match="not registered"):
+            registry.get(missing)
+        with pytest.raises(KeyError, match="not registered"):
+            registry.remove(missing)
+        with pytest.raises(ValueError, match="outside registered workspace roots"):
+            registry.owner_for_path(str(tmp_path / "outside.bsl"))
+
+        registry.close()
+
+        assert registry.entries() == ()
+        first.state.snapshot().symbol_index.close.assert_called_once()
+        second.state.snapshot().symbol_index.close.assert_called_once()
+
+    def test_workspace_symbol_merge_has_stable_root_independent_order(self) -> None:
+        from types import SimpleNamespace
+
+        from lsprotocol.types import WorkspaceSymbolParams
+
+        from onec_hbk_bsl.lsp.server import on_workspace_symbol
+
+        def _entry(root: str, rows: list[dict]):
+            index = SimpleNamespace(find_symbol=lambda *_args, **_kwargs: list(rows))
+            state = SimpleNamespace(snapshot=lambda: SimpleNamespace(symbol_index=index))
+            return SimpleNamespace(
+                workspace_id=SimpleNamespace(root=root),
+                state=state,
+            )
+
+        alpha = {
+            "name": "Альфа",
+            "kind": "function",
+            "file_path": "/z/alpha.bsl",
+            "line": 2,
+            "character": 1,
+            "container": "",
+        }
+        beta = {
+            "name": "Бета",
+            "kind": "function",
+            "file_path": "/a/beta.bsl",
+            "line": 1,
+            "character": 0,
+            "container": "",
+        }
+        ls = SimpleNamespace(
+            workspace_entries=lambda: (_entry("/z", [beta]), _entry("/a", [alpha]))
+        )
+
+        result = on_workspace_symbol(ls, WorkspaceSymbolParams(query="а"))
+
+        assert [item.name for item in result] == ["Альфа", "Бета"]
+
+    def test_workspace_folder_notifications_add_and_retire_state(
+        self, tmp_path: Path, monkeypatch
+    ) -> None:
+        from lsprotocol.types import (
+            DidChangeWorkspaceFoldersParams,
+            WorkspaceFolder,
+            WorkspaceFoldersChangeEvent,
+        )
+
+        from onec_hbk_bsl.lsp import server as srv
+
+        monkeypatch.setenv("INDEX_DB_PATH", str(tmp_path / "initial.sqlite"))
+        ls = srv.BslLanguageServer()
+        root = tmp_path / "added"
+        root.mkdir()
+        entry = self._entry(root, "added")
+        entry = type(entry)(
+            workspace_id=entry.workspace_id,
+            state=entry.state,
+            config=entry.config,
+            index_mode="off",
+        )
+        monkeypatch.setattr(ls, "_build_workspace_entry", lambda _root: entry)
+
+        srv.on_did_change_workspace_folders(
+            ls,
+            DidChangeWorkspaceFoldersParams(
+                event=WorkspaceFoldersChangeEvent(
+                    added=[WorkspaceFolder(uri=root.as_uri(), name="added")],
+                    removed=[],
+                )
+            ),
+        )
+        assert ls.workspace_entry_for_path(str(root / "module.bsl")) is entry
+
+        srv.on_did_change_workspace_folders(
+            ls,
+            DidChangeWorkspaceFoldersParams(
+                event=WorkspaceFoldersChangeEvent(
+                    added=[],
+                    removed=[WorkspaceFolder(uri=root.as_uri(), name="added")],
+                )
+            ),
+        )
+        entry.state.snapshot().symbol_index.close.assert_called_once()
+        ls.close()
+
+    def test_shared_persistent_index_path_is_rejected_and_closed(
+        self, tmp_path: Path, monkeypatch
+    ) -> None:
+        import pytest
+
+        from onec_hbk_bsl.lsp import server as srv
+
+        monkeypatch.setenv("INDEX_DB_PATH", str(tmp_path / "initial.sqlite"))
+        ls = srv.BslLanguageServer()
+        roots = (tmp_path / "first", tmp_path / "second")
+        entries = [self._entry(root, root.name) for root in roots]
+        for entry in entries:
+            entry.state.snapshot().symbol_index.db_path = str(tmp_path / "shared.sqlite")
+        by_root = {entry.workspace_id.root: entry for entry in entries}
+        monkeypatch.setattr(ls, "_build_workspace_entry", by_root.__getitem__)
+
+        with pytest.raises(ValueError, match="same persistent index database"):
+            ls.configure_workspace_roots([str(root) for root in roots])
+
+        for entry in entries:
+            entry.state.snapshot().symbol_index.close.assert_called_once()
+        ls.close()
+
+    def test_lsp_roots_keep_same_named_symbols_and_configs_isolated(
+        self, tmp_path: Path, monkeypatch
+    ) -> None:
+        from onec_hbk_bsl.lsp import server as srv
+
+        monkeypatch.delenv("INDEX_DB_PATH", raising=False)
+        roots = (tmp_path / "a", tmp_path / "b")
+        for number, root in enumerate(roots, start=1):
+            root.mkdir()
+            (root / ".git").mkdir()
+            (root / "onec-hbk-bsl.toml").write_text(
+                f'select = ["BSL00{number}"]\n',
+                encoding="utf-8",
+            )
+            (root / "module.bsl").write_text(
+                f"Процедура ОдинаковоеИмя()\n\tЗначение = {number};\nКонецПроцедуры\n",
+                encoding="utf-8",
+            )
+
+        ls = srv.BslLanguageServer()
+        ls.configure_workspace_roots([str(root) for root in roots])
+        entries = ls.workspace_entries()
+        for root, entry in zip(roots, entries, strict=True):
+            entry.state.snapshot().indexer.index_file(str(root / "module.bsl"))
+
+        assert entries[0].config.select == {"BSL001"}
+        assert entries[1].config.select == {"BSL002"}
+        for root, entry in zip(roots, entries, strict=True):
+            rows = entry.state.snapshot().symbol_index.find_symbol("ОдинаковоеИмя")
+            assert {row["file_path"] for row in rows} == {str(root / "module.bsl")}
+        ls.close()
+
 
 # ---------------------------------------------------------------------------
 # Diagnostics publishing helper (internal)
@@ -151,6 +652,124 @@ class TestDocumentDiagnosticsState:
 
 
 class TestPublishDiagnostics:
+    def test_stale_run_finishing_last_does_not_publish_over_latest(
+        self, tmp_path: Path, monkeypatch
+    ) -> None:
+        import threading
+        from unittest.mock import MagicMock
+
+        from onec_hbk_bsl.lsp import server as srv
+        from onec_hbk_bsl.lsp.server import BslLanguageServer, _publish_diagnostics
+
+        monkeypatch.setenv("INDEX_DB_PATH", str(tmp_path / "idx.sqlite"))
+        ls = BslLanguageServer()
+        ls.text_document_publish_diagnostics = MagicMock()
+        uri = (tmp_path / "module.bsl").as_uri()
+        old_content = "Старое = 1;"
+        new_content = "Новое = 2;"
+        ls.doc_state.set_doc(uri, old_content)
+
+        old_started = threading.Event()
+        allow_old_finish = threading.Event()
+        old_finished = threading.Event()
+
+        def _build_inner(
+            _ls: object,
+            _uri: str,
+            _path: str,
+            *,
+            workspace_context: object,
+            content_override: str,
+        ) -> list:
+            if content_override == old_content:
+                old_started.set()
+                assert allow_old_finish.wait(timeout=5)
+            return []
+
+        monkeypatch.setattr(srv, "_build_lsp_diagnostics_inner", _build_inner)
+        monkeypatch.setattr(srv, "_get_lsp_document_context", lambda *_a, **_k: None)
+
+        def _publish_old() -> None:
+            _publish_diagnostics(ls, uri, str(tmp_path / "module.bsl"))
+            old_finished.set()
+
+        old_thread = threading.Thread(target=_publish_old)
+        old_thread.start()
+        assert old_started.wait(timeout=5)
+
+        ls.doc_state.set_doc(uri, new_content)
+        _publish_diagnostics(ls, uri, str(tmp_path / "module.bsl"))
+        _publish_diagnostics(ls, uri, str(tmp_path / "module.bsl"))
+        allow_old_finish.set()
+        assert old_finished.wait(timeout=5)
+        old_thread.join(timeout=5)
+
+        assert not old_thread.is_alive()
+        ls.text_document_publish_diagnostics.assert_called_once()
+        cached = ls.doc_state.get_diag_cache(uri)
+        assert cached is not None
+        assert cached[0].content_hash == hash(new_content)
+
+    def test_workspace_revision_change_discards_inflight_result(
+        self, tmp_path: Path, monkeypatch
+    ) -> None:
+        import threading
+        from unittest.mock import MagicMock
+
+        from onec_hbk_bsl.lsp import server as srv
+        from onec_hbk_bsl.lsp.server import BslLanguageServer, _publish_diagnostics
+
+        monkeypatch.setenv("INDEX_DB_PATH", str(tmp_path / "idx.sqlite"))
+        ls = BslLanguageServer()
+        ls.text_document_publish_diagnostics = MagicMock()
+        uri = (tmp_path / "module.bsl").as_uri()
+        content = "Значение = 1;"
+        ls.doc_state.set_doc(uri, content)
+
+        old_started = threading.Event()
+        allow_old_finish = threading.Event()
+        old_finished = threading.Event()
+        calls = 0
+
+        def _build_inner(
+            _ls: object,
+            _uri: str,
+            _path: str,
+            *,
+            workspace_context: object,
+            content_override: str,
+        ) -> list:
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                old_started.set()
+                assert allow_old_finish.wait(timeout=5)
+            return []
+
+        monkeypatch.setattr(srv, "_build_lsp_diagnostics_inner", _build_inner)
+        monkeypatch.setattr(srv, "_get_lsp_document_context", lambda *_a, **_k: None)
+
+        def _publish_old() -> None:
+            _publish_diagnostics(ls, uri, str(tmp_path / "module.bsl"))
+            old_finished.set()
+
+        old_thread = threading.Thread(target=_publish_old)
+        old_thread.start()
+        assert old_started.wait(timeout=5)
+
+        current_revisions = ls.workspace_state.mark_config_changed()
+        _publish_diagnostics(ls, uri, str(tmp_path / "module.bsl"))
+        allow_old_finish.set()
+        assert old_finished.wait(timeout=5)
+        old_thread.join(timeout=5)
+
+        assert not old_thread.is_alive()
+        assert calls == 2
+        ls.text_document_publish_diagnostics.assert_called_once()
+        cached = ls.doc_state.get_diag_cache(uri)
+        assert cached is not None
+        assert cached[0].revisions == current_revisions
+
     def test_publish_diagnostics_runs_engine(self, tmp_path: Path, monkeypatch) -> None:
         """_publish_diagnostics should not raise for a valid BSL file."""
         monkeypatch.setenv("INDEX_DB_PATH", str(tmp_path / "idx.sqlite"))
@@ -255,7 +874,7 @@ class TestPublishDiagnostics:
 
         dead = [d for d in params.diagnostics if _is_dead(d)]
         assert len(dead) == 1
-        assert dead[0].code == "UnusedPrivateMethod"
+        assert dead[0].code == "BSL-DEAD"
         assert dead[0].source == "onec-hbk-bsl · BSL-DEAD"
         assert dead[0].severity == DiagnosticSeverity.Warning
         assert dead[0].tags and DiagnosticTag.Unnecessary in dead[0].tags
@@ -654,7 +1273,11 @@ class TestHandlerFunctions:
     def test_document_symbols_use_open_document_without_index(self, tmp_path, monkeypatch) -> None:
         from unittest.mock import MagicMock
 
-        from onec_hbk_bsl.lsp.server import on_did_open, on_document_symbol
+        from onec_hbk_bsl.lsp.server import (
+            on_did_open,
+            on_document_symbol,
+            on_prepare_rename,
+        )
 
         ls = self._make_server(tmp_path, monkeypatch)
         ls.client_pull_diagnostics = True
@@ -682,6 +1305,13 @@ class TestHandlerFunctions:
         assert symbols[0].detail == "Процедура ОткрытаяПроцедура(Параметр) Экспорт"
         assert symbols[0].range.start.line == 0
         assert symbols[1].range.start.line == 3
+
+        rename_params = MagicMock()
+        rename_params.text_document.uri = uri
+        rename_params.position.line = 0
+        rename_params.position.character = params.text_document.text.index("ОткрытаяПроцедура")
+        assert on_prepare_rename(ls, rename_params) is not None
+        assert ls._parsed_doc_cache[uri].snapshot.semantic_fact_build_count == 1
 
     def test_document_symbols_reflect_unsaved_changes(self, tmp_path, monkeypatch) -> None:
         from unittest.mock import MagicMock
@@ -885,7 +1515,7 @@ class TestHandlerFunctions:
         # No symbols found for this name → returns None or empty list
         assert result is None or result == []
 
-    def test_chained_workspace_call_has_hover_and_definition(self, tmp_path, monkeypatch) -> None:
+    def test_unknown_chained_workspace_call_is_not_guessed(self, tmp_path, monkeypatch) -> None:
         from unittest.mock import MagicMock
 
         from onec_hbk_bsl.lsp.server import on_definition, on_hover
@@ -910,13 +1540,86 @@ class TestHandlerFunctions:
         params.position.line = 0
         params.position.character = content.index("УникальныйЧленЦепочки") + 2
 
+        assert on_hover(ls, params) is None
+        assert on_definition(ls, params) is None
+
+    def test_resolved_receiver_filters_hover_definition_and_references(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        from unittest.mock import MagicMock
+
+        from onec_hbk_bsl.lsp.server import on_definition, on_hover, on_references
+
+        ls = self._make_server(tmp_path, monkeypatch)
+        target = tmp_path / "Catalogs" / "Организации" / "Ext" / "ObjectModule.bsl"
+        distractor = tmp_path / "Catalogs" / "Склады" / "Ext" / "ObjectModule.bsl"
+        target.parent.mkdir(parents=True)
+        distractor.parent.mkdir(parents=True)
+        target.write_text(
+            "// Правильный объект.\n"
+            "Процедура УникальныйМетодПолучателя() Экспорт\n"
+            "КонецПроцедуры\n",
+            encoding="utf-8",
+        )
+        distractor.write_text(
+            "// Другой объект.\nПроцедура УникальныйМетодПолучателя() Экспорт\nКонецПроцедуры\n",
+            encoding="utf-8",
+        )
+        ls.indexer.index_file(str(target))
+        ls.indexer.index_file(str(distractor))
+
+        content = (
+            "Элемент = Справочники.Организации.СоздатьЭлемент();\n"
+            "Элемент.УникальныйМетодПолучателя();\n"
+        )
+        caller = tmp_path / "Caller.bsl"
+        uri = caller.as_uri()
+        ls._docs[uri] = content
+        params = MagicMock()
+        params.text_document.uri = uri
+        params.position.line = 1
+        params.position.character = content.splitlines()[1].index("УникальныйМетодПолучателя") + 2
+        params.context.include_declaration = True
+
         hover = on_hover(ls, params)
         definition = on_definition(ls, params)
+        references = on_references(ls, params)
 
         assert hover is not None
-        assert "Возвращает служебный модуль" in str(hover.contents)
-        assert definition and definition[0].target_uri == library.as_uri()
-        assert definition[0].target_selection_range.start.line == 1
+        assert "Правильный объект" in str(hover.contents)
+        assert definition and [link.target_uri for link in definition] == [target.as_uri()]
+        assert references is not None
+        assert [location.uri for location in references] == [target.as_uri(), uri]
+
+    def test_ambiguous_receiver_has_no_navigation_or_reference_target(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        from unittest.mock import MagicMock
+
+        from onec_hbk_bsl.lsp.server import on_definition, on_hover, on_references
+
+        ls = self._make_server(tmp_path, monkeypatch)
+        content = (
+            "Функция Ф(Ссылка) Экспорт\n"
+            '\tЕсли ТипЗнч(Ссылка) = Тип("ДокументСсылка.А")\n'
+            '\t\tИЛИ ТипЗнч(Ссылка) = Тип("ДокументСсылка.Б") Тогда\n'
+            "\t\tСсылка.УникальныйМетодПолучателя();\n"
+            "\tКонецЕсли;\n"
+            "КонецФункции\n"
+        )
+        uri = (tmp_path / "Caller.bsl").as_uri()
+        ls._docs[uri] = content
+        params = MagicMock()
+        params.text_document.uri = uri
+        params.position.line = 3
+        params.position.character = content.splitlines()[3].index("УникальныйМетодПолучателя") + 2
+        params.context.include_declaration = True
+
+        hover = on_hover(ls, params)
+        assert hover is not None
+        assert "неоднозначный receiver" in str(hover.contents)
+        assert on_definition(ls, params) is None
+        assert on_references(ls, params) is None
 
     def test_chained_workspace_call_does_not_resolve_private_symbol(
         self, tmp_path, monkeypatch
@@ -995,6 +1698,43 @@ class TestHandlerFunctions:
         result = on_hover(ls, params)
         assert result is not None
         assert "Число(15,2)" in str(result.contents)
+
+    def test_query_metadata_hover_uses_semantic_fact_resolution(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        from unittest.mock import MagicMock
+
+        from onec_hbk_bsl.lsp.server import on_hover
+
+        ls = self._make_server(tmp_path, monkeypatch)
+        content = 'Запрос.Текст = "ВЫБРАТЬ Таблица.Ссылка ИЗ Справочник.Известный КАК Таблица";\n'
+        uri = (tmp_path / "Module.bsl").as_uri()
+        ls._docs[uri] = content
+        ls.symbol_index.has_metadata = lambda: True
+        ls.symbol_index.find_meta_object_candidates = lambda name, object_kind=None: (
+            [
+                {
+                    "name": name,
+                    "kind": object_kind,
+                    "synonym_ru": "",
+                    "collection": "Справочники",
+                }
+            ]
+            if name == "Известный" and object_kind == "Catalog"
+            else []
+        )
+
+        params = MagicMock()
+        params.text_document.uri = uri
+        params.position.line = 0
+        params.position.character = content.index("Известный") + 2
+
+        result = on_hover(ls, params)
+
+        assert result is not None
+        assert "Catalog.Известный" in str(result.contents)
+        context = ls._parsed_doc_cache[uri]
+        assert context.snapshot.semantic_fact_build_count == 1
 
     def test_on_signature_help_empty_doc_returns_none(self, tmp_path, monkeypatch) -> None:
         from unittest.mock import MagicMock
@@ -1308,6 +2048,55 @@ class TestHandlerFunctions:
         assert result is not None
         labels = [i.label for i in result.items]
         assert "Сумма" in labels
+
+    def test_query_metadata_completion_uses_resolved_kind(self, tmp_path, monkeypatch) -> None:
+        from unittest.mock import MagicMock
+
+        from onec_hbk_bsl.lsp.server import on_completion
+
+        ls = self._make_server(tmp_path, monkeypatch)
+        content = 'Запрос.Текст = "ВЫБРАТЬ * ИЗ Справочник.Известный.Су";\n'
+        uri = (tmp_path / "Module.bsl").as_uri()
+        ls._docs[uri] = content
+        ls.symbol_index.has_metadata = lambda: True
+        ls.symbol_index.find_meta_object_candidates = lambda name, object_kind=None: (
+            [
+                {
+                    "name": name,
+                    "kind": object_kind,
+                    "synonym_ru": "",
+                    "collection": "Справочники",
+                }
+            ]
+            if name == "Известный" and object_kind == "Catalog"
+            else []
+        )
+        ls.symbol_index.get_meta_members = lambda obj, prefix="", object_kind=None: (
+            [
+                {
+                    "name": "Сумма",
+                    "kind": "attribute",
+                    "type_info": "Число",
+                    "synonym_ru": "",
+                    "object_name": obj,
+                    "object_kind": object_kind,
+                }
+            ]
+            if obj == "Известный" and prefix == "Су" and object_kind == "Catalog"
+            else []
+        )
+
+        params = MagicMock()
+        params.text_document.uri = uri
+        params.position.line = 0
+        params.position.character = content.index('";')
+
+        result = on_completion(ls, params)
+
+        assert result is not None
+        assert [item.label for item in result.items] == ["Сумма"]
+        context = ls._parsed_doc_cache[uri]
+        assert context.snapshot.semantic_fact_build_count == 1
 
 
 # ---------------------------------------------------------------------------
@@ -1777,6 +2566,30 @@ class TestRenameSymbol:
         }
         assert {edit.new_text for edit in edits} == {"НовоеИмя"}
 
+    def test_rename_uses_utf16_exact_spans_after_non_bmp_text(self, tmp_path, monkeypatch) -> None:
+        from unittest.mock import MagicMock
+
+        from onec_hbk_bsl.analysis.lsp_positions import utf16_len
+        from onec_hbk_bsl.lsp.server import on_rename
+
+        ls = self._make_server(tmp_path, monkeypatch)
+        uri = (tmp_path / "unicode.bsl").as_uri()
+        content = 'Процедура СтароеИмя()\n    Текст = "😀"; СтароеИмя();\nКонецПроцедуры\n'
+        ls._docs[uri] = content
+        params = MagicMock()
+        params.text_document.uri = uri
+        params.position.line = 0
+        params.position.character = content.splitlines()[0].index("СтароеИмя") + 2
+        params.new_name = "НовоеИмя"
+
+        result = on_rename(ls, params)
+
+        assert result is not None
+        call_edit = next(edit for edit in result.changes[uri] if edit.range.start.line == 1)
+        prefix = content.splitlines()[1].split("СтароеИмя", 1)[0]
+        assert call_edit.range.start.character == utf16_len(prefix)
+        assert call_edit.range.end.character == utf16_len(prefix + "СтароеИмя")
+
     def test_rename_rejects_invalid_new_identifier(self, tmp_path, monkeypatch) -> None:
         from unittest.mock import MagicMock
 
@@ -2115,16 +2928,58 @@ class TestWorkspaceReindexSingleFlight:
 
         class _LS:
             def __init__(self) -> None:
+                from types import SimpleNamespace
+
                 self._reindex_lock = threading.Lock()
                 self._reindex_running = False
                 self._reindex_pending = False
                 self.indexer = _Indexer()
                 self.symbol_index = _SymbolIndex()
+                self.workspace_state = SimpleNamespace(mark_index_changed=lambda **_kwargs: None)
+
+            def workspace_run_context(self):
+                from types import SimpleNamespace
+
+                return SimpleNamespace(
+                    indexer=self.indexer,
+                    symbol_index=self.symbol_index,
+                )
 
         ls = _LS()
         _schedule_workspace_reindex(ls, "/workspace", reason="test")
         time.sleep(0.1)
         assert ls.indexer.calls == 1
+        assert ls._reindex_running is False
+
+    def test_successful_reindex_requests_pull_diagnostic_refresh(
+        self, tmp_path: Path, monkeypatch
+    ) -> None:
+        from unittest.mock import MagicMock
+
+        from onec_hbk_bsl.lsp import server as srv
+        from onec_hbk_bsl.lsp.server import BslLanguageServer, _schedule_workspace_reindex
+
+        class _SyncThread:
+            def __init__(self, target, args=(), kwargs=None, daemon=None, name=None):
+                self._target = target
+                self._args = args
+                self._kwargs = kwargs or {}
+
+            def start(self):
+                self._target(*self._args, **self._kwargs)
+
+        monkeypatch.setattr(srv.threading, "Thread", _SyncThread)
+        monkeypatch.setenv("INDEX_DB_PATH", str(tmp_path / "idx.sqlite"))
+        ls = BslLanguageServer()
+        ls.client_pull_diagnostics = True
+        ls.client_diagnostic_refresh = True
+        ls.workspace_diagnostic_refresh = MagicMock()  # type: ignore[method-assign]
+        ls.indexer.index_workspace = MagicMock()  # type: ignore[method-assign]
+
+        _schedule_workspace_reindex(ls, str(tmp_path), reason="test")
+
+        ls.indexer.index_workspace.assert_called_once_with(str(tmp_path), force=False)
+        ls.workspace_diagnostic_refresh.assert_called_once()
         assert ls._reindex_running is False
 
 
@@ -2174,6 +3029,9 @@ class TestStatusAndReindexContract:
             result["db_size_bytes"] + result["wal_size_bytes"] + result["shm_size_bytes"]
         )
         assert result["index_size_bytes"] > 0
+        assert result["index_revision"] >= 1
+        assert result["metadata_revision"] >= 1
+        assert result["config_revision"] >= 1
 
     def test_workspace_index_mode_reads_project_config(self, tmp_path, monkeypatch) -> None:
         from onec_hbk_bsl.lsp.server import _workspace_index_mode
@@ -2483,9 +3341,7 @@ class TestInferSpecificMetadataIdentity:
 
         content = "Процедура П() Экспорт\n\tX = Ссылка;\n\tY = ЭтотОбъект;\nКонецПроцедуры\n"
         tree = self._parse(content)
-        engine = BslTypeEngine(
-            tree, module_path="/fake/Catalogs/Сотрудники/Ext/ObjectModule.bsl"
-        )
+        engine = BslTypeEngine(tree, module_path="/fake/Catalogs/Сотрудники/Ext/ObjectModule.bsl")
         assert engine.infer("Ссылка", 1, metadata_only=True) == "СправочникСсылка.Сотрудники"
         assert engine.infer("Ссылка", 1) == "СправочникСсылка"
         assert engine.infer("ЭтотОбъект", 2, metadata_only=True) == "СправочникОбъект.Сотрудники"
@@ -2512,9 +3368,7 @@ class TestInferSpecificMetadataIdentity:
 
         content = "Процедура П() Экспорт\n\tX = Ссылка;\n\tY = ЭтотОбъект;\nКонецПроцедуры\n"
         tree = self._parse(content)
-        engine = BslTypeEngine(
-            tree, module_path="/fake/Catalogs/Сотрудники/Ext/ManagerModule.bsl"
-        )
+        engine = BslTypeEngine(tree, module_path="/fake/Catalogs/Сотрудники/Ext/ManagerModule.bsl")
         assert engine.infer("Ссылка", 1) is None
         assert engine.infer("ЭтотОбъект", 2) is None
 

@@ -6,9 +6,7 @@ to concrete identities (`Справочник.Организации.Голов�
 FROM/JOIN alias bindings and dereferencing reference-typed fields through the
 configuration metadata index (`meta_members.type_info`).
 
-Scope (see docs/contributors/onec-hbk-bsl-query-field-resolver-proposal.md):
-field identity
-for where-used queries, not query validation. Composite reference types produce
+Scope: field identity for where-used queries, not query validation. Composite reference types produce
 `ambiguous` results with candidates instead of silently picking the first match.
 
 Known limits (accepted, not planned):
@@ -18,11 +16,8 @@ Known limits (accepted, not planned):
   and the like) resolve to `unknown` (safe — no such name exists on the base
   object), and a resource referenced by its bare base name (not how real
   queries address these virtual tables) would resolve as if valid;
-- `ВЫРАЗИТЬ(...).Поле` dereference requires a grammar with the
-  `cast_field_access` node (see
-  docs/contributors/onec-hbk-bsl-sdbl-grammar-parse-gaps.md); on an older
-  `tree-sitter-hbk` build the dot after `)` is an ERROR node and the chain is
-  invisible to this resolver, same as any other parse error;
+- `ВЫРАЗИТЬ(...).Поле` dereference uses the `cast_field_access` node provided
+  by the required `tree-sitter-hbk>=0.1.11`;
 - dynamically built query texts are out of scope by design.
 """
 
@@ -252,7 +247,7 @@ class SymbolIndexFieldLookup:
         self._index = index
 
     def object_fields(self, kind: str, object_name: str) -> dict[str, tuple[str, str]] | None:
-        members = self._index.get_meta_members(object_name)
+        members = self._index.get_meta_members(object_name, object_kind=kind)
         if not members:
             return None
         if members[0].get("object_kind") != kind:
@@ -508,7 +503,9 @@ def _resolve_hops(
         ]
         if not resolved:
             return ChainResolution(status="unknown", hops=tuple(hops))
-        distinct_identities = tuple(dict.fromkeys(h.identity for h in resolved))
+        distinct_identities = tuple(
+            sorted({hop.identity for hop in resolved}, key=lambda value: (value.casefold(), value))
+        )
         if len(resolved) > 1 and len(distinct_identities) > 1:
             return ChainResolution(
                 status="ambiguous", hops=tuple(hops), candidates=distinct_identities
@@ -689,7 +686,7 @@ def resolve_query_field_uses(
     """
     source_file = root
     temp_tables = build_temp_table_env(source_file, lookup, temp_tables)
-    section_envs: dict[int, dict[str, TableBinding]] = {}
+    section_envs: dict[tuple[int, int], dict[str, TableBinding]] = {}
     cache: dict[tuple[str, str], dict[str, tuple[str, str]] | None] = {}
     uses: list[QueryFieldUse] = []
 
@@ -706,11 +703,11 @@ def resolve_query_field_uses(
             section = _enclosing_select_section(node)
             if section is None:
                 return
-            section_id = id(section)
-            if section_id not in section_envs:
-                section_envs[section_id] = build_section_env(section, lookup, temp_tables)
+            section_key = (section.start_byte, section.end_byte)
+            if section_key not in section_envs:
+                section_envs[section_key] = build_section_env(section, lookup, temp_tables)
             parts = dotted_identifier_parts(node)
-            resolution = resolve_chain(parts, section_envs[section_id], lookup, cache)
+            resolution = resolve_chain(parts, section_envs[section_key], lookup, cache)
             uses.append(
                 QueryFieldUse(node=node, parts=parts, resolution=resolution, row_offset=row_offset)
             )

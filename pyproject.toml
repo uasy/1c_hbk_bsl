@@ -9,9 +9,23 @@ description = "1C Enterprise BSL core formatter, diagnostics, LSP server, and CL
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.12"
+keywords = ["1c", "bsl", "linter", "formatter", "lsp", "mcp", "vscode"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Environment :: Plugins",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Text Editors :: Integrated Development Environments (IDE)",
+]
 dependencies = [
     "tree-sitter>=0.24,<0.26",
-    "tree-sitter-hbk>=0.1.10",
+    "tree-sitter-hbk>=0.1.11",
     "watchfiles>=0.24",
     "pygls>=1.3",
     "rich>=13.0",
@@ -19,6 +33,13 @@ dependencies = [
     "pymorphy3>=2.0",
     "pymorphy3-dicts-ru>=2.4",
 ]
+
+[project.urls]
+Homepage = "https://github.com/mussolene/1c_hbk_bsl"
+Documentation = "https://mussolene.github.io/1c_hbk_bsl/"
+Repository = "https://github.com/mussolene/1c_hbk_bsl"
+Issues = "https://github.com/mussolene/1c_hbk_bsl/issues"
+Changelog = "https://github.com/mussolene/1c_hbk_bsl/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 mcp = [
@@ -48,6 +69,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "onec_hbk_bsl.analysis.bsl_typo" = ["*.properties"]
+"onec_hbk_bsl.data.platform_api" = ["*.json"]
 
 # Version from git tags (e.g. v0.7.2). See scripts/README.md.
 [tool.setuptools_scm]
@@ -55,14 +77,42 @@ fallback_version = "0.0.0"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-v --cov=src/onec_hbk_bsl --cov-report=term-missing --cov-fail-under=50"
+addopts = "-v --strict-config --strict-markers --cov=src/onec_hbk_bsl --cov-report=term-missing --cov-fail-under=80"
 filterwarnings = ["ignore::DeprecationWarning"]
+markers = [
+    "external_bslls: parity checks that require an explicitly provisioned upstream BSLLS checkout",
+    "integration: semantic tests that exercise multiple diagnostic layers or workspace metadata",
+    "performance: deterministic performance-oriented diagnostic tests",
+    "platform: tests whose behavior depends on an optional parser or operating-system capability",
+    "slow: deterministic tests that are intentionally more expensive than the default unit cases",
+    "unit: focused deterministic tests for one diagnostic behavior or registry contract",
+]
 
 [tool.coverage.run]
 omit = [
     "*/tests/*",
 ]
 source = ["src/onec_hbk_bsl"]
+
+[tool.onec_hbk_bsl.quality]
+total = 80
+diff = 80
+
+[tool.onec_hbk_bsl.quality.components.parser]
+prefix = "src/onec_hbk_bsl/parser/"
+floor = 63
+
+[tool.onec_hbk_bsl.quality.components.lsp]
+prefix = "src/onec_hbk_bsl/lsp/"
+floor = 74
+
+[tool.onec_hbk_bsl.quality.components.mcp]
+prefix = "src/onec_hbk_bsl/mcp_bridge/"
+floor = 68
+
+[tool.onec_hbk_bsl.quality.components.index]
+prefix = "src/onec_hbk_bsl/indexer/"
+floor = 81
 
 [tool.ruff]
 line-length = 100
@@ -95,4 +145,7 @@ dev = [
     "pytest-cov>=7.0",
     "ruff>=0.9",
     "setuptools-scm>=8",
+]
+docs = [
+    "mkdocs-material>=9.6,<9.7",
 ]

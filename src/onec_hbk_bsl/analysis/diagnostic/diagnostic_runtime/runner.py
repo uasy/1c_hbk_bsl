@@ -1,9 +1,6 @@
 from __future__ import annotations
 
-import multiprocessing as mp
-import os
 from collections.abc import Callable
-from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 from typing import Any
 
@@ -337,31 +334,6 @@ _AGGREGATED_RULE_CODES: frozenset[str] = frozenset(
 _PROCESS_TYPO_MIN_LINES = 5_000
 _PROCESS_TYPO_MIN_CANDIDATES = 200
 _PROCESS_HEAVY_GROUP_MIN_LINES = 5_000
-_PROCESS_FORK_RULE_GROUPS: tuple[tuple[str, ...], ...] = (
-    ("BSL224",),
-    ("BSL197",),
-    ("BSL060",),
-    ("BSL263",),
-    ("BSL005",),
-    ("BSL039",),
-    ("BSL171",),
-    ("BSL271",),
-    ("BSL020",),
-    ("BSL029",),
-    ("BSL007",),
-    ("BSL153",),
-    ("BSL148",),
-    ("BSL212",),
-    ("BSL001",),
-    ("BSL210",),
-    ("BSL227", "BSL265"),
-    ("BSL173", "BSL186", "BSL181"),
-    ("BSL030", "BSL243"),
-    ("BSL230", "BSL202", "BSL218", "BSL223"),
-    ("BSL035", "BSL027", "BSL267", "BSL066"),
-    ("BSL180", "BSL200", "BSL178", "BSL279"),
-    ("BSL097", "BSL250", "BSL205", "BSL185"),
-)
 _RUNTIME_CST_NODE_TYPES_BY_CODE: dict[str, frozenset[str]] = {
     "BSL022": frozenset({"method_call"}),
     "BSL025": frozenset({";"}),
@@ -466,29 +438,6 @@ _PROCESS_CORE_FACT_CODES: tuple[str, ...] = (
 )
 _PROCESS_CORE_FACT_CODE_SET: frozenset[str] = frozenset(_PROCESS_CORE_FACT_CODES)
 _SPLIT_FRAGMENT_CORE_FACT_CODES: frozenset[str] = frozenset({"BSL017", "BSL026", "BSL040"})
-_FORK_CONTEXT: DiagnosticDocumentContext | None = None
-_FORK_RULE_BY_CODE: dict[str, DiagnosticRuntimeRule] = {}
-_FORK_RULE_TASKS: tuple[Callable[[], list[Diagnostic]], ...] = ()
-
-
-def _parallel_rule_tasks_enabled() -> bool:
-    value = os.environ.get("BSL_DIAG_PARALLEL_RULES", "1").strip().casefold()
-    return value not in {"0", "false", "no", "off"}
-
-
-def _process_rule_tasks_enabled() -> bool:
-    value = os.environ.get("BSL_DIAG_PROCESS_RULES", "1").strip().casefold()
-    return _parallel_rule_tasks_enabled() and value not in {"0", "false", "no", "off"}
-
-
-def _process_rule_workers(group_count: int) -> int:
-    try:
-        configured = int(os.environ.get("BSL_DIAG_PARALLEL_WORKERS", "0") or "0")
-    except ValueError:
-        configured = 0
-    if configured <= 0:
-        configured = min(6, (os.cpu_count() or 2))
-    return max(1, min(configured, group_count))
 
 
 def _runtime_cst_node_types_for_codes(codes: set[str] | frozenset[str]) -> set[str]:
@@ -496,102 +445,6 @@ def _runtime_cst_node_types_for_codes(codes: set[str] | frozenset[str]) -> set[s
     for code in codes:
         node_types.update(_RUNTIME_CST_NODE_TYPES_BY_CODE.get(code, ()))
     return node_types
-
-
-def _run_forked_runtime_rule_group(codes: tuple[str, ...]) -> list[Diagnostic]:
-    if _FORK_CONTEXT is None:
-        return []
-    out: list[Diagnostic] = []
-    for code in codes:
-        rule = _FORK_RULE_BY_CODE.get(code)
-        if rule is not None:
-            out.extend(rule.run(_FORK_CONTEXT))
-    return out
-
-
-def _run_forked_rule_task(index: int) -> list[Diagnostic]:
-    if not 0 <= index < len(_FORK_RULE_TASKS):
-        return []
-    return _FORK_RULE_TASKS[index]()
-
-
-def _run_forked_rule_tasks(tasks: tuple[Any, ...]) -> list[Diagnostic]:
-    callables = tuple(task.fn if hasattr(task, "fn") else task[1] for task in tasks)
-    if not callables:
-        return []
-    if "fork" not in mp.get_all_start_methods():
-        return [diagnostic for fn in callables for diagnostic in fn()]
-
-    global _FORK_RULE_TASKS
-    _FORK_RULE_TASKS = callables
-    try:
-        workers = _process_rule_workers(len(callables))
-        with ProcessPoolExecutor(max_workers=workers, mp_context=mp.get_context("fork")) as pool:
-            future_to_index = {
-                pool.submit(_run_forked_rule_task, index): index for index in range(len(callables))
-            }
-            results: dict[int, list[Diagnostic]] = {}
-            for future, index in future_to_index.items():
-                try:
-                    results[index] = future.result()
-                except Exception:
-                    results[index] = callables[index]()
-            return [
-                diagnostic
-                for index in range(len(callables))
-                for diagnostic in results.get(index, ())
-            ]
-    finally:
-        _FORK_RULE_TASKS = ()
-
-
-def _run_forked_runtime_rule_groups(
-    *,
-    context: DiagnosticDocumentContext,
-    rule_by_code: dict[str, DiagnosticRuntimeRule],
-    groups: tuple[tuple[str, ...], ...],
-) -> list[Diagnostic]:
-    if not groups:
-        return []
-    if "fork" not in mp.get_all_start_methods():
-        return [
-            diag
-            for group in groups
-            for diag in _run_runtime_rule_group_local(context, rule_by_code, group)
-        ]
-
-    global _FORK_CONTEXT, _FORK_RULE_BY_CODE
-    _FORK_CONTEXT = context
-    _FORK_RULE_BY_CODE = rule_by_code
-    try:
-        workers = _process_rule_workers(len(groups))
-        with ProcessPoolExecutor(max_workers=workers, mp_context=mp.get_context("fork")) as pool:
-            future_to_group = {
-                pool.submit(_run_forked_runtime_rule_group, group): group for group in groups
-            }
-            out: list[Diagnostic] = []
-            for future, group in future_to_group.items():
-                try:
-                    out.extend(future.result())
-                except Exception:
-                    out.extend(_run_runtime_rule_group_local(context, rule_by_code, group))
-            return out
-    finally:
-        _FORK_CONTEXT = None
-        _FORK_RULE_BY_CODE = {}
-
-
-def _run_runtime_rule_group_local(
-    context: DiagnosticDocumentContext,
-    rule_by_code: dict[str, DiagnosticRuntimeRule],
-    codes: tuple[str, ...],
-) -> list[Diagnostic]:
-    out: list[Diagnostic] = []
-    for code in codes:
-        rule = rule_by_code.get(code)
-        if rule is not None:
-            out.extend(rule.run(context))
-    return out
 
 
 def _run_bsl011_175_snapshot_facts(
@@ -666,18 +519,16 @@ def _run_bsl011_175_snapshot_facts(
 def _run_deprecated_api_pool(
     context: DiagnosticDocumentContext,
     enabled_codes: tuple[str, ...],
+    semantic_facts: Any,
 ) -> list[Diagnostic]:
     from onec_hbk_bsl.analysis import diagnostics as _diag
 
-    snapshot = context.snapshot
-    symbols = list(getattr(snapshot, "symbols", []) or [])
-    calls = list(getattr(snapshot, "calls", []) or [])
     return context.module_model.validate_bsl175_176_177_179_195_deprecated_api_diagnostics(
         lines=context.lines,
         tree=context.tree,
-        symbols=symbols,
-        calls=calls,
-        symbol_index=getattr(context.diagnostics_engine, "_symbol_index", None),
+        symbols=list(semantic_facts.symbols),
+        calls=list(semantic_facts.calls),
+        symbol_index=context.symbol_index,
         enabled_codes=enabled_codes,
         ts_walk_fn=_diag._ts_walk,
         ts_node_text_fn=_diag._ts_node_text,
@@ -703,14 +554,13 @@ def _run_light_pool_169_170_181_196_260(
 ) -> list[Diagnostic]:
     from onec_hbk_bsl.analysis import diagnostics as _diag
 
-    engine = context.diagnostics_engine
     return context.module_model.validate_bsl169_170_181_182_196_260_light_pool(
         lines=context.lines,
         procs=context.procedures,
         enabled=enabled_codes,
         snapshot=context.snapshot,
         tree=context.tree,
-        ts_nodes_for_types_fn=engine._ts_nodes_for_types,
+        ts_nodes_for_types_fn=context.ts_nodes_for_types,
         ts_child_of_type_fn=_diag._ts_child_of_type,
         ts_node_text_fn=_diag._ts_node_text,
         utf8_byte_offset_to_lsp_character_fn=_diag.utf8_byte_offset_to_lsp_character,
@@ -735,7 +585,7 @@ def _run_light_pool_171_248_252_259_268(
         procs=context.procedures,
         codes=enabled_codes,
         rule_enabled_fn=engine._rule_enabled,
-        ts_nodes_for_types_fn=engine._ts_nodes_for_types,
+        ts_nodes_for_types_fn=context.ts_nodes_for_types,
         rule_bsl171_fn=runtime_rules._run_bsl171_crazy_multiline_string,
         rule_bsl248_fn=runtime_rules._run_bsl248_several_compiler_directives,
         rule_bsl251_fn=runtime_rules._run_bsl251_ternary_operator_usage,
@@ -757,7 +607,7 @@ def _run_light_call_pool_202_223_243_249(
         enabled=enabled_codes,
         snapshot=context.snapshot,
         strip_inline_comment_preserve_strings_fn=_diag._strip_inline_comment_preserve_strings,
-        ts_nodes_for_types_fn=context.diagnostics_engine._ts_nodes_for_types,
+        ts_nodes_for_types_fn=context.ts_nodes_for_types,
         ts_child_of_type_fn=_diag._ts_child_of_type,
         ts_node_text_fn=_diag._ts_node_text,
         ts_method_call_arg_exprs_fn=_diag._ts_method_call_arg_exprs,
@@ -787,7 +637,7 @@ def _run_light_pool_221_222_239_271(
         strip_inline_comment_preserve_strings_fn=_diag._strip_inline_comment_preserve_strings,
         reserved_parameter_names_re=engine._reserved_parameter_names_re,
         ts_walk_fn=_diag._ts_walk,
-        ts_nodes_for_types_fn=engine._ts_nodes_for_types,
+        ts_nodes_for_types_fn=context.ts_nodes_for_types,
         ts_child_of_type_fn=_diag._ts_child_of_type,
         ts_node_text_fn=_diag._ts_node_text,
         utf8_byte_offset_to_lsp_character_fn=_diag.utf8_byte_offset_to_lsp_character,
@@ -975,28 +825,51 @@ def append_diagnostic_runtime_rule_tasks(
     lines: list[str],
     tree: Any,
     snapshot: Any | None,
+    symbol_index: Any | None = None,
 ) -> None:
     enabled_rule_codes = engine._enabled_rule_codes()
-    if engine._ts_nodes_for_types is not None:
-        runtime_cst_node_types = _runtime_cst_node_types_for_codes(enabled_rule_codes)
-        if enabled_rule_codes:
-            runtime_cst_node_types.add("string")
-        if runtime_cst_node_types:
-            engine._ts_nodes_for_types(tree, runtime_cst_node_types)
+
+    def ts_nodes_for_types(current_tree: Any, node_types: set[str]) -> dict[str, list[Any]]:
+        return engine._ts_nodes_for_types(
+            current_tree,
+            node_types,
+            snapshot=snapshot,
+        )
+
+    def global_method_calls_from_nodes(
+        method_call_nodes: list[Any],
+        line_texts: list[str],
+    ) -> list[dict[str, Any]]:
+        return engine._global_method_calls_from_nodes(
+            method_call_nodes,
+            line_texts,
+            snapshot=snapshot,
+        )
+
+    runtime_cst_node_types = _runtime_cst_node_types_for_codes(enabled_rule_codes)
+    if enabled_rule_codes:
+        runtime_cst_node_types.add("string")
+    if runtime_cst_node_types:
+        ts_nodes_for_types(tree, runtime_cst_node_types)
     runtime_call_context = None
     if enabled_rule_codes.intersection({"BSL066", "BSL097", "BSL217", "BSL218", "BSL277"}):
-        runtime_call_context = engine._runtime_call_context(tree, lines)
+        runtime_call_context = engine._runtime_call_context(
+            tree,
+            lines,
+            snapshot=snapshot,
+        )
     context = DiagnosticDocumentContext(
         path=path,
         content=content,
         lines=lines,
         tree=tree,
         snapshot=snapshot,
+        symbol_index=symbol_index,
         max_bool_ops=int(getattr(engine, "max_bool_ops", 3)),
         bsl036_enabled=bool(engine._rule_enabled("BSL036")),
         runtime_call_context=runtime_call_context,
-        ts_nodes_for_types=engine._ts_nodes_for_types,
-        global_method_calls_from_nodes=engine._global_method_calls_from_nodes,
+        ts_nodes_for_types=ts_nodes_for_types,
+        global_method_calls_from_nodes=global_method_calls_from_nodes,
         diagnostics_engine=engine,
     )
 
@@ -1006,6 +879,45 @@ def append_diagnostic_runtime_rule_tasks(
     def add_task(codes: tuple[str, ...], fn: Callable[[], list[Diagnostic]]) -> None:
         if codes:
             rule_tasks.append(("+".join(codes), fn))
+
+    semantic_fact_snapshot: Any | None = None
+
+    def document_semantic_facts(*, resolve_metadata: bool = False) -> Any | None:
+        """Build one request-local fact snapshot before diagnostic tasks fan out."""
+        nonlocal semantic_fact_snapshot
+        if snapshot is None:
+            return None
+        if semantic_fact_snapshot is not None:
+            return semantic_fact_snapshot
+
+        from onec_hbk_bsl.analysis.semantic_facts import FactRevision  # noqa: PLC0415
+
+        metadata_resolver = None
+        metadata_revision = 0
+        if resolve_metadata:
+            from onec_hbk_bsl.analysis import diagnostics as _diag  # noqa: PLC0415
+
+            config_root = _diag._config_root_for_file(path)
+            metadata_names = (
+                frozenset(_diag._metadata_typed_name_index_cached(config_root))
+                if config_root is not None
+                else frozenset()
+            )
+            if metadata_names:
+
+                def _resolve_metadata(kind: str, name: str) -> tuple[str, ...]:
+                    key = (kind.casefold(), name.casefold())
+                    return (f"{kind}.{name}",) if key in metadata_names else ()
+
+                metadata_resolver = _resolve_metadata
+                metadata_revision = 1
+
+        revision = FactRevision.for_content(content, metadata=metadata_revision)
+        semantic_fact_snapshot = snapshot.semantic_facts(
+            revision,
+            metadata_resolver=metadata_resolver,
+        )
+        return semantic_fact_snapshot
 
     def add_aggregated_query_tasks() -> None:
         query_text_191_201 = enabled_codes(_QUERY_TEXT_191_201_CODES)
@@ -1070,10 +982,12 @@ def append_diagnostic_runtime_rule_tasks(
                 run_bsl174_187_236_238_query_metadata_pool,
             )
 
+            fact_snapshot = document_semantic_facts(resolve_metadata="BSL236" in query_metadata)
+            query_facts = fact_snapshot.queries if fact_snapshot is not None else ()
             query_metadata = applicable_bsl174_187_236_238_codes(
                 context.path,
                 query_metadata,
-                query_blocks,
+                query_facts,
             )
             add_task(
                 query_metadata,
@@ -1081,7 +995,7 @@ def append_diagnostic_runtime_rule_tasks(
                     context.path,
                     context.lines,
                     codes,
-                    query_blocks,
+                    query_facts,
                     context.lines,
                 ),
             )
@@ -1127,20 +1041,15 @@ def append_diagnostic_runtime_rule_tasks(
             )
 
     add_aggregated_query_tasks()
-    fork_all_rule_tasks = (
-        _process_rule_tasks_enabled()
-        and len(lines) >= _PROCESS_HEAVY_GROUP_MIN_LINES
-        and "fork" in mp.get_all_start_methods()
-    )
     coarse_parallelized: set[str] = set()
     fact_group_011_175 = tuple(
         code
         for code in enabled_codes(_PROCESS_FACT_GROUP_011_175)
-        if not fork_all_rule_tasks
-        and snapshot is not None
-        and len(lines) >= _PROCESS_HEAVY_GROUP_MIN_LINES
+        if snapshot is not None and len(lines) >= _PROCESS_HEAVY_GROUP_MIN_LINES
     )
     if fact_group_011_175 and snapshot is not None:
+        semantic_facts = document_semantic_facts()
+        assert semantic_facts is not None
         rule_tasks.append(
             make_diagnostic_rule_task(
                 "+".join(fact_group_011_175),
@@ -1157,8 +1066,8 @@ def append_diagnostic_runtime_rule_tasks(
                             engine.max_cognitive_complexity
                         )
                     ),
-                    symbols=list(snapshot.symbols),
-                    calls=list(snapshot.calls),
+                    symbols=list(semantic_facts.symbols),
+                    calls=list(semantic_facts.calls),
                     enabled_codes=fact_group_011_175,
                     max_cognitive_complexity=engine.max_cognitive_complexity,
                 ),
@@ -1174,9 +1083,15 @@ def append_diagnostic_runtime_rule_tasks(
         if code not in coarse_parallelized
     )
     if deprecated_api_pool:
+        semantic_facts = document_semantic_facts()
+        assert semantic_facts is not None
         add_task(
             deprecated_api_pool,
-            lambda codes=deprecated_api_pool: _run_deprecated_api_pool(context, codes),
+            lambda codes=deprecated_api_pool: _run_deprecated_api_pool(
+                context,
+                codes,
+                semantic_facts,
+            ),
         )
         deprecated_api_parallelized.update(deprecated_api_pool)
 
@@ -1231,7 +1146,7 @@ def append_diagnostic_runtime_rule_tasks(
         )
 
     core_fact_parallelized: set[str] = set()
-    if snapshot is not None and not fork_all_rule_tasks:
+    if snapshot is not None:
         split_fragment = _path_is_split_module_fragment(path)
         enabled_core_fact_codes = tuple(
             code
@@ -1265,11 +1180,7 @@ def append_diagnostic_runtime_rule_tasks(
                 core_fact_parallelized.add(code)
 
     typo_parallelized = False
-    if (
-        not fork_all_rule_tasks
-        and engine._rule_enabled("BSL256")
-        and len(lines) >= _PROCESS_TYPO_MIN_LINES
-    ):
+    if engine._rule_enabled("BSL256") and len(lines) >= _PROCESS_TYPO_MIN_LINES:
         root = getattr(tree, "root_node", None)
         if root is not None and isinstance(getattr(root, "text", None), (bytes, bytearray)):
             typo_nodes = (
@@ -1295,41 +1206,6 @@ def append_diagnostic_runtime_rule_tasks(
                     )
                 typo_parallelized = True
 
-    fork_parallelized: set[str] = set()
-    if (
-        not fork_all_rule_tasks
-        and _process_rule_tasks_enabled()
-        and len(lines) >= _PROCESS_HEAVY_GROUP_MIN_LINES
-    ):
-        rule_by_code = {rule.code: rule for rule in _RULES}
-        fork_groups: list[tuple[str, ...]] = []
-        for group in _PROCESS_FORK_RULE_GROUPS:
-            enabled_group = tuple(
-                code
-                for code in group
-                if code not in _AGGREGATED_RULE_CODES
-                and code not in coarse_parallelized
-                and code not in core_fact_parallelized
-                and not (code == "BSL256" and typo_parallelized)
-                and engine._rule_enabled(code)
-                and code in rule_by_code
-            )
-            if enabled_group:
-                fork_groups.append(enabled_group)
-                fork_parallelized.update(enabled_group)
-        if fork_groups:
-            rule_tasks.append(
-                make_diagnostic_rule_task(
-                    "fork:" + "+".join(sorted(fork_parallelized)),
-                    partial(
-                        _run_forked_runtime_rule_groups,
-                        context=context,
-                        rule_by_code=rule_by_code,
-                        groups=tuple(fork_groups),
-                    ),
-                )
-            )
-
     for rule in _RULES:
         if rule.code in _AGGREGATED_RULE_CODES:
             continue
@@ -1339,22 +1215,7 @@ def append_diagnostic_runtime_rule_tasks(
             continue
         if rule.code in deprecated_api_parallelized:
             continue
-        if rule.code in fork_parallelized:
-            continue
         if rule.code == "BSL256" and typo_parallelized:
             continue
         if engine._rule_enabled(rule.code):
             rule_tasks.append((rule.code, lambda rule=rule: rule.run(context)))
-
-    if fork_all_rule_tasks and len(rule_tasks) > 1:
-        fork_tasks = tuple(rule_tasks)
-        fork_codes = "+".join(
-            task.code if hasattr(task, "code") else task[0] for task in fork_tasks
-        )
-        rule_tasks.clear()
-        rule_tasks.append(
-            (
-                f"fork-all:{fork_codes}",
-                partial(_run_forked_rule_tasks, fork_tasks),
-            )
-        )

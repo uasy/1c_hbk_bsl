@@ -7,11 +7,185 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Documentation is published as a searchable RU/EN Material site with
+  system/light/dark themes and separate Toolkit and VS Code / Cursor guides;
+  all 180 `BSL###` pages contain localized rule guidance and compatible
+  suppression forms, while internal implementation dossiers are not published.
+- README landing page is reorganized around installation and common tasks,
+  removes duplicated reference prose, and replaces retired Visual Studio
+  Marketplace Shields endpoints with stable release, security, and install
+  links.
+
+## [0.8.46] - 2026-07-24
+
+### Changed
+
+- Query metadata diagnostics BSL187/236/238 and query-aware LSP
+  hover/completion now reuse one immutable revision-aware fact snapshot with
+  exact metadata kind, conservative resolution state, and source spans.
+- Qualified-call hover, definition, and references now consume exact receiver
+  facts populated by the existing type engine; resolved metadata identities
+  are restricted to their concrete module, while ambiguous/unknown receivers
+  no longer guess a same-named workspace target.
+- Deprecated API diagnostics BSL175/BSL176 now share the same immutable
+  symbol/call fact snapshot in local and large-file execution paths without
+  changing their severity, messages, multiplicity, or ranges.
+- Product boundaries between local code intelligence, centralized help/context,
+  source-first project packs, and runtime orchestration are documented with
+  three deployment scenarios and explicit source-authority rules.
+
+## [0.8.45] - 2026-07-24
+
+### Added
+
+- LSP и MCP используют общий immutable `RenamePlan` с точными semantic CST spans,
+  детерминированной сортировкой edits и content-hash preconditions; MCP
+  `bsl_rename(apply=true)` применяет многофайловый план транзакционно с полным
+  rollback при ошибке записи.
+- Diagnostics, LSP navigation и rename используют общий immutable,
+  revision-aware semantic fact snapshot для representative symbol/call slice
+  без дублирования parser/semantic engine.
+- LSP поддерживает детерминированный multi-root lifecycle: отдельные workspace
+  contexts, маршрутизацию документа по наиболее специфичному root и очистку
+  состояния при изменении workspace folders.
+- Performance observability публикует стабильные benchmark-артефакты, сравнивает
+  их с versioned baseline и запускается в release preflight и nightly CI.
+
+### Changed
+
+- CLI, Python API, LSP и MCP используют единый immutable config resolver с
+  приоритетом explicit option → environment → project config → defaults;
+  явные `--format text`, `--jobs 0`, `--no-exit-zero` и
+  `--no-insert-spaces` корректно перекрывают конфиг проекта.
+- Неоднозначное определение, коллизия нового имени, stale index/content или
+  квалифицированный receiver без доказанной identity теперь отклоняют rename
+  до записи стабильным кодом ошибки.
+- Каталог diagnostic contracts перенесён в канонический `docs/rule-contracts`,
+  а executable gate проверяет владельца, fixture mapping и согласованность
+  публичного каталога.
+- BSLLS comparator сохраняет mapping и multiplicity diagnostics; semantic
+  regression suite разделён по execution families и дополнен пропущенными
+  parity/lifecycle сценариями.
+- Публичные README, architecture, package metadata, issue/PR templates,
+  security policy и карта surface ownership синхронизированы с фактическим
+  продуктовым контрактом.
+
+### Security
+
+- Synthetic credential fixtures отслеживаются явным allowlist gitleaks после
+  перемещения diagnostic tests; production paths остаются под строгой проверкой.
+
+## [0.8.44] - 2026-07-23
+
+### Added
+
+- Type inference сохраняет конкретную metadata identity через manager chains,
+  выборки, значения перечислений, type guards и неявные переменные object/
+  record-set modules; generic hover-контракт остаётся обратимо совместимым,
+  а неоднозначность возвращается детерминированным списком кандидатов.
+- SDBL query field resolver связывает aliases, временные таблицы, вложенные
+  запросы и цепочки полей с конкретными metadata identities; composite types
+  возвращают explicit ambiguity, а unsupported/dynamic cases — `unknown`.
+
+### Changed
+
+- Минимальная версия `tree-sitter-hbk` поднята до `0.1.11`: SDBL parser
+  поддерживает доступ к полю после `ВЫРАЗИТЬ(...)`, кортежи слева от `В`,
+  `УНИЧТОЖИТЬ` внутри пакета запросов и вложенные соединения.
+
+### Fixed
+
+- Artifact preflight для pull request проверяет непустой раздел `Unreleased`,
+  сохраняя строгую проверку датированного раздела версии для release tag.
+- `DiagnosticEngine` передаёт snapshot, строки и symbol index через immutable
+  request-local context без общего mutable состояния текущего документа.
+- LSP публикует `SymbolIndex`, indexer и diagnostics engine через единый
+  workspace lifecycle с монотонными revisions и revision-aware caches.
+- LSP diagnostic scheduler не запускает process pool из фоновых потоков,
+  не использует fork-global context и выполняет worker fallback ровно один раз.
+- Incremental index учитывает committed, staged, unstaged, untracked, deleted
+  и renamed worktree paths даже при неизменном `HEAD`.
+- LSP защищает cache, snapshot index и Problems от устаревших diagnostic runs
+  монотонными document generations и CAS-публикацией; workspace reindex
+  инициирует diagnostic refresh.
+- `bsl_callers` и `bsl_callees` ограничивают callers файлом выбранного
+  непубличного определения и не смешивают одноимённые локальные обработчики.
+
+### Security
+
+- MCP filesystem, index and metadata tools reject workspace roots, path traversal
+  and symlink escapes outside the immutable startup workspace allowlist with a
+  stable `workspace_path_denied` response.
+- `bsl_rename` сохраняет read-only preview, но отклоняет `apply=True` стабильной
+  ошибкой `write_disabled` до появления semantic RenamePlan.
+
+## [0.8.43] - 2026-07-23
+
+### Added
+
+- `bsl_callers` и `bsl_callees` принимают `file_filter` и возвращают явный
+  ambiguity contract вместо выбора произвольного определения.
+- VS Code extension проверяется поведенческими тестами регистрации команд,
+  разрешения binary path и передачи настроек в LSP.
+- Единый release preflight собирает и проверяет wheel/sdist, четыре standalone
+  binary и четыре platform VSIX до первой внешней публикации; релиз содержит
+  детерминированный `SHA256SUMS`.
+
+### Changed
+
+- Designer metadata type tokens сохраняются из реальной XML-структуры без
+  усечения, включая composite-типы и form attributes.
+- Type inference корректно обрабатывает вложенные access chains и учитывает
+  затенение platform manager collections локальными переменными.
+- Coverage ratchet поднят до 80% и дополнен reviewable floors для parser, LSP,
+  MCP и index, diff coverage и сохраняемыми CI evidence artifacts.
+- Диагностические `BSL###` стали canonical machine IDs на CLI, LSP и MCP;
+  implementation state выводится из runtime registry, а версия LSP — из
+  package version.
+
 ### Fixed
 
 - Hover и переход к определению для пользовательских функций в цепочках вызовов
   используют workspace symbol index; `index-exclude` позволяет индексировать
   библиотеки независимо от диагностического `exclude`.
+- Core wheel и PyInstaller binary теперь содержат полный каталог platform API,
+  загружаемый через `importlib.resources`.
+- Обновлён frozen npm dependency tree; runtime и полный dev audit проходят без
+  high/critical advisories.
+- Каталог диагностик не публикует нераскрытые `%s` placeholders.
+
+## [0.8.42] - 2026-07-16
+
+### Changed
+
+- Диагностический runtime переиспользует CST cursor traversal, call facts,
+  function nodes и лениво вычисленные parameter-usage facts между правилами,
+  сохраняя прежние diagnostic contracts.
+- CLI планирует большие файлы по process workers без повторной передачи одного
+  документа и сохраняет детерминированный порядок результатов.
+
+### Fixed
+
+- BSL062 и BSL148 используют уже построенные структурные факты и не выполняют
+  повторные обходы процедур и функций.
+
+## [0.8.41] - 2026-07-13
+
+### Added
+
+- Конфигурация `index-exclude` отделяет область workspace navigation от
+  диагностического `exclude`, по умолчанию наследуя его для совместимости.
+- Frozen Python lock и синхронизированные release/build instructions закрепляют
+  воспроизводимую сборку дистрибутивов.
+
+### Fixed
+
+- Hover и переход к определению пользовательских функций работают внутри
+  цепочек вызовов через workspace symbol index.
+- Typo diagnostics не дублируют один structural candidate, даже если несколько
+  нормализованных частей приводят к одному сообщению.
 
 ## [0.8.40] - 2026-07-13
 
@@ -341,7 +515,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BSL035: повторы строковых литералов учитываются **в пределах одной процедуры/функции** (и отдельно на уровне модуля), а не по всему файлу — убраны ложные срабатывания на одинаковых ключах `Вставить("…")` в разных методах.
 
 ### Added
-- Документация аудита: `docs/SECURITY_AUDIT.md`, `docs/THIRD_PARTY_NOTICES.md`, `docs/DATA_SOURCES.md`; ссылки из корневого `README.md`.
+- Документация безопасности и происхождения данных: `SECURITY.md`,
+  `docs/THIRD_PARTY_NOTICES.md`, `docs/DATA_SOURCES.md`.
 - `.gitleaks.toml` и workflow **Security** (Gitleaks в CI).
 
 ### Changed
@@ -435,7 +610,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 30+ diagnostic rules (BSL001–BSL055)
 - Standalone native binary (no system Python required)
 
-[Unreleased]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.40...HEAD
+[Unreleased]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.46...HEAD
+[0.8.46]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.45...v0.8.46
+[0.8.45]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.44...v0.8.45
+[0.8.44]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.43...v0.8.44
+[0.8.43]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.42...v0.8.43
+[0.8.42]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.41...v0.8.42
+[0.8.41]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.40...v0.8.41
 [0.8.40]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.39...v0.8.40
 [0.8.39]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.38...v0.8.39
 [0.8.38]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.18...v0.8.38

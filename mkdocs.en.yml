@@ -1,0 +1,21 @@
+INHERIT: mkdocs.yml
+
+site_name: 1C HBK BSL
+site_description: Formatter, diagnostics, language server, CLI, and MCP tools for 1C BSL
+site_url: https://mussolene.github.io/1c_hbk_bsl/en/
+site_dir: site/en
+
+theme:
+  language: en
+
+extra:
+  doc_locale: en
+
+nav:
+  - Overview:
+      - Home: index.md
+  - Products:
+      - Toolkit: public-surface.md
+      - VS Code / Cursor extension: extension.md
+  - Diagnostics:
+      - Rule catalog: diagnostic-rules.md
