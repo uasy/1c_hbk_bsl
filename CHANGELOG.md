@@ -7,8 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.47] - 2026-07-26
+
+### Fixed
+
+- Call graph attribution now preserves call receiver expressions in the
+  SQLite index and excludes qualified calls to other same-named exported
+  methods, while retaining unresolved bare calls.
+
 ### Changed
 
+- VS Code / Cursor extension now requires VS Code API 1.91 or newer and uses
+  the current language client and security-clean packaging toolchain.
+- `noqa`, `bsl-disable` and compatible `BSLLS:…-off` suppressions now share a
+  deterministic line/range contract: trailing markers affect one line,
+  standalone markers open a range, and family-specific enable markers close it.
 - Documentation is published as a searchable RU/EN Material site with
   system/light/dark themes and separate Toolkit and VS Code / Cursor guides;
   all 180 `BSL###` pages contain localized rule guidance and compatible
@@ -470,7 +483,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Реестр вызова правил (`diagnostics_rule_registry`): фазы (`RulePhase`), `infer_rule_invoke`, `build_enabled_invoke_snapshot`; метрика `last_metrics["rule_invoke"]` в движке.
-- Документация [docs/diagnostics_rule_invoke.md](docs/diagnostics_rule_invoke.md); тесты [tests/test_diagnostics_rule_registry.py](tests/test_diagnostics_rule_registry.py).
+- Документация классификации вызовов правил; тесты [tests/test_diagnostics_rule_registry.py](tests/test_diagnostics_rule_registry.py).
 
 ### Changed
 
@@ -485,7 +498,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **LSP:** `textDocument/diagnostic` (pull) для клиентов с LSP 3.17; при поддержке pull не шлём `publishDiagnostics` на каждое изменение; группировка Problems: `source` = `onec-hbk-bsl · <код правила>`; MCP: `source` для BSL-DEAD выровнен с LSP.
-- Документация: [docs/Production-Notes.md](docs/Production-Notes.md) — индексация и параллелизм.
+- Документация по индексации и параллелизму.
 
 ## [0.6.9] - 2026-03-22
 
@@ -610,7 +623,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 30+ diagnostic rules (BSL001–BSL055)
 - Standalone native binary (no system Python required)
 
-[Unreleased]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.46...HEAD
+[Unreleased]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.47...HEAD
+[0.8.47]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.46...v0.8.47
 [0.8.46]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.45...v0.8.46
 [0.8.45]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.44...v0.8.45
 [0.8.44]: https://github.com/mussolene/1c_hbk_bsl/compare/v0.8.43...v0.8.44
