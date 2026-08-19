@@ -1,0 +1,9 @@
+{
+  "$schema_version": "2.20",
+  "kind": "Role",
+  "node_files": {
+    "Ext/Rights.xml": {
+      "parser": "FileRefParser"
+    }
+  }
+}

@@ -1,0 +1,2681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Схема пространства имён http://v8.1c.ru/8.2/data/spreadsheet
+  корневой элемент document, поколение выгрузки 2.22.
+
+  ВНИМАНИЕ: этот формат СВОЕГО атрибута version может не нести —
+  тогда поколение унаследовано от описателя-родителя и означает
+  «в выгрузке какого поколения файл наблюдался», а НЕ версию этого
+  формата.
+
+  ПОРОЖДЕНО из корпуса выгрузок, не является официальной схемой 1С.
+  Дата порождения: 2026-08-09
+  Файлов в основе: 607, видов/веток: 1
+  Корней в корпусе: 2
+
+  ХАРАКТЕР АРТЕФАКТА — ОПИСАТЕЛЬНЫЙ, НЕ НОРМАТИВНЫЙ.
+  Схема фиксирует то, что встретилось в корпусе, а не то, что допускает
+  формат. Модель содержимого намеренно разрешительная (xs:choice без
+  порядка и кратностей). Применение:
+    можно  — находить поля, обнаруживать незнакомые элементы;
+    нельзя — отбраковывать файлы: законный, но не встретившийся в корпусе
+             элемент дал бы ложную ошибку.
+
+  Поддеревья чужих пространств имён (v8:, xr:, logform, DCS, predef…)
+  не раскрываются — у них собственные артефакты; здесь xs:any.
+
+  Регенерация входит в тесты: породить заново и сравнить с этим файлом.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://v8.1c.ru/8.2/data/spreadsheet"
+           targetNamespace="http://v8.1c.ru/8.2/data/spreadsheet"
+           elementFormDefault="qualified">
+
+  <!-- Схема НЕ самодостаточна: экземпляры ссылаются через xsi:type
+       на типы чужих пространств имён. Заглушки этих типов порождаются
+       рядом; настоящие определения — за пределами этого артефакта
+       (у каждого пространства будет свой). -->
+  <xs:import namespace="http://v8.1c.ru/8.2/data/chart" schemaLocation="stubs/v8.1c.ru_8.2_data_chart.xsd"/>
+
+  <xs:element name="document" type="t_document" nillable="true"/>
+
+  <!-- Типы своего пространства, названные через xsi:type. Импортировать
+       собственный targetNamespace нельзя, поэтому объявлены здесь —
+       разрешительно, как заглушки: содержимое не описывается. -->
+  <xs:complexType name="NamedItemCells" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+  <xs:complexType name="NamedItemDrawing" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document; встречено: 1214</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="centerFooter" type="t_document.centerFooter" nillable="true"/>
+        <xs:element name="centerHeader" type="t_document.centerHeader" nillable="true"/>
+        <xs:element name="columns" type="t_document.columns" nillable="true"/>
+        <xs:element name="defaultFormatIndex" type="t_document.defaultFormatIndex" nillable="true"/>
+        <xs:element name="drawing" type="t_document.drawing" nillable="true"/>
+        <xs:element name="font" type="t_document.font" nillable="true"/>
+        <xs:element name="format" type="t_document.format" nillable="true"/>
+        <xs:element name="groupsBackColor" type="t_document.groupsBackColor" nillable="true"/>
+        <xs:element name="groupsColor" type="t_document.groupsColor" nillable="true"/>
+        <xs:element name="headersBackColor" type="t_document.headersBackColor" nillable="true"/>
+        <xs:element name="headersColor" type="t_document.headersColor" nillable="true"/>
+        <xs:element name="height" type="t_document.height" nillable="true"/>
+        <xs:element name="horizontalUnmerge" type="t_document.horizontalUnmerge" nillable="true"/>
+        <xs:element name="languageSettings" type="t_document.languageSettings" nillable="true"/>
+        <xs:element name="leftFooter" type="t_document.leftFooter" nillable="true"/>
+        <xs:element name="leftHeader" type="t_document.leftHeader" nillable="true"/>
+        <xs:element name="line" type="t_document.line" nillable="true"/>
+        <xs:element name="merge" type="t_document.merge" nillable="true"/>
+        <xs:element name="namedItem" type="xs:anyType" nillable="true"/>
+        <xs:element name="picture" type="t_document.picture" nillable="true"/>
+        <xs:element name="printArea" type="t_document.printArea" nillable="true"/>
+        <xs:element name="printSettings" type="t_document.printSettings" nillable="true"/>
+        <xs:element name="rightFooter" type="t_document.rightFooter" nillable="true"/>
+        <xs:element name="rightHeader" type="t_document.rightHeader" nillable="true"/>
+        <xs:element name="rowsItem" type="t_document.rowsItem" nillable="true"/>
+        <xs:element name="templateMode" type="t_document.templateMode" nillable="true"/>
+        <xs:element name="verticalUnmerge" type="t_document.verticalUnmerge" nillable="true"/>
+        <xs:element name="vg" type="t_document.vg" nillable="true"/>
+        <xs:element name="vgLevels" type="t_document.vgLevels" nillable="true"/>
+        <xs:element name="vgRows" type="t_document.vgRows" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.centerFooter" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.centerFooter; встречено: 43</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="f" type="t_document.centerFooter.f" nillable="true"/>
+        <xs:element name="tfl" type="t_document.centerFooter.tfl" nillable="true"/>
+        <xs:element name="tl" type="t_document.centerFooter.tl" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.centerFooter.f">
+    <xs:annotation>
+      <xs:documentation>путь: document.centerFooter.f; встречено: 43</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.centerFooter.tfl">
+    <xs:annotation>
+      <xs:documentation>путь: document.centerFooter.tfl; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.centerFooter.tl">
+    <xs:annotation>
+      <xs:documentation>путь: document.centerFooter.tl; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.centerHeader" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.centerHeader; встречено: 43</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="f" type="t_document.centerHeader.f" nillable="true"/>
+        <xs:element name="tfl" type="t_document.centerHeader.tfl" nillable="true"/>
+        <xs:element name="tl" type="t_document.centerHeader.tl" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.centerHeader.f">
+    <xs:annotation>
+      <xs:documentation>путь: document.centerHeader.f; встречено: 43</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.centerHeader.tfl">
+    <xs:annotation>
+      <xs:documentation>путь: document.centerHeader.tfl; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.centerHeader.tl">
+    <xs:annotation>
+      <xs:documentation>путь: document.centerHeader.tl; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.columns" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.columns; встречено: 1572</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="columnsItem" type="t_document.columns.columnsItem" nillable="true"/>
+        <xs:element name="formatIndex" type="t_document.columns.formatIndex" nillable="true"/>
+        <xs:element name="id" type="t_document.columns.id" nillable="true"/>
+        <xs:element name="size" type="t_document.columns.size" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.columns.columnsItem" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.columns.columnsItem; встречено: 31945</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="column" type="t_document.columns.columnsItem.column" nillable="true"/>
+        <xs:element name="index" type="t_document.columns.columnsItem.index" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.columns.columnsItem.column" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.columns.columnsItem.column; встречено: 31945</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="formatIndex" type="t_document.columns.columnsItem.column.formatIndex" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.columns.columnsItem.column.formatIndex">
+    <xs:annotation>
+      <xs:documentation>путь: document.columns.columnsItem.column.formatIndex; встречено: 31945</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.columns.columnsItem.index">
+    <xs:annotation>
+      <xs:documentation>путь: document.columns.columnsItem.index; встречено: 31945</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.columns.formatIndex">
+    <xs:annotation>
+      <xs:documentation>путь: document.columns.formatIndex; встречено: 63</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.columns.id">
+    <xs:annotation>
+      <xs:documentation>путь: document.columns.id; встречено: 965</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.columns.size">
+    <xs:annotation>
+      <xs:documentation>путь: document.columns.size; встречено: 1572</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.defaultFormatIndex">
+    <xs:annotation>
+      <xs:documentation>путь: document.defaultFormatIndex; встречено: 549</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="autoSize" type="t_document.drawing.autoSize" nillable="true"/>
+        <xs:element name="beginColumn" type="t_document.drawing.beginColumn" nillable="true"/>
+        <xs:element name="beginColumnOffset" type="t_document.drawing.beginColumnOffset" nillable="true"/>
+        <xs:element name="beginRow" type="t_document.drawing.beginRow" nillable="true"/>
+        <xs:element name="beginRowOffset" type="t_document.drawing.beginRowOffset" nillable="true"/>
+        <xs:element name="detailParameter" type="t_document.drawing.detailParameter" nillable="true"/>
+        <xs:element name="drawingType" type="t_document.drawing.drawingType" nillable="true"/>
+        <xs:element name="endColumn" type="t_document.drawing.endColumn" nillable="true"/>
+        <xs:element name="endColumnOffset" type="t_document.drawing.endColumnOffset" nillable="true"/>
+        <xs:element name="endRow" type="t_document.drawing.endRow" nillable="true"/>
+        <xs:element name="endRowOffset" type="t_document.drawing.endRowOffset" nillable="true"/>
+        <xs:element name="formatIndex" type="t_document.drawing.formatIndex" nillable="true"/>
+        <xs:element name="id" type="t_document.drawing.id" nillable="true"/>
+        <xs:element name="object" type="xs:anyType" nillable="true"/>
+        <xs:element name="parameter" type="t_document.drawing.parameter" nillable="true"/>
+        <xs:element name="pictureIndex" type="t_document.drawing.pictureIndex" nillable="true"/>
+        <xs:element name="pictureSize" type="t_document.drawing.pictureSize" nillable="true"/>
+        <xs:element name="text" type="t_document.drawing.text" nillable="true"/>
+        <xs:element name="value" type="xs:anyType" nillable="true"/>
+        <xs:element name="zOrder" type="t_document.drawing.zOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.autoSize">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.autoSize; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.beginColumn">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.beginColumn; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.beginColumnOffset">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.beginColumnOffset; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.beginRow">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.beginRow; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.beginRowOffset">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.beginRowOffset; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.detailParameter">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.detailParameter; встречено: 33</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.drawingType">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.drawingType; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.endColumn">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.endColumn; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.endColumnOffset">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.endColumnOffset; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.endRow">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.endRow; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.endRowOffset">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.endRowOffset; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.formatIndex">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.formatIndex; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.id">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.id; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.object" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.object; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.2/data/chart}animation, {http://v8.1c.ru/8.2/data/chart}autoFullInterval, {http://v8.1c.ru/8.2/data/chart}autoMaxValue, {http://v8.1c.ru/8.2/data/chart}autoMinValue, {http://v8.1c.ru/8.2/data/chart}autoTransposition, {http://v8.1c.ru/8.2/data/chart}backIntervals … -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.parameter">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.parameter; встречено: 35</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.pictureIndex">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.pictureIndex; встречено: 512</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.pictureSize">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.pictureSize; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.text" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.text; встречено: 55</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.value">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.value; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.drawing.zOrder">
+    <xs:annotation>
+      <xs:documentation>путь: document.drawing.zOrder; встречено: 632</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.font">
+    <xs:annotation>
+      <xs:documentation>путь: document.font; встречено: 2745</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bold" type="xs:string"/>
+        <xs:attribute name="faceName" type="xs:string"/>
+        <xs:attribute name="height" type="xs:string"/>
+        <xs:attribute name="italic" type="xs:string"/>
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:attribute name="scale" type="xs:string"/>
+        <xs:attribute name="strikeout" type="xs:string"/>
+        <xs:attribute name="underline" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.format; встречено: 49618</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="autoIndent" type="t_document.format.autoIndent" nillable="true"/>
+        <xs:element name="autoMarkIncomplete" type="t_document.format.autoMarkIncomplete" nillable="true"/>
+        <xs:element name="autoWidthCalculation" type="t_document.format.autoWidthCalculation" nillable="true"/>
+        <xs:element name="backColor" type="t_document.format.backColor" nillable="true"/>
+        <xs:element name="border" type="t_document.format.border" nillable="true"/>
+        <xs:element name="borderColor" type="t_document.format.borderColor" nillable="true"/>
+        <xs:element name="bottomBorder" type="t_document.format.bottomBorder" nillable="true"/>
+        <xs:element name="bottomMargin" type="t_document.format.bottomMargin" nillable="true"/>
+        <xs:element name="bySelectedColumns" type="t_document.format.bySelectedColumns" nillable="true"/>
+        <xs:element name="columnSizeChange" type="t_document.format.columnSizeChange" nillable="true"/>
+        <xs:element name="containsValue" type="t_document.format.containsValue" nillable="true"/>
+        <xs:element name="controlType" type="t_document.format.controlType" nillable="true"/>
+        <xs:element name="detailsUse" type="t_document.format.detailsUse" nillable="true"/>
+        <xs:element name="drawingBorder" type="t_document.format.drawingBorder" nillable="true"/>
+        <xs:element name="drawingHaveBottomBorder" type="t_document.format.drawingHaveBottomBorder" nillable="true"/>
+        <xs:element name="drawingHaveLeftBorder" type="t_document.format.drawingHaveLeftBorder" nillable="true"/>
+        <xs:element name="drawingHaveRightBorder" type="t_document.format.drawingHaveRightBorder" nillable="true"/>
+        <xs:element name="drawingHaveTopBorder" type="t_document.format.drawingHaveTopBorder" nillable="true"/>
+        <xs:element name="editFormat" type="t_document.format.editFormat" nillable="true"/>
+        <xs:element name="fillType" type="t_document.format.fillType" nillable="true"/>
+        <xs:element name="font" type="t_document.format.font" nillable="true"/>
+        <xs:element name="format" type="t_document.format" nillable="true"/>
+        <xs:element name="height" type="t_document.format.height" nillable="true"/>
+        <xs:element name="hidden" type="t_document.format.hidden" nillable="true"/>
+        <xs:element name="horizontalAlignment" type="t_document.format.horizontalAlignment" nillable="true"/>
+        <xs:element name="hyperLink" type="t_document.format.hyperLink" nillable="true"/>
+        <xs:element name="indent" type="t_document.format.indent" nillable="true"/>
+        <xs:element name="leftBorder" type="t_document.format.leftBorder" nillable="true"/>
+        <xs:element name="leftMargin" type="t_document.format.leftMargin" nillable="true"/>
+        <xs:element name="markIncomplete" type="t_document.format.markIncomplete" nillable="true"/>
+        <xs:element name="markNegatives" type="t_document.format.markNegatives" nillable="true"/>
+        <xs:element name="mask" type="t_document.format.mask" nillable="true"/>
+        <xs:element name="pattern" type="t_document.format.pattern" nillable="true"/>
+        <xs:element name="patternColor" type="t_document.format.patternColor" nillable="true"/>
+        <xs:element name="picHorizontalAlignment" type="t_document.format.picHorizontalAlignment" nillable="true"/>
+        <xs:element name="picIndex" type="t_document.format.picIndex" nillable="true"/>
+        <xs:element name="picVerticalAlignment" type="t_document.format.picVerticalAlignment" nillable="true"/>
+        <xs:element name="pictureSizeMode" type="t_document.format.pictureSizeMode" nillable="true"/>
+        <xs:element name="print" type="t_document.format.print" nillable="true"/>
+        <xs:element name="protection" type="t_document.format.protection" nillable="true"/>
+        <xs:element name="rightBorder" type="t_document.format.rightBorder" nillable="true"/>
+        <xs:element name="rightMargin" type="t_document.format.rightMargin" nillable="true"/>
+        <xs:element name="textColor" type="t_document.format.textColor" nillable="true"/>
+        <xs:element name="textOrientation" type="t_document.format.textOrientation" nillable="true"/>
+        <xs:element name="textPlacement" type="t_document.format.textPlacement" nillable="true"/>
+        <xs:element name="textPosition" type="t_document.format.textPosition" nillable="true"/>
+        <xs:element name="topBorder" type="t_document.format.topBorder" nillable="true"/>
+        <xs:element name="topMargin" type="t_document.format.topMargin" nillable="true"/>
+        <xs:element name="valueType" type="t_document.format.valueType" nillable="true"/>
+        <xs:element name="verticalAlignment" type="t_document.format.verticalAlignment" nillable="true"/>
+        <xs:element name="width" type="t_document.format.width" nillable="true"/>
+        <xs:element name="widthWeightFactor" type="t_document.format.widthWeightFactor" nillable="true"/>
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.autoIndent">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.autoIndent; встречено: 168</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.autoMarkIncomplete">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.autoMarkIncomplete; встречено: 109</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.autoWidthCalculation">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.autoWidthCalculation; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.backColor">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.backColor; встречено: 3244</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.border">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.border; встречено: 5553</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.borderColor">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.borderColor; встречено: 2446</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.bottomBorder">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.bottomBorder; встречено: 9187</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.bottomMargin">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.bottomMargin; встречено: 60</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.bySelectedColumns">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.bySelectedColumns; встречено: 1968</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.columnSizeChange">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.columnSizeChange; встречено: 213</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.containsValue">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.containsValue; встречено: 287</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.controlType">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.controlType; встречено: 275</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.detailsUse">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.detailsUse; встречено: 492</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.drawingBorder">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.drawingBorder; встречено: 283</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.drawingHaveBottomBorder">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.drawingHaveBottomBorder; встречено: 19</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.drawingHaveLeftBorder">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.drawingHaveLeftBorder; встречено: 19</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.drawingHaveRightBorder">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.drawingHaveRightBorder; встречено: 19</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.drawingHaveTopBorder">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.drawingHaveTopBorder; встречено: 19</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.editFormat" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.editFormat; встречено: 892</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.fillType">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.fillType; встречено: 9878</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.font">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.font; встречено: 23270</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.height">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.height; встречено: 11281</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.hidden">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.hidden; встречено: 540</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.horizontalAlignment">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.horizontalAlignment; встречено: 16096</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.hyperLink">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.hyperLink; встречено: 273</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.indent">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.indent; встречено: 587</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.leftBorder">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.leftBorder; встречено: 7658</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.leftMargin">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.leftMargin; встречено: 102</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.markIncomplete">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.markIncomplete; встречено: 60</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.markNegatives">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.markNegatives; встречено: 390</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.mask" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.mask; встречено: 959</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.pattern">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.pattern; встречено: 123</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.patternColor">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.patternColor; встречено: 15</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.picHorizontalAlignment">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.picHorizontalAlignment; встречено: 92</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.picIndex">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.picIndex; встречено: 60</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.picVerticalAlignment">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.picVerticalAlignment; встречено: 92</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.pictureSizeMode">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.pictureSizeMode; встречено: 98</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.print">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.print; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.protection">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.protection; встречено: 1080</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.rightBorder">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.rightBorder; встречено: 5829</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.rightMargin">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.rightMargin; встречено: 60</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.textColor">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.textColor; встречено: 3178</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.textOrientation">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.textOrientation; встречено: 98</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.textPlacement">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.textPlacement; встречено: 13875</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.textPosition">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.textPosition; встречено: 79</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.topBorder">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.topBorder; встречено: 7934</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.topMargin">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.topMargin; встречено: 60</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.valueType" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.valueType; встречено: 283</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}DateQualifiers, {http://v8.1c.ru/8.1/data/core}NumberQualifiers, {http://v8.1c.ru/8.1/data/core}StringQualifiers, {http://v8.1c.ru/8.1/data/core}Type, {http://v8.1c.ru/8.1/data/core}TypeId -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.verticalAlignment">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.verticalAlignment; встречено: 17167</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.width">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.width; встречено: 34415</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.format.widthWeightFactor">
+    <xs:annotation>
+      <xs:documentation>путь: document.format.widthWeightFactor; встречено: 125</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.groupsBackColor">
+    <xs:annotation>
+      <xs:documentation>путь: document.groupsBackColor; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.groupsColor">
+    <xs:annotation>
+      <xs:documentation>путь: document.groupsColor; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.headersBackColor">
+    <xs:annotation>
+      <xs:documentation>путь: document.headersBackColor; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.headersColor">
+    <xs:annotation>
+      <xs:documentation>путь: document.headersColor; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.height">
+    <xs:annotation>
+      <xs:documentation>путь: document.height; встречено: 605</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.horizontalUnmerge" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.horizontalUnmerge; встречено: 162</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="c" type="t_document.horizontalUnmerge.c" nillable="true"/>
+        <xs:element name="h" type="t_document.horizontalUnmerge.h" nillable="true"/>
+        <xs:element name="r" type="t_document.horizontalUnmerge.r" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.horizontalUnmerge.c">
+    <xs:annotation>
+      <xs:documentation>путь: document.horizontalUnmerge.c; встречено: 162</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.horizontalUnmerge.h">
+    <xs:annotation>
+      <xs:documentation>путь: document.horizontalUnmerge.h; встречено: 162</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.horizontalUnmerge.r">
+    <xs:annotation>
+      <xs:documentation>путь: document.horizontalUnmerge.r; встречено: 162</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.languageSettings" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.languageSettings; встречено: 607</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="currentLanguage" type="t_document.languageSettings.currentLanguage" nillable="true"/>
+        <xs:element name="defaultLanguage" type="t_document.languageSettings.defaultLanguage" nillable="true"/>
+        <xs:element name="languageInfo" type="t_document.languageSettings.languageInfo" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.languageSettings.currentLanguage">
+    <xs:annotation>
+      <xs:documentation>путь: document.languageSettings.currentLanguage; встречено: 607</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.languageSettings.defaultLanguage">
+    <xs:annotation>
+      <xs:documentation>путь: document.languageSettings.defaultLanguage; встречено: 607</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.languageSettings.languageInfo" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.languageSettings.languageInfo; встречено: 727</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="code" type="t_document.languageSettings.languageInfo.code" nillable="true"/>
+        <xs:element name="description" type="t_document.languageSettings.languageInfo.description" nillable="true"/>
+        <xs:element name="id" type="t_document.languageSettings.languageInfo.id" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.languageSettings.languageInfo.code">
+    <xs:annotation>
+      <xs:documentation>путь: document.languageSettings.languageInfo.code; встречено: 727</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.languageSettings.languageInfo.description">
+    <xs:annotation>
+      <xs:documentation>путь: document.languageSettings.languageInfo.description; встречено: 727</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.languageSettings.languageInfo.id">
+    <xs:annotation>
+      <xs:documentation>путь: document.languageSettings.languageInfo.id; встречено: 727</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.leftFooter" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.leftFooter; встречено: 68</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="f" type="t_document.leftFooter.f" nillable="true"/>
+        <xs:element name="tfl" type="t_document.leftFooter.tfl" nillable="true"/>
+        <xs:element name="tl" type="t_document.leftFooter.tl" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.leftFooter.f">
+    <xs:annotation>
+      <xs:documentation>путь: document.leftFooter.f; встречено: 68</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.leftFooter.tfl" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.leftFooter.tfl; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.leftFooter.tl" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.leftFooter.tl; встречено: 6</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.leftHeader" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.leftHeader; встречено: 68</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="f" type="t_document.leftHeader.f" nillable="true"/>
+        <xs:element name="tfl" type="t_document.leftHeader.tfl" nillable="true"/>
+        <xs:element name="tl" type="t_document.leftHeader.tl" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.leftHeader.f">
+    <xs:annotation>
+      <xs:documentation>путь: document.leftHeader.f; встречено: 68</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.leftHeader.tfl" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.leftHeader.tfl; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.leftHeader.tl" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.leftHeader.tl; встречено: 6</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.line" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.line; встречено: 1347</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.merge" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.merge; встречено: 19169</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="c" type="t_document.merge.c" nillable="true"/>
+        <xs:element name="columnsID" type="t_document.merge.columnsID" nillable="true"/>
+        <xs:element name="h" type="t_document.merge.h" nillable="true"/>
+        <xs:element name="r" type="t_document.merge.r" nillable="true"/>
+        <xs:element name="w" type="t_document.merge.w" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.merge.c">
+    <xs:annotation>
+      <xs:documentation>путь: document.merge.c; встречено: 19169</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.merge.columnsID">
+    <xs:annotation>
+      <xs:documentation>путь: document.merge.columnsID; встречено: 253</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.merge.h">
+    <xs:annotation>
+      <xs:documentation>путь: document.merge.h; встречено: 3768</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.merge.r">
+    <xs:annotation>
+      <xs:documentation>путь: document.merge.r; встречено: 19169</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.merge.w">
+    <xs:annotation>
+      <xs:documentation>путь: document.merge.w; встречено: 17262</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.namedItem" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.namedItem; встречено: 7277</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="area" type="t_document.namedItem.area" nillable="true"/>
+        <xs:element name="drawingID" type="t_document.namedItem.drawingID" nillable="true"/>
+        <xs:element name="name" type="t_document.namedItem.name" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.namedItem.area" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.namedItem.area; встречено: 6891</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="beginColumn" type="t_document.namedItem.area.beginColumn" nillable="true"/>
+        <xs:element name="beginRow" type="t_document.namedItem.area.beginRow" nillable="true"/>
+        <xs:element name="columnsID" type="t_document.namedItem.area.columnsID" nillable="true"/>
+        <xs:element name="endColumn" type="t_document.namedItem.area.endColumn" nillable="true"/>
+        <xs:element name="endRow" type="t_document.namedItem.area.endRow" nillable="true"/>
+        <xs:element name="type" type="t_document.namedItem.area.type" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.namedItem.area.beginColumn">
+    <xs:annotation>
+      <xs:documentation>путь: document.namedItem.area.beginColumn; встречено: 6891</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.namedItem.area.beginRow">
+    <xs:annotation>
+      <xs:documentation>путь: document.namedItem.area.beginRow; встречено: 6891</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.namedItem.area.columnsID">
+    <xs:annotation>
+      <xs:documentation>путь: document.namedItem.area.columnsID; встречено: 2477</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.namedItem.area.endColumn">
+    <xs:annotation>
+      <xs:documentation>путь: document.namedItem.area.endColumn; встречено: 6891</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.namedItem.area.endRow">
+    <xs:annotation>
+      <xs:documentation>путь: document.namedItem.area.endRow; встречено: 6891</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.namedItem.area.type">
+    <xs:annotation>
+      <xs:documentation>путь: document.namedItem.area.type; встречено: 6891</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.namedItem.drawingID">
+    <xs:annotation>
+      <xs:documentation>путь: document.namedItem.drawingID; встречено: 386</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.namedItem.name">
+    <xs:annotation>
+      <xs:documentation>путь: document.namedItem.name; встречено: 7277</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.picture" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.picture; встречено: 782</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="index" type="t_document.picture.index" nillable="true"/>
+        <xs:element name="picture" type="t_document.picture" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="ref" type="xs:string"/>
+    <xs:attribute name="t" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.picture.index">
+    <xs:annotation>
+      <xs:documentation>путь: document.picture.index; встречено: 391</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printArea" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.printArea; встречено: 70</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="beginColumn" type="t_document.printArea.beginColumn" nillable="true"/>
+        <xs:element name="beginRow" type="t_document.printArea.beginRow" nillable="true"/>
+        <xs:element name="columnsID" type="t_document.printArea.columnsID" nillable="true"/>
+        <xs:element name="endColumn" type="t_document.printArea.endColumn" nillable="true"/>
+        <xs:element name="endRow" type="t_document.printArea.endRow" nillable="true"/>
+        <xs:element name="type" type="t_document.printArea.type" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printArea.beginColumn">
+    <xs:annotation>
+      <xs:documentation>путь: document.printArea.beginColumn; встречено: 70</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printArea.beginRow">
+    <xs:annotation>
+      <xs:documentation>путь: document.printArea.beginRow; встречено: 70</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printArea.columnsID">
+    <xs:annotation>
+      <xs:documentation>путь: document.printArea.columnsID; встречено: 1</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printArea.endColumn">
+    <xs:annotation>
+      <xs:documentation>путь: document.printArea.endColumn; встречено: 70</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printArea.endRow">
+    <xs:annotation>
+      <xs:documentation>путь: document.printArea.endRow; встречено: 70</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printArea.type">
+    <xs:annotation>
+      <xs:documentation>путь: document.printArea.type; встречено: 70</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings; встречено: 121</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="blackAndWhite" type="t_document.printSettings.blackAndWhite" nillable="true"/>
+        <xs:element name="bottomMargin" type="t_document.printSettings.bottomMargin" nillable="true"/>
+        <xs:element name="collate" type="t_document.printSettings.collate" nillable="true"/>
+        <xs:element name="copies" type="t_document.printSettings.copies" nillable="true"/>
+        <xs:element name="duplexType" type="t_document.printSettings.duplexType" nillable="true"/>
+        <xs:element name="fitToPage" type="t_document.printSettings.fitToPage" nillable="true"/>
+        <xs:element name="footerSize" type="t_document.printSettings.footerSize" nillable="true"/>
+        <xs:element name="headerSize" type="t_document.printSettings.headerSize" nillable="true"/>
+        <xs:element name="leftMargin" type="t_document.printSettings.leftMargin" nillable="true"/>
+        <xs:element name="pageHeight" type="t_document.printSettings.pageHeight" nillable="true"/>
+        <xs:element name="pageOrientation" type="t_document.printSettings.pageOrientation" nillable="true"/>
+        <xs:element name="pagePlacementAlternation" type="t_document.printSettings.pagePlacementAlternation" nillable="true"/>
+        <xs:element name="pageWidth" type="t_document.printSettings.pageWidth" nillable="true"/>
+        <xs:element name="paper" type="t_document.printSettings.paper" nillable="true"/>
+        <xs:element name="paperSource" type="t_document.printSettings.paperSource" nillable="true"/>
+        <xs:element name="perPage" type="t_document.printSettings.perPage" nillable="true"/>
+        <xs:element name="printerName" type="t_document.printSettings.printerName" nillable="true"/>
+        <xs:element name="rightMargin" type="t_document.printSettings.rightMargin" nillable="true"/>
+        <xs:element name="scale" type="t_document.printSettings.scale" nillable="true"/>
+        <xs:element name="topMargin" type="t_document.printSettings.topMargin" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.blackAndWhite">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.blackAndWhite; встречено: 109</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.bottomMargin">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.bottomMargin; встречено: 121</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.collate">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.collate; встречено: 118</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.copies">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.copies; встречено: 118</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.duplexType">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.duplexType; встречено: 50</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.fitToPage">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.fitToPage; встречено: 109</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.footerSize">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.footerSize; встречено: 121</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.headerSize">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.headerSize; встречено: 121</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.leftMargin">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.leftMargin; встречено: 121</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.pageHeight">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.pageHeight; встречено: 109</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.pageOrientation">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.pageOrientation; встречено: 119</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.pagePlacementAlternation">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.pagePlacementAlternation; встречено: 50</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.pageWidth">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.pageWidth; встречено: 109</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.paper">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.paper; встречено: 118</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.paperSource">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.paperSource; встречено: 118</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.perPage">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.perPage; встречено: 112</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.printerName">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.printerName; встречено: 106</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.rightMargin">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.rightMargin; встречено: 121</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.scale">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.scale; встречено: 112</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.printSettings.topMargin">
+    <xs:annotation>
+      <xs:documentation>путь: document.printSettings.topMargin; встречено: 121</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rightFooter" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.rightFooter; встречено: 43</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="f" type="t_document.rightFooter.f" nillable="true"/>
+        <xs:element name="tfl" type="t_document.rightFooter.tfl" nillable="true"/>
+        <xs:element name="tl" type="t_document.rightFooter.tl" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rightFooter.f">
+    <xs:annotation>
+      <xs:documentation>путь: document.rightFooter.f; встречено: 43</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rightFooter.tfl">
+    <xs:annotation>
+      <xs:documentation>путь: document.rightFooter.tfl; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rightFooter.tl">
+    <xs:annotation>
+      <xs:documentation>путь: document.rightFooter.tl; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rightHeader" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.rightHeader; встречено: 43</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="f" type="t_document.rightHeader.f" nillable="true"/>
+        <xs:element name="tfl" type="t_document.rightHeader.tfl" nillable="true"/>
+        <xs:element name="tl" type="t_document.rightHeader.tl" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rightHeader.f">
+    <xs:annotation>
+      <xs:documentation>путь: document.rightHeader.f; встречено: 43</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rightHeader.tfl">
+    <xs:annotation>
+      <xs:documentation>путь: document.rightHeader.tfl; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rightHeader.tl">
+    <xs:annotation>
+      <xs:documentation>путь: document.rightHeader.tl; встречено: 4</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem; встречено: 76416</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="index" type="t_document.rowsItem.index" nillable="true"/>
+        <xs:element name="indexTo" type="t_document.rowsItem.indexTo" nillable="true"/>
+        <xs:element name="row" type="t_document.rowsItem.row" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.index">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.index; встречено: 76416</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.indexTo">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.indexTo; встречено: 296</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row; встречено: 76416</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="c" type="t_document.rowsItem.row.c" nillable="true"/>
+        <xs:element name="columnsID" type="t_document.rowsItem.row.columnsID" nillable="true"/>
+        <xs:element name="empty" type="t_document.rowsItem.row.empty" nillable="true"/>
+        <xs:element name="formatIndex" type="t_document.rowsItem.row.formatIndex" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c; встречено: 4312604</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="c" type="t_document.rowsItem.row.c" nillable="true"/>
+        <xs:element name="control" type="xs:anyType" nillable="true"/>
+        <xs:element name="d" type="xs:anyType" nillable="true"/>
+        <xs:element name="detailParameter" type="t_document.rowsItem.row.c.detailParameter" nillable="true"/>
+        <xs:element name="f" type="t_document.rowsItem.row.c.f" nillable="true"/>
+        <xs:element name="i" type="t_document.rowsItem.row.c.i" nillable="true"/>
+        <xs:element name="note" type="t_document.rowsItem.row.c.note" nillable="true"/>
+        <xs:element name="parameter" type="t_document.rowsItem.row.c.parameter" nillable="true"/>
+        <xs:element name="pictureParameter" type="t_document.rowsItem.row.c.pictureParameter" nillable="true"/>
+        <xs:element name="tl" type="t_document.rowsItem.row.c.tl" nillable="true"/>
+        <xs:element name="v" type="xs:anyType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.control">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.control; встречено: 22</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.d">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.d; встречено: 85</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.detailParameter">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.detailParameter; встречено: 6723</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.f">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.f; встречено: 2156302</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.i">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.i; встречено: 45187</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="autoSize" type="t_document.rowsItem.row.c.note.autoSize" nillable="true"/>
+        <xs:element name="beginColumn" type="t_document.rowsItem.row.c.note.beginColumn" nillable="true"/>
+        <xs:element name="beginColumnOffset" type="t_document.rowsItem.row.c.note.beginColumnOffset" nillable="true"/>
+        <xs:element name="beginRow" type="t_document.rowsItem.row.c.note.beginRow" nillable="true"/>
+        <xs:element name="beginRowOffset" type="t_document.rowsItem.row.c.note.beginRowOffset" nillable="true"/>
+        <xs:element name="drawingType" type="t_document.rowsItem.row.c.note.drawingType" nillable="true"/>
+        <xs:element name="endColumn" type="t_document.rowsItem.row.c.note.endColumn" nillable="true"/>
+        <xs:element name="endColumnOffset" type="t_document.rowsItem.row.c.note.endColumnOffset" nillable="true"/>
+        <xs:element name="endRow" type="t_document.rowsItem.row.c.note.endRow" nillable="true"/>
+        <xs:element name="endRowOffset" type="t_document.rowsItem.row.c.note.endRowOffset" nillable="true"/>
+        <xs:element name="formatIndex" type="t_document.rowsItem.row.c.note.formatIndex" nillable="true"/>
+        <xs:element name="id" type="t_document.rowsItem.row.c.note.id" nillable="true"/>
+        <xs:element name="pictureSize" type="t_document.rowsItem.row.c.note.pictureSize" nillable="true"/>
+        <xs:element name="text" type="t_document.rowsItem.row.c.note.text" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.autoSize">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.autoSize; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.beginColumn">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.beginColumn; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.beginColumnOffset">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.beginColumnOffset; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.beginRow">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.beginRow; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.beginRowOffset">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.beginRowOffset; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.drawingType">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.drawingType; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.endColumn">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.endColumn; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.endColumnOffset">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.endColumnOffset; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.endRow">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.endRow; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.endRowOffset">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.endRowOffset; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.formatIndex">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.formatIndex; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.id">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.id; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.pictureSize">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.pictureSize; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.note.text" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.note.text; встречено: 238</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.parameter">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.parameter; встречено: 17447</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.pictureParameter">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.pictureParameter; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.tl" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.tl; встречено: 238901</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.c.v">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.c.v; встречено: 34</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.columnsID">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.columnsID; встречено: 5792</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.empty">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.empty; встречено: 1781</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.rowsItem.row.formatIndex">
+    <xs:annotation>
+      <xs:documentation>путь: document.rowsItem.row.formatIndex; встречено: 32485</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.templateMode">
+    <xs:annotation>
+      <xs:documentation>путь: document.templateMode; встречено: 607</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.verticalUnmerge" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.verticalUnmerge; встречено: 3254</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="c" type="t_document.verticalUnmerge.c" nillable="true"/>
+        <xs:element name="r" type="t_document.verticalUnmerge.r" nillable="true"/>
+        <xs:element name="w" type="t_document.verticalUnmerge.w" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.verticalUnmerge.c">
+    <xs:annotation>
+      <xs:documentation>путь: document.verticalUnmerge.c; встречено: 3254</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.verticalUnmerge.r">
+    <xs:annotation>
+      <xs:documentation>путь: document.verticalUnmerge.r; встречено: 3254</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.verticalUnmerge.w">
+    <xs:annotation>
+      <xs:documentation>путь: document.verticalUnmerge.w; встречено: 3254</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.vg" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.vg; встречено: 2808</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="b" type="t_document.vg.b" nillable="true"/>
+        <xs:element name="e" type="t_document.vg.e" nillable="true"/>
+        <xs:element name="o" type="t_document.vg.o" nillable="true"/>
+        <xs:element name="t" type="t_document.vg.t" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.vg.b">
+    <xs:annotation>
+      <xs:documentation>путь: document.vg.b; встречено: 2808</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.vg.e">
+    <xs:annotation>
+      <xs:documentation>путь: document.vg.e; встречено: 2586</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.vg.o">
+    <xs:annotation>
+      <xs:documentation>путь: document.vg.o; встречено: 1219</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.vg.t" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: document.vg.t; встречено: 111</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.vgLevels">
+    <xs:annotation>
+      <xs:documentation>путь: document.vgLevels; встречено: 74</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_document.vgRows">
+    <xs:annotation>
+      <xs:documentation>путь: document.vgRows; встречено: 607</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+</xs:schema>

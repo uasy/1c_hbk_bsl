@@ -1,0 +1,17 @@
+{
+  "$schema_version": "2.20",
+  "kind": "Subsystem",
+  "children_external": {
+    "ChildObjects/Subsystem": {
+      "folder": "Subsystems"
+    }
+  },
+  "node_files": {
+    "Ext/CommandInterface.xml": {
+      "parser": "FileRefParser"
+    },
+    "Ext/Help.xml": {
+      "parser": "HelpParser"
+    }
+  }
+}

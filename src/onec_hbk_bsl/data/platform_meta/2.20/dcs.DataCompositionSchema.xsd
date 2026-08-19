@@ -1,0 +1,2367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Схема пространства имён http://v8.1c.ru/8.1/data-composition-system/schema
+  корневой элемент DataCompositionSchema, поколение выгрузки 2.20.
+
+  ВНИМАНИЕ: этот формат СВОЕГО атрибута version может не нести —
+  тогда поколение унаследовано от описателя-родителя и означает
+  «в выгрузке какого поколения файл наблюдался», а НЕ версию этого
+  формата.
+
+  ПОРОЖДЕНО из корпуса выгрузок, не является официальной схемой 1С.
+  Дата последнего пополнения: 2026-08-19
+
+  СХЕМА НАКАПЛИВАЕТСЯ. Прогон читает этот файл обратно в модель
+  наблюдений, объединяет с наблюдениями по новым выгрузкам и переписывает.
+  Прежние выгрузки для этого не нужны: источником прежних наблюдений
+  служит сама схема. Ранее записанное не удаляется; прогон, ничего не
+  добавивший, файла не меняет.
+
+  ХАРАКТЕР АРТЕФАКТА — ОПИСАТЕЛЬНЫЙ, НЕ НОРМАТИВНЫЙ.
+  Схема фиксирует то, что встретилось в корпусе, а не то, что допускает
+  формат. Модель содержимого намеренно разрешительная (xs:choice без
+  порядка и кратностей). Применение:
+    можно  — находить поля, обнаруживать незнакомые элементы;
+    нельзя — отбраковывать файлы: законный, но не встретившийся в корпусе
+             элемент дал бы ложную ошибку.
+
+  Поддеревья чужих пространств имён (v8:, xr:, logform, DCS, predef…)
+  не раскрываются — у них собственные артефакты; здесь xs:any.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://v8.1c.ru/8.1/data-composition-system/schema"
+           targetNamespace="http://v8.1c.ru/8.1/data-composition-system/schema"
+           elementFormDefault="qualified">
+
+  <!-- Схема НЕ самодостаточна: экземпляры ссылаются через xsi:type
+       на типы чужих пространств имён. Заглушки этих типов порождаются
+       рядом; настоящие определения — за пределами этого артефакта
+       (у каждого пространства будет свой). -->
+  <xs:import namespace="http://v8.1c.ru/8.1/data-composition-system/area-template" schemaLocation="stubs/v8.1c.ru_8.1_data-composition-system_area-template.xsd"/>
+  <xs:import namespace="http://v8.1c.ru/8.1/data-composition-system/core" schemaLocation="stubs/v8.1c.ru_8.1_data-composition-system_core.xsd"/>
+  <xs:import namespace="http://v8.1c.ru/8.1/data/core" schemaLocation="stubs/v8.1c.ru_8.1_data_core.xsd"/>
+  <xs:import namespace="http://v8.1c.ru/8.1/data/enterprise" schemaLocation="stubs/v8.1c.ru_8.1_data_enterprise.xsd"/>
+
+  <xs:element name="DataCompositionSchema" type="t_DataCompositionSchema" nillable="true"/>
+
+  <!-- Типы своего пространства, названные через xsi:type. Импортировать
+       собственный targetNamespace нельзя, поэтому объявлены здесь. -->
+  <xs:complexType name="DataSetFieldField" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+  <xs:complexType name="DataSetFieldFolder" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+  <xs:complexType name="DataSetFieldNestedDataSet" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+  <xs:complexType name="DataSetObject" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+  <xs:complexType name="DataSetQuery" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+  <xs:complexType name="DataSetUnion" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="calculatedField" type="t_DataCompositionSchema.calculatedField" nillable="true"/>
+        <xs:element name="dataSet" type="xs:anyType" nillable="true"/>
+        <xs:element name="dataSetLink" type="t_DataCompositionSchema.dataSetLink" nillable="true"/>
+        <xs:element name="dataSource" type="t_DataCompositionSchema.dataSource" nillable="true"/>
+        <xs:element name="fieldTemplate" type="t_DataCompositionSchema.fieldTemplate" nillable="true"/>
+        <xs:element name="groupHeaderTemplate" type="t_DataCompositionSchema.groupHeaderTemplate" nillable="true"/>
+        <xs:element name="groupTemplate" type="t_DataCompositionSchema.groupTemplate" nillable="true"/>
+        <xs:element name="nestedSchema" type="t_DataCompositionSchema.nestedSchema" nillable="true"/>
+        <xs:element name="parameter" type="t_DataCompositionSchema.parameter" nillable="true"/>
+        <xs:element name="settingsVariant" type="t_DataCompositionSchema.settingsVariant" nillable="true"/>
+        <xs:element name="template" type="t_DataCompositionSchema.template" nillable="true"/>
+        <xs:element name="totalField" type="t_DataCompositionSchema.totalField" nillable="true"/>
+        <xs:element name="totalFieldsTemplate" type="t_DataCompositionSchema.totalFieldsTemplate" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="appearance" type="t_DataCompositionSchema.calculatedField.appearance" nillable="true"/>
+        <xs:element name="availableValue" type="t_DataCompositionSchema.calculatedField.availableValue" nillable="true"/>
+        <xs:element name="dataPath" type="t_DataCompositionSchema.calculatedField.dataPath" nillable="true"/>
+        <xs:element name="expression" type="t_DataCompositionSchema.calculatedField.expression" nillable="true"/>
+        <xs:element name="inputParameters" type="t_DataCompositionSchema.calculatedField.inputParameters" nillable="true"/>
+        <xs:element name="orderExpression" type="t_DataCompositionSchema.calculatedField.orderExpression" nillable="true"/>
+        <xs:element name="presentationExpression" type="t_DataCompositionSchema.calculatedField.presentationExpression" nillable="true"/>
+        <xs:element name="title" type="xs:anyType" nillable="true"/>
+        <xs:element name="useRestriction" type="t_DataCompositionSchema.calculatedField.useRestriction" nillable="true"/>
+        <xs:element name="valueType" type="t_DataCompositionSchema.calculatedField.valueType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField.appearance" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField.appearance</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField.availableValue" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField.availableValue</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="presentation" type="xs:anyType" nillable="true"/>
+        <xs:element name="value" type="xs:anyType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField.dataPath">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField.dataPath</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField.expression">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField.expression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField.inputParameters" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField.inputParameters</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField.orderExpression" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField.orderExpression</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/common}autoOrder, {http://v8.1c.ru/8.1/data-composition-system/common}expression, {http://v8.1c.ru/8.1/data-composition-system/common}orderType -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField.presentationExpression">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField.presentationExpression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField.title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField.title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField.useRestriction" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField.useRestriction</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="condition" type="t_calculatedField.useRestriction.condition" nillable="true"/>
+        <xs:element name="field" type="t_calculatedField.useRestriction.field" nillable="true"/>
+        <xs:element name="group" type="t_calculatedField.useRestriction.group" nillable="true"/>
+        <xs:element name="order" type="t_calculatedField.useRestriction.order" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.calculatedField.valueType" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.calculatedField.valueType</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}DateQualifiers, {http://v8.1c.ru/8.1/data/core}NumberQualifiers, {http://v8.1c.ru/8.1/data/core}StringQualifiers, {http://v8.1c.ru/8.1/data/core}Type, {http://v8.1c.ru/8.1/data/core}TypeSet -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSet" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSet</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="autoFillFields" type="t_DataCompositionSchema.dataSet.autoFillFields" nillable="true"/>
+        <xs:element name="dataSource" type="t_DataCompositionSchema.dataSet.dataSource" nillable="true"/>
+        <xs:element name="field" type="xs:anyType" nillable="true"/>
+        <xs:element name="item" type="xs:anyType" nillable="true"/>
+        <xs:element name="name" type="t_DataCompositionSchema.dataSet.name" nillable="true"/>
+        <xs:element name="objectName" type="t_DataCompositionSchema.dataSet.objectName" nillable="true"/>
+        <xs:element name="query" type="t_DataCompositionSchema.dataSet.query" nillable="true"/>
+        <xs:element name="useQueryGroupIfPossible" type="t_DataCompositionSchema.dataSet.useQueryGroupIfPossible" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSet.autoFillFields">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSet.autoFillFields</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSet.dataSource">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSet.dataSource</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSet.field" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSet.field</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="appearance" type="t_dataSet.field.appearance" nillable="true"/>
+        <xs:element name="attributeUseRestriction" type="t_dataSet.field.attributeUseRestriction" nillable="true"/>
+        <xs:element name="availableValue" type="t_dataSet.field.availableValue" nillable="true"/>
+        <xs:element name="dataPath" type="t_dataSet.field.dataPath" nillable="true"/>
+        <xs:element name="field" type="t_dataSet.field.field" nillable="true"/>
+        <xs:element name="inHierarchyDataSet" type="t_dataSet.field.inHierarchyDataSet" nillable="true"/>
+        <xs:element name="inHierarchyDataSetParameter" type="t_dataSet.field.inHierarchyDataSetParameter" nillable="true"/>
+        <xs:element name="inputParameters" type="t_dataSet.field.inputParameters" nillable="true"/>
+        <xs:element name="orderExpression" type="t_dataSet.field.orderExpression" nillable="true"/>
+        <xs:element name="presentationExpression" type="t_dataSet.field.presentationExpression" nillable="true"/>
+        <xs:element name="role" type="t_dataSet.field.role" nillable="true"/>
+        <xs:element name="title" type="xs:anyType" nillable="true"/>
+        <xs:element name="useRestriction" type="t_dataSet.field.useRestriction" nillable="true"/>
+        <xs:element name="valueType" type="t_dataSet.field.valueType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSet.item" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSet.item</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="autoFillFields" type="t_dataSet.item.autoFillFields" nillable="true"/>
+        <xs:element name="dataSource" type="t_dataSet.item.dataSource" nillable="true"/>
+        <xs:element name="field" type="xs:anyType" nillable="true"/>
+        <xs:element name="item" type="xs:anyType" nillable="true"/>
+        <xs:element name="name" type="t_dataSet.item.name" nillable="true"/>
+        <xs:element name="objectName" type="t_dataSet.item.objectName" nillable="true"/>
+        <xs:element name="query" type="t_dataSet.item.query" nillable="true"/>
+        <xs:element name="useQueryGroupIfPossible" type="t_dataSet.item.useQueryGroupIfPossible" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSet.name">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSet.name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSet.objectName">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSet.objectName</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSet.query">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSet.query</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSet.useQueryGroupIfPossible">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSet.useQueryGroupIfPossible</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSetLink" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSetLink</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="destinationDataSet" type="t_DataCompositionSchema.dataSetLink.destinationDataSet" nillable="true"/>
+        <xs:element name="destinationExpression" type="t_DataCompositionSchema.dataSetLink.destinationExpression" nillable="true"/>
+        <xs:element name="linkConditionExpression" type="t_DataCompositionSchema.dataSetLink.linkConditionExpression" nillable="true"/>
+        <xs:element name="parameter" type="t_DataCompositionSchema.dataSetLink.parameter" nillable="true"/>
+        <xs:element name="parameterListAllowed" type="t_DataCompositionSchema.dataSetLink.parameterListAllowed" nillable="true"/>
+        <xs:element name="required" type="t_DataCompositionSchema.dataSetLink.required" nillable="true"/>
+        <xs:element name="sourceDataSet" type="t_DataCompositionSchema.dataSetLink.sourceDataSet" nillable="true"/>
+        <xs:element name="sourceExpression" type="t_DataCompositionSchema.dataSetLink.sourceExpression" nillable="true"/>
+        <xs:element name="startExpression" type="t_DataCompositionSchema.dataSetLink.startExpression" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSetLink.destinationDataSet">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSetLink.destinationDataSet</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSetLink.destinationExpression">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSetLink.destinationExpression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSetLink.linkConditionExpression">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSetLink.linkConditionExpression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSetLink.parameter">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSetLink.parameter</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSetLink.parameterListAllowed">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSetLink.parameterListAllowed</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSetLink.required">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSetLink.required</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSetLink.sourceDataSet">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSetLink.sourceDataSet</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSetLink.sourceExpression">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSetLink.sourceExpression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSetLink.startExpression">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSetLink.startExpression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSource" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSource</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dataSourceType" type="t_DataCompositionSchema.dataSource.dataSourceType" nillable="true"/>
+        <xs:element name="name" type="t_DataCompositionSchema.dataSource.name" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSource.dataSourceType">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSource.dataSourceType</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.dataSource.name">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.dataSource.name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.fieldTemplate" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.fieldTemplate</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="field" type="t_DataCompositionSchema.fieldTemplate.field" nillable="true"/>
+        <xs:element name="template" type="t_DataCompositionSchema.fieldTemplate.template" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.fieldTemplate.field">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.fieldTemplate.field</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.fieldTemplate.template">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.fieldTemplate.template</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.groupHeaderTemplate" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.groupHeaderTemplate</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="groupField" type="t_DataCompositionSchema.groupHeaderTemplate.groupField" nillable="true"/>
+        <xs:element name="groupName" type="t_DataCompositionSchema.groupHeaderTemplate.groupName" nillable="true"/>
+        <xs:element name="template" type="t_DataCompositionSchema.groupHeaderTemplate.template" nillable="true"/>
+        <xs:element name="templateType" type="t_DataCompositionSchema.groupHeaderTemplate.templateType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.groupHeaderTemplate.groupField">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.groupHeaderTemplate.groupField</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.groupHeaderTemplate.groupName">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.groupHeaderTemplate.groupName</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.groupHeaderTemplate.template">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.groupHeaderTemplate.template</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.groupHeaderTemplate.templateType">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.groupHeaderTemplate.templateType</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.groupTemplate" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.groupTemplate</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="groupField" type="t_DataCompositionSchema.groupTemplate.groupField" nillable="true"/>
+        <xs:element name="groupName" type="t_DataCompositionSchema.groupTemplate.groupName" nillable="true"/>
+        <xs:element name="template" type="t_DataCompositionSchema.groupTemplate.template" nillable="true"/>
+        <xs:element name="templateType" type="t_DataCompositionSchema.groupTemplate.templateType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.groupTemplate.groupField">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.groupTemplate.groupField</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.groupTemplate.groupName">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.groupTemplate.groupName</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.groupTemplate.template">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.groupTemplate.template</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.groupTemplate.templateType">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.groupTemplate.templateType</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.nestedSchema" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.nestedSchema</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="name" type="t_DataCompositionSchema.nestedSchema.name" nillable="true"/>
+        <xs:element name="schema" type="t_DataCompositionSchema.nestedSchema.schema" nillable="true"/>
+        <xs:element name="settings" type="t_DataCompositionSchema.nestedSchema.settings" nillable="true"/>
+        <xs:element name="title" type="xs:anyType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.nestedSchema.name">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.nestedSchema.name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.nestedSchema.schema" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.nestedSchema.schema</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="calculatedField" type="t_nestedSchema.schema.calculatedField" nillable="true"/>
+        <xs:element name="dataSet" type="xs:anyType" nillable="true"/>
+        <xs:element name="dataSetLink" type="t_nestedSchema.schema.dataSetLink" nillable="true"/>
+        <xs:element name="dataSource" type="t_nestedSchema.schema.dataSource" nillable="true"/>
+        <xs:element name="parameter" type="t_nestedSchema.schema.parameter" nillable="true"/>
+        <xs:element name="settingsVariant" type="t_nestedSchema.schema.settingsVariant" nillable="true"/>
+        <xs:element name="totalField" type="t_nestedSchema.schema.totalField" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.nestedSchema.settings" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.nestedSchema.settings</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/settings}filter -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.nestedSchema.title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.nestedSchema.title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="availableAsField" type="t_DataCompositionSchema.parameter.availableAsField" nillable="true"/>
+        <xs:element name="availableValue" type="t_DataCompositionSchema.parameter.availableValue" nillable="true"/>
+        <xs:element name="denyIncompleteValues" type="t_DataCompositionSchema.parameter.denyIncompleteValues" nillable="true"/>
+        <xs:element name="expression" type="t_DataCompositionSchema.parameter.expression" nillable="true"/>
+        <xs:element name="functionalOptionsParameter" type="t_DataCompositionSchema.parameter.functionalOptionsParameter" nillable="true"/>
+        <xs:element name="inputParameters" type="t_DataCompositionSchema.parameter.inputParameters" nillable="true"/>
+        <xs:element name="name" type="t_DataCompositionSchema.parameter.name" nillable="true"/>
+        <xs:element name="title" type="xs:anyType" nillable="true"/>
+        <xs:element name="use" type="t_DataCompositionSchema.parameter.use" nillable="true"/>
+        <xs:element name="useRestriction" type="t_DataCompositionSchema.parameter.useRestriction" nillable="true"/>
+        <xs:element name="value" type="xs:anyType" nillable="true"/>
+        <xs:element name="valueListAllowed" type="t_DataCompositionSchema.parameter.valueListAllowed" nillable="true"/>
+        <xs:element name="valueType" type="t_DataCompositionSchema.parameter.valueType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.availableAsField">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.availableAsField</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.availableValue" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.availableValue</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="presentation" type="xs:anyType" nillable="true"/>
+        <xs:element name="value" type="xs:anyType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.denyIncompleteValues">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.denyIncompleteValues</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.expression">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.expression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.functionalOptionsParameter">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.functionalOptionsParameter</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.inputParameters" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.inputParameters</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.name">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.use">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.use</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.useRestriction">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.useRestriction</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.value" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.value</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}endDate, {http://v8.1c.ru/8.1/data/core}startDate, {http://v8.1c.ru/8.1/data/core}variant -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.valueListAllowed">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.valueListAllowed</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.parameter.valueType" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.parameter.valueType</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}DateQualifiers, {http://v8.1c.ru/8.1/data/core}NumberQualifiers, {http://v8.1c.ru/8.1/data/core}StringQualifiers, {http://v8.1c.ru/8.1/data/core}Type, {http://v8.1c.ru/8.1/data/core}TypeId, {http://v8.1c.ru/8.1/data/core}TypeSet -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.settingsVariant" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.settingsVariant</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/settings}name, {http://v8.1c.ru/8.1/data-composition-system/settings}presentation, {http://v8.1c.ru/8.1/data-composition-system/settings}settings -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.template" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.template</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="name" type="t_DataCompositionSchema.template.name" nillable="true"/>
+        <xs:element name="parameter" type="xs:anyType" nillable="true"/>
+        <xs:element name="template" type="xs:anyType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.template.name">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.template.name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.template.parameter" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.template.parameter</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/area-template}expression, {http://v8.1c.ru/8.1/data-composition-system/area-template}fieldExpression, {http://v8.1c.ru/8.1/data-composition-system/area-template}mainAction, {http://v8.1c.ru/8.1/data-composition-system/area-template}name -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.template.template" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.template.template</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/area-template}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalField" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalField</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dataPath" type="t_DataCompositionSchema.totalField.dataPath" nillable="true"/>
+        <xs:element name="expression" type="t_DataCompositionSchema.totalField.expression" nillable="true"/>
+        <xs:element name="group" type="t_DataCompositionSchema.totalField.group" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalField.dataPath">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalField.dataPath</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalField.expression">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalField.expression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalField.group">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalField.group</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalFieldsTemplate" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalFieldsTemplate</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="groupField1" type="t_DataCompositionSchema.totalFieldsTemplate.groupField1" nillable="true"/>
+        <xs:element name="groupField2" type="t_DataCompositionSchema.totalFieldsTemplate.groupField2" nillable="true"/>
+        <xs:element name="groupName1" type="t_DataCompositionSchema.totalFieldsTemplate.groupName1" nillable="true"/>
+        <xs:element name="groupName2" type="t_DataCompositionSchema.totalFieldsTemplate.groupName2" nillable="true"/>
+        <xs:element name="template" type="t_DataCompositionSchema.totalFieldsTemplate.template" nillable="true"/>
+        <xs:element name="templateType1" type="t_DataCompositionSchema.totalFieldsTemplate.templateType1" nillable="true"/>
+        <xs:element name="templateType2" type="t_DataCompositionSchema.totalFieldsTemplate.templateType2" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalFieldsTemplate.groupField1">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalFieldsTemplate.groupField1</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalFieldsTemplate.groupField2">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalFieldsTemplate.groupField2</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalFieldsTemplate.groupName1">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalFieldsTemplate.groupName1</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalFieldsTemplate.groupName2">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalFieldsTemplate.groupName2</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalFieldsTemplate.template">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalFieldsTemplate.template</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalFieldsTemplate.templateType1">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalFieldsTemplate.templateType1</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_DataCompositionSchema.totalFieldsTemplate.templateType2">
+    <xs:annotation>
+      <xs:documentation>контекст: DataCompositionSchema.totalFieldsTemplate.templateType2</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_calculatedField.availableValue.presentation" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: calculatedField.availableValue.presentation</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_calculatedField.availableValue.value">
+    <xs:annotation>
+      <xs:documentation>контекст: calculatedField.availableValue.value</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_calculatedField.useRestriction.condition">
+    <xs:annotation>
+      <xs:documentation>контекст: calculatedField.useRestriction.condition</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_calculatedField.useRestriction.field">
+    <xs:annotation>
+      <xs:documentation>контекст: calculatedField.useRestriction.field</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_calculatedField.useRestriction.group">
+    <xs:annotation>
+      <xs:documentation>контекст: calculatedField.useRestriction.group</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_calculatedField.useRestriction.order">
+    <xs:annotation>
+      <xs:documentation>контекст: calculatedField.useRestriction.order</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.appearance" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.appearance</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.attributeUseRestriction" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.attributeUseRestriction</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="condition" type="t_field.attributeUseRestriction.condition" nillable="true"/>
+        <xs:element name="field" type="t_field.attributeUseRestriction.field" nillable="true"/>
+        <xs:element name="group" type="t_field.attributeUseRestriction.group" nillable="true"/>
+        <xs:element name="order" type="t_field.attributeUseRestriction.order" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.availableValue" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.availableValue</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="presentation" type="xs:anyType" nillable="true"/>
+        <xs:element name="value" type="xs:anyType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.dataPath">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.dataPath</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.field">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.field</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.inHierarchyDataSet">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.inHierarchyDataSet</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.inHierarchyDataSetParameter">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.inHierarchyDataSetParameter</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.inputParameters" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.inputParameters</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.orderExpression" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.orderExpression</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/common}autoOrder, {http://v8.1c.ru/8.1/data-composition-system/common}expression, {http://v8.1c.ru/8.1/data-composition-system/common}orderType -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.presentationExpression">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.presentationExpression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.role" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.role</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/common}account, {http://v8.1c.ru/8.1/data-composition-system/common}accountField, {http://v8.1c.ru/8.1/data-composition-system/common}accountTypeExpression, {http://v8.1c.ru/8.1/data-composition-system/common}accountingBalanceType, {http://v8.1c.ru/8.1/data-composition-system/common}balance, {http://v8.1c.ru/8.1/data-composition-system/common}balanceGroupName, {http://v8.1c.ru/8.1/data-composition-system/common}balanceType, {http://v8.1c.ru/8.1/data-composition-system/common}dimension, {http://v8.1c.ru/8.1/data-composition-system/common}ignoreNullValues, {http://v8.1c.ru/8.1/data-composition-system/common}parentDimension, {http://v8.1c.ru/8.1/data-composition-system/common}periodNumber, {http://v8.1c.ru/8.1/data-composition-system/common}periodType, {http://v8.1c.ru/8.1/data-composition-system/common}required -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.useRestriction" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.useRestriction</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="condition" type="t_field.useRestriction.condition" nillable="true"/>
+        <xs:element name="field" type="t_field.useRestriction.field" nillable="true"/>
+        <xs:element name="group" type="t_field.useRestriction.group" nillable="true"/>
+        <xs:element name="order" type="t_field.useRestriction.order" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.field.valueType" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.field.valueType</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}DateQualifiers, {http://v8.1c.ru/8.1/data/core}NumberQualifiers, {http://v8.1c.ru/8.1/data/core}StringQualifiers, {http://v8.1c.ru/8.1/data/core}Type, {http://v8.1c.ru/8.1/data/core}TypeId, {http://v8.1c.ru/8.1/data/core}TypeSet -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.item.autoFillFields">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.item.autoFillFields</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.item.dataSource">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.item.dataSource</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.item.field" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.item.field</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="appearance" type="t_item.field.appearance" nillable="true"/>
+        <xs:element name="attributeUseRestriction" type="t_item.field.attributeUseRestriction" nillable="true"/>
+        <xs:element name="availableValue" type="t_item.field.availableValue" nillable="true"/>
+        <xs:element name="dataPath" type="t_item.field.dataPath" nillable="true"/>
+        <xs:element name="field" type="t_item.field.field" nillable="true"/>
+        <xs:element name="inHierarchyDataSetParameter" type="t_item.field.inHierarchyDataSetParameter" nillable="true"/>
+        <xs:element name="inputParameters" type="t_item.field.inputParameters" nillable="true"/>
+        <xs:element name="orderExpression" type="t_item.field.orderExpression" nillable="true"/>
+        <xs:element name="presentationExpression" type="t_item.field.presentationExpression" nillable="true"/>
+        <xs:element name="role" type="t_item.field.role" nillable="true"/>
+        <xs:element name="title" type="xs:anyType" nillable="true"/>
+        <xs:element name="useRestriction" type="t_item.field.useRestriction" nillable="true"/>
+        <xs:element name="valueType" type="t_item.field.valueType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.item.item" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.item.item</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="autoFillFields" type="t_item.item.autoFillFields" nillable="true"/>
+        <xs:element name="dataSource" type="t_item.item.dataSource" nillable="true"/>
+        <xs:element name="field" type="xs:anyType" nillable="true"/>
+        <xs:element name="item" type="xs:anyType" nillable="true"/>
+        <xs:element name="name" type="t_item.item.name" nillable="true"/>
+        <xs:element name="query" type="t_item.item.query" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.item.name">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.item.name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.item.objectName">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.item.objectName</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.item.query">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.item.query</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_dataSet.item.useQueryGroupIfPossible">
+    <xs:annotation>
+      <xs:documentation>контекст: dataSet.item.useQueryGroupIfPossible</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_field.attributeUseRestriction.condition">
+    <xs:annotation>
+      <xs:documentation>контекст: field.attributeUseRestriction.condition</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_field.attributeUseRestriction.field">
+    <xs:annotation>
+      <xs:documentation>контекст: field.attributeUseRestriction.field</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_field.attributeUseRestriction.group">
+    <xs:annotation>
+      <xs:documentation>контекст: field.attributeUseRestriction.group</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_field.attributeUseRestriction.order">
+    <xs:annotation>
+      <xs:documentation>контекст: field.attributeUseRestriction.order</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_field.availableValue.presentation" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: field.availableValue.presentation</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_field.availableValue.value">
+    <xs:annotation>
+      <xs:documentation>контекст: field.availableValue.value</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_field.useRestriction.condition">
+    <xs:annotation>
+      <xs:documentation>контекст: field.useRestriction.condition</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_field.useRestriction.field">
+    <xs:annotation>
+      <xs:documentation>контекст: field.useRestriction.field</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_field.useRestriction.group">
+    <xs:annotation>
+      <xs:documentation>контекст: field.useRestriction.group</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_field.useRestriction.order">
+    <xs:annotation>
+      <xs:documentation>контекст: field.useRestriction.order</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.appearance" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.appearance</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.attributeUseRestriction" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.attributeUseRestriction</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="condition" type="t_field.attributeUseRestriction.condition" nillable="true"/>
+        <xs:element name="field" type="t_field.attributeUseRestriction.field" nillable="true"/>
+        <xs:element name="group" type="t_field.attributeUseRestriction.group" nillable="true"/>
+        <xs:element name="order" type="t_field.attributeUseRestriction.order" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.availableValue" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.availableValue</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="presentation" type="xs:anyType" nillable="true"/>
+        <xs:element name="value" type="xs:anyType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.dataPath">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.dataPath</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.field">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.field</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.inHierarchyDataSetParameter">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.inHierarchyDataSetParameter</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.inputParameters" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.inputParameters</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.orderExpression" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.orderExpression</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/common}autoOrder, {http://v8.1c.ru/8.1/data-composition-system/common}expression, {http://v8.1c.ru/8.1/data-composition-system/common}orderType -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.presentationExpression">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.presentationExpression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.role" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.role</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/common}account, {http://v8.1c.ru/8.1/data-composition-system/common}accountField, {http://v8.1c.ru/8.1/data-composition-system/common}accountTypeExpression, {http://v8.1c.ru/8.1/data-composition-system/common}accountingBalanceType, {http://v8.1c.ru/8.1/data-composition-system/common}balance, {http://v8.1c.ru/8.1/data-composition-system/common}balanceGroupName, {http://v8.1c.ru/8.1/data-composition-system/common}balanceType, {http://v8.1c.ru/8.1/data-composition-system/common}dimension, {http://v8.1c.ru/8.1/data-composition-system/common}ignoreNullValues, {http://v8.1c.ru/8.1/data-composition-system/common}parentDimension, {http://v8.1c.ru/8.1/data-composition-system/common}periodNumber, {http://v8.1c.ru/8.1/data-composition-system/common}periodType, {http://v8.1c.ru/8.1/data-composition-system/common}required -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.useRestriction" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.useRestriction</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="condition" type="t_field.useRestriction.condition" nillable="true"/>
+        <xs:element name="field" type="t_field.useRestriction.field" nillable="true"/>
+        <xs:element name="group" type="t_field.useRestriction.group" nillable="true"/>
+        <xs:element name="order" type="t_field.useRestriction.order" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.field.valueType" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.field.valueType</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}DateQualifiers, {http://v8.1c.ru/8.1/data/core}NumberQualifiers, {http://v8.1c.ru/8.1/data/core}StringQualifiers, {http://v8.1c.ru/8.1/data/core}Type, {http://v8.1c.ru/8.1/data/core}TypeId, {http://v8.1c.ru/8.1/data/core}TypeSet -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.item.autoFillFields">
+    <xs:annotation>
+      <xs:documentation>контекст: item.item.autoFillFields</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.item.dataSource">
+    <xs:annotation>
+      <xs:documentation>контекст: item.item.dataSource</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.item.field" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.item.field</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dataPath" type="t_item.field.dataPath" nillable="true"/>
+        <xs:element name="field" type="t_item.field.field" nillable="true"/>
+        <xs:element name="role" type="t_item.field.role" nillable="true"/>
+        <xs:element name="title" type="xs:anyType" nillable="true"/>
+        <xs:element name="useRestriction" type="t_item.field.useRestriction" nillable="true"/>
+        <xs:element name="valueType" type="t_item.field.valueType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.item.item" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: item.item.item</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="autoFillFields" type="t_item.item.autoFillFields" nillable="true"/>
+        <xs:element name="dataSource" type="t_item.item.dataSource" nillable="true"/>
+        <xs:element name="field" type="xs:anyType" nillable="true"/>
+        <xs:element name="name" type="t_item.item.name" nillable="true"/>
+        <xs:element name="query" type="t_item.item.query" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.item.name">
+    <xs:annotation>
+      <xs:documentation>контекст: item.item.name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_item.item.query">
+    <xs:annotation>
+      <xs:documentation>контекст: item.item.query</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_nestedSchema.schema.calculatedField" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: nestedSchema.schema.calculatedField</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="appearance" type="t_schema.calculatedField.appearance" nillable="true"/>
+        <xs:element name="availableValue" type="t_schema.calculatedField.availableValue" nillable="true"/>
+        <xs:element name="dataPath" type="t_schema.calculatedField.dataPath" nillable="true"/>
+        <xs:element name="expression" type="t_schema.calculatedField.expression" nillable="true"/>
+        <xs:element name="title" type="xs:anyType" nillable="true"/>
+        <xs:element name="useRestriction" type="t_schema.calculatedField.useRestriction" nillable="true"/>
+        <xs:element name="valueType" type="t_schema.calculatedField.valueType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_nestedSchema.schema.dataSet" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: nestedSchema.schema.dataSet</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dataSource" type="t_schema.dataSet.dataSource" nillable="true"/>
+        <xs:element name="field" type="xs:anyType" nillable="true"/>
+        <xs:element name="name" type="t_schema.dataSet.name" nillable="true"/>
+        <xs:element name="objectName" type="t_schema.dataSet.objectName" nillable="true"/>
+        <xs:element name="query" type="t_schema.dataSet.query" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_nestedSchema.schema.dataSetLink" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: nestedSchema.schema.dataSetLink</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="destinationDataSet" type="t_schema.dataSetLink.destinationDataSet" nillable="true"/>
+        <xs:element name="destinationExpression" type="t_schema.dataSetLink.destinationExpression" nillable="true"/>
+        <xs:element name="required" type="t_schema.dataSetLink.required" nillable="true"/>
+        <xs:element name="sourceDataSet" type="t_schema.dataSetLink.sourceDataSet" nillable="true"/>
+        <xs:element name="sourceExpression" type="t_schema.dataSetLink.sourceExpression" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_nestedSchema.schema.dataSource" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: nestedSchema.schema.dataSource</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dataSourceType" type="t_schema.dataSource.dataSourceType" nillable="true"/>
+        <xs:element name="name" type="t_schema.dataSource.name" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_nestedSchema.schema.parameter" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: nestedSchema.schema.parameter</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="availableAsField" type="t_schema.parameter.availableAsField" nillable="true"/>
+        <xs:element name="expression" type="t_schema.parameter.expression" nillable="true"/>
+        <xs:element name="inputParameters" type="t_schema.parameter.inputParameters" nillable="true"/>
+        <xs:element name="name" type="t_schema.parameter.name" nillable="true"/>
+        <xs:element name="title" type="xs:anyType" nillable="true"/>
+        <xs:element name="use" type="t_schema.parameter.use" nillable="true"/>
+        <xs:element name="useRestriction" type="t_schema.parameter.useRestriction" nillable="true"/>
+        <xs:element name="value" type="xs:anyType" nillable="true"/>
+        <xs:element name="valueListAllowed" type="t_schema.parameter.valueListAllowed" nillable="true"/>
+        <xs:element name="valueType" type="t_schema.parameter.valueType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_nestedSchema.schema.settingsVariant" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: nestedSchema.schema.settingsVariant</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/settings}name, {http://v8.1c.ru/8.1/data-composition-system/settings}presentation, {http://v8.1c.ru/8.1/data-composition-system/settings}settings -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_nestedSchema.schema.totalField" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: nestedSchema.schema.totalField</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dataPath" type="t_schema.totalField.dataPath" nillable="true"/>
+        <xs:element name="expression" type="t_schema.totalField.expression" nillable="true"/>
+        <xs:element name="group" type="t_schema.totalField.group" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_parameter.availableValue.presentation" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: parameter.availableValue.presentation</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_parameter.availableValue.value">
+    <xs:annotation>
+      <xs:documentation>контекст: parameter.availableValue.value</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.calculatedField.appearance" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.calculatedField.appearance</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.calculatedField.availableValue" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.calculatedField.availableValue</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="value" type="xs:anyType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.calculatedField.dataPath">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.calculatedField.dataPath</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.calculatedField.expression">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.calculatedField.expression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.calculatedField.title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.calculatedField.title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.calculatedField.useRestriction" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.calculatedField.useRestriction</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="condition" type="t_calculatedField.useRestriction.condition" nillable="true"/>
+        <xs:element name="field" type="t_calculatedField.useRestriction.field" nillable="true"/>
+        <xs:element name="group" type="t_calculatedField.useRestriction.group" nillable="true"/>
+        <xs:element name="order" type="t_calculatedField.useRestriction.order" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.calculatedField.valueType" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.calculatedField.valueType</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}DateQualifiers, {http://v8.1c.ru/8.1/data/core}NumberQualifiers, {http://v8.1c.ru/8.1/data/core}Type -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSet.dataSource">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSet.dataSource</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSet.field" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSet.field</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="appearance" type="t_dataSet.field.appearance" nillable="true"/>
+        <xs:element name="attributeUseRestriction" type="t_dataSet.field.attributeUseRestriction" nillable="true"/>
+        <xs:element name="availableValue" type="t_dataSet.field.availableValue" nillable="true"/>
+        <xs:element name="dataPath" type="t_dataSet.field.dataPath" nillable="true"/>
+        <xs:element name="field" type="t_dataSet.field.field" nillable="true"/>
+        <xs:element name="orderExpression" type="t_dataSet.field.orderExpression" nillable="true"/>
+        <xs:element name="presentationExpression" type="t_dataSet.field.presentationExpression" nillable="true"/>
+        <xs:element name="role" type="t_dataSet.field.role" nillable="true"/>
+        <xs:element name="title" type="xs:anyType" nillable="true"/>
+        <xs:element name="valueType" type="t_dataSet.field.valueType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSet.name">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSet.name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSet.objectName">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSet.objectName</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSet.query">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSet.query</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSetLink.destinationDataSet">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSetLink.destinationDataSet</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSetLink.destinationExpression">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSetLink.destinationExpression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSetLink.required">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSetLink.required</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSetLink.sourceDataSet">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSetLink.sourceDataSet</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSetLink.sourceExpression">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSetLink.sourceExpression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSource.dataSourceType">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSource.dataSourceType</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.dataSource.name">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.dataSource.name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.parameter.availableAsField">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.parameter.availableAsField</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.parameter.expression">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.parameter.expression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.parameter.inputParameters" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.parameter.inputParameters</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data-composition-system/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.parameter.name">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.parameter.name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.parameter.title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.parameter.title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.parameter.use">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.parameter.use</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.parameter.useRestriction">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.parameter.useRestriction</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.parameter.value" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.parameter.value</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}endDate, {http://v8.1c.ru/8.1/data/core}startDate, {http://v8.1c.ru/8.1/data/core}variant -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.parameter.valueListAllowed">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.parameter.valueListAllowed</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.parameter.valueType" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.parameter.valueType</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}DateQualifiers, {http://v8.1c.ru/8.1/data/core}StringQualifiers, {http://v8.1c.ru/8.1/data/core}Type -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.totalField.dataPath">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.totalField.dataPath</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.totalField.expression">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.totalField.expression</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_schema.totalField.group">
+    <xs:annotation>
+      <xs:documentation>контекст: schema.totalField.group</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+</xs:schema>

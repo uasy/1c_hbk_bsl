@@ -1,0 +1,16 @@
+{
+  "$schema_version": "2.20",
+  "kind": "Sequence",
+  "children_inline": {
+    "ChildObjects/Dimension": {
+      "parser": "AttributeParser",
+      "member_kind": "dimension"
+    }
+  },
+  "node_files": {
+    "Ext/RecordSetModule.bsl": {
+      "parser": "BslParser",
+      "type": "RecordSetModule"
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "$schema_version": "2.20",
+  "kind": "Catalog",
+  "children_inline": {
+    "ChildObjects/Attribute": {
+      "parser": "AttributeParser",
+      "member_kind": "attribute"
+    },
+    "ChildObjects/Command": {
+      "parser": "CommandParser",
+      "folder": "Commands"
+    },
+    "ChildObjects/TabularSection": {
+      "parser": "TabularSectionParser",
+      "member_kind": "tabular_section",
+      "children_inline": {
+        "ChildObjects/Attribute": {
+          "parser": "AttributeParser",
+          "member_kind": "ts_attribute"
+        }
+      }
+    },
+    "Properties/AuxiliaryChoiceForm": {
+      "parser": "RefParser"
+    },
+    "Properties/AuxiliaryFolderChoiceForm": {
+      "parser": "RefParser"
+    },
+    "Properties/AuxiliaryFolderForm": {
+      "parser": "RefParser"
+    },
+    "Properties/AuxiliaryListForm": {
+      "parser": "RefParser"
+    },
+    "Properties/AuxiliaryObjectForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultChoiceForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultFolderChoiceForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultFolderForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultListForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultObjectForm": {
+      "parser": "RefParser"
+    }
+  },
+  "children_external": {
+    "ChildObjects/Form": {
+      "folder": "Forms"
+    },
+    "ChildObjects/Template": {
+      "folder": "Templates"
+    }
+  },
+  "node_files": {
+    "Ext/Help.xml": {
+      "parser": "HelpParser"
+    },
+    "Ext/ManagerModule.bsl": {
+      "parser": "BslParser",
+      "type": "ManagerModule"
+    },
+    "Ext/ObjectModule.bsl": {
+      "parser": "BslParser",
+      "type": "ObjectModule"
+    },
+    "Ext/Predefined.xml": {
+      "parser": "PredefinedParser"
+    }
+  }
+}

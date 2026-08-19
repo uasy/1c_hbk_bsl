@@ -1,0 +1,9 @@
+{
+  "$schema_version": "2.20",
+  "kind": "XDTOPackage",
+  "node_files": {
+    "Ext/Package.bin": {
+      "parser": "NopParser"
+    }
+  }
+}

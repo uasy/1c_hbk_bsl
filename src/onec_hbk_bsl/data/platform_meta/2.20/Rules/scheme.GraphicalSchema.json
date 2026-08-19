@@ -1,0 +1,59 @@
+{
+  "$schema_version": "2.20",
+  "kind": "scheme.GraphicalSchema",
+  "children_inline": {
+    "Items/Activity": {
+      "parser": "AttributeParser",
+      "member_kind": "route_point"
+    },
+    "Items/Activity/Events/Event": {
+      "parser": "RefParser"
+    },
+    "Items/Completion": {
+      "parser": "AttributeParser",
+      "member_kind": "route_point"
+    },
+    "Items/Completion/Events/Event": {
+      "parser": "RefParser"
+    },
+    "Items/Condition": {
+      "parser": "AttributeParser",
+      "member_kind": "route_point"
+    },
+    "Items/Condition/Events/Event": {
+      "parser": "RefParser"
+    },
+    "Items/ConnectionLine": {
+      "parser": "NopParser"
+    },
+    "Items/Decoration": {
+      "parser": "NopParser"
+    },
+    "Items/Processing": {
+      "parser": "AttributeParser",
+      "member_kind": "route_point"
+    },
+    "Items/Processing/Events/Event": {
+      "parser": "RefParser"
+    },
+    "Items/Start": {
+      "parser": "AttributeParser",
+      "member_kind": "route_point"
+    },
+    "Items/Start/Events/Event": {
+      "parser": "RefParser"
+    },
+    "Items/Switch": {
+      "parser": "AttributeParser",
+      "member_kind": "route_point"
+    },
+    "Items/Switch/Events/Event": {
+      "parser": "RefParser"
+    }
+  },
+  "node_files": {
+    "Items": {
+      "parser": "NopParser"
+    }
+  }
+}

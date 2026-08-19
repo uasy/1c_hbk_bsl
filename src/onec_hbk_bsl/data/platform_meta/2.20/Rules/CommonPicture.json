@@ -1,0 +1,9 @@
+{
+  "$schema_version": "2.20",
+  "kind": "CommonPicture",
+  "node_files": {
+    "Ext/Picture.xml": {
+      "parser": "PictureParser"
+    }
+  }
+}

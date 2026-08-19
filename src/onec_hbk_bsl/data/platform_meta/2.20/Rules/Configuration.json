@@ -1,0 +1,203 @@
+{
+  "$schema_version": "2.20",
+  "kind": "Configuration",
+  "children_inline": {
+    "Properties/DefaultLanguage": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultReportForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultReportSettingsForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultReportVariantForm": {
+      "parser": "RefParser"
+    },
+    "Properties/ReportsVariantsStorage": {
+      "parser": "RefParser"
+    }
+  },
+  "children_external": {
+    "ChildObjects/AccountingRegister": {
+      "folder": "AccountingRegisters"
+    },
+    "ChildObjects/AccumulationRegister": {
+      "folder": "AccumulationRegisters"
+    },
+    "ChildObjects/BusinessProcess": {
+      "folder": "BusinessProcesses"
+    },
+    "ChildObjects/CalculationRegister": {
+      "folder": "CalculationRegisters"
+    },
+    "ChildObjects/Catalog": {
+      "folder": "Catalogs"
+    },
+    "ChildObjects/ChartOfAccounts": {
+      "folder": "ChartsOfAccounts"
+    },
+    "ChildObjects/ChartOfCalculationTypes": {
+      "folder": "ChartsOfCalculationTypes"
+    },
+    "ChildObjects/ChartOfCharacteristicTypes": {
+      "folder": "ChartsOfCharacteristicTypes"
+    },
+    "ChildObjects/CommandGroup": {
+      "folder": "CommandGroups"
+    },
+    "ChildObjects/CommonAttribute": {
+      "folder": "CommonAttributes"
+    },
+    "ChildObjects/CommonCommand": {
+      "folder": "CommonCommands"
+    },
+    "ChildObjects/CommonForm": {
+      "folder": "CommonForms"
+    },
+    "ChildObjects/CommonModule": {
+      "folder": "CommonModules"
+    },
+    "ChildObjects/CommonPicture": {
+      "folder": "CommonPictures"
+    },
+    "ChildObjects/CommonTemplate": {
+      "folder": "CommonTemplates"
+    },
+    "ChildObjects/Constant": {
+      "folder": "Constants"
+    },
+    "ChildObjects/DataProcessor": {
+      "folder": "DataProcessors"
+    },
+    "ChildObjects/DefinedType": {
+      "folder": "DefinedTypes"
+    },
+    "ChildObjects/Document": {
+      "folder": "Documents"
+    },
+    "ChildObjects/DocumentJournal": {
+      "folder": "DocumentJournals"
+    },
+    "ChildObjects/DocumentNumerator": {
+      "folder": "DocumentNumerators"
+    },
+    "ChildObjects/Enum": {
+      "folder": "Enums"
+    },
+    "ChildObjects/EventSubscription": {
+      "folder": "EventSubscriptions"
+    },
+    "ChildObjects/ExchangePlan": {
+      "folder": "ExchangePlans"
+    },
+    "ChildObjects/FilterCriterion": {
+      "folder": "FilterCriteria"
+    },
+    "ChildObjects/FunctionalOption": {
+      "folder": "FunctionalOptions"
+    },
+    "ChildObjects/FunctionalOptionsParameter": {
+      "folder": "FunctionalOptionsParameters"
+    },
+    "ChildObjects/HTTPService": {
+      "folder": "HTTPServices"
+    },
+    "ChildObjects/InformationRegister": {
+      "folder": "InformationRegisters"
+    },
+    "ChildObjects/IntegrationService": {
+      "folder": "IntegrationServices"
+    },
+    "ChildObjects/Language": {
+      "folder": "Languages"
+    },
+    "ChildObjects/Report": {
+      "folder": "Reports"
+    },
+    "ChildObjects/Role": {
+      "folder": "Roles"
+    },
+    "ChildObjects/ScheduledJob": {
+      "folder": "ScheduledJobs"
+    },
+    "ChildObjects/Sequence": {
+      "folder": "Sequences"
+    },
+    "ChildObjects/SessionParameter": {
+      "folder": "SessionParameters"
+    },
+    "ChildObjects/SettingsStorage": {
+      "folder": "SettingsStorages"
+    },
+    "ChildObjects/StyleItem": {
+      "folder": "StyleItems"
+    },
+    "ChildObjects/Subsystem": {
+      "folder": "Subsystems"
+    },
+    "ChildObjects/Task": {
+      "folder": "Tasks"
+    },
+    "ChildObjects/WSReference": {
+      "folder": "WSReferences"
+    },
+    "ChildObjects/WebService": {
+      "folder": "WebServices"
+    },
+    "ChildObjects/XDTOPackage": {
+      "folder": "XDTOPackages"
+    }
+  },
+  "node_files": {
+    "ConfigDumpInfo.xml": {
+      "parser": "NopParser"
+    },
+    "Ext/ClientApplicationInterface.xml": {
+      "parser": "NopParser"
+    },
+    "Ext/CommandInterface.xml": {
+      "parser": "FileRefParser"
+    },
+    "Ext/ExternalConnectionModule.bsl": {
+      "parser": "BslParser",
+      "type": "ExternalConnectionModule"
+    },
+    "Ext/Help.xml": {
+      "parser": "HelpParser"
+    },
+    "Ext/HomePageWorkArea.xml": {
+      "parser": "FileRefParser"
+    },
+    "Ext/MainSectionCommandInterface.xml": {
+      "parser": "FileRefParser"
+    },
+    "Ext/MainSectionPicture.xml": {
+      "parser": "PictureParser"
+    },
+    "Ext/ManagedApplicationModule.bsl": {
+      "parser": "BslParser",
+      "type": "ManagedApplicationModule"
+    },
+    "Ext/MobileClientSignature.bin": {
+      "parser": "NopParser"
+    },
+    "Ext/OrdinaryApplicationModule.bsl": {
+      "parser": "BslParser",
+      "type": "OrdinaryApplicationModule"
+    },
+    "Ext/ParentConfigurations": {
+      "parser": "NopParser"
+    },
+    "Ext/ParentConfigurations.bin": {
+      "parser": "NopParser"
+    },
+    "Ext/SessionModule.bsl": {
+      "parser": "BslParser",
+      "type": "SessionModule"
+    },
+    "Ext/Splash.xml": {
+      "parser": "PictureParser"
+    }
+  }
+}

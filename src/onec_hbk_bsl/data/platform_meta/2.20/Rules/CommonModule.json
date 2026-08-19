@@ -1,0 +1,13 @@
+{
+  "$schema_version": "2.20",
+  "kind": "CommonModule",
+  "node_files": {
+    "Ext/Module.bin": {
+      "parser": "NopParser"
+    },
+    "Ext/Module.bsl": {
+      "parser": "BslParser",
+      "type": "Module"
+    }
+  }
+}

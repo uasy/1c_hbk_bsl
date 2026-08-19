@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Схема пространства имён http://v8.1c.ru/8.2/roles
+  корневой элемент Rights, поколение выгрузки 2.22.
+
+  ВНИМАНИЕ: этот формат СВОЕГО атрибута version может не нести —
+  тогда поколение унаследовано от описателя-родителя и означает
+  «в выгрузке какого поколения файл наблюдался», а НЕ версию этого
+  формата.
+
+  ПОРОЖДЕНО из корпуса выгрузок, не является официальной схемой 1С.
+  Дата порождения: 2026-08-09
+  Файлов в основе: 1058, видов/веток: 1
+  Корней в корпусе: 2
+
+  ХАРАКТЕР АРТЕФАКТА — ОПИСАТЕЛЬНЫЙ, НЕ НОРМАТИВНЫЙ.
+  Схема фиксирует то, что встретилось в корпусе, а не то, что допускает
+  формат. Модель содержимого намеренно разрешительная (xs:choice без
+  порядка и кратностей). Применение:
+    можно  — находить поля, обнаруживать незнакомые элементы;
+    нельзя — отбраковывать файлы: законный, но не встретившийся в корпусе
+             элемент дал бы ложную ошибку.
+
+  Поддеревья чужих пространств имён (v8:, xr:, logform, DCS, predef…)
+  не раскрываются — у них собственные артефакты; здесь xs:any.
+
+  Регенерация входит в тесты: породить заново и сравнить с этим файлом.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://v8.1c.ru/8.2/roles"
+           targetNamespace="http://v8.1c.ru/8.2/roles"
+           elementFormDefault="qualified">
+
+  <xs:element name="Rights" type="xs:anyType" nillable="true"/>
+
+  <!-- Типы своего пространства, названные через xsi:type. Импортировать
+       собственный targetNamespace нельзя, поэтому объявлены здесь —
+       разрешительно, как заглушки: содержимое не описывается. -->
+  <xs:complexType name="Rights" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: Rights; встречено: 2116</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="independentRightsOfChildObjects" type="t_Rights.independentRightsOfChildObjects" nillable="true"/>
+        <xs:element name="object" type="t_Rights.object" nillable="true"/>
+        <xs:element name="restrictionTemplate" type="t_Rights.restrictionTemplate" nillable="true"/>
+        <xs:element name="setForAttributesByDefault" type="t_Rights.setForAttributesByDefault" nillable="true"/>
+        <xs:element name="setForNewObjects" type="t_Rights.setForNewObjects" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.independentRightsOfChildObjects">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.independentRightsOfChildObjects; встречено: 1058</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.object" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.object; встречено: 14842</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="name" type="t_Rights.object.name" nillable="true"/>
+        <xs:element name="right" type="t_Rights.object.right" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.object.name">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.object.name; встречено: 14842</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.object.right" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.object.right; встречено: 44665</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="name" type="t_Rights.object.right.name" nillable="true"/>
+        <xs:element name="restrictionByCondition" type="t_Rights.object.right.restrictionByCondition" nillable="true"/>
+        <xs:element name="value" type="t_Rights.object.right.value" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.object.right.name">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.object.right.name; встречено: 44665</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.object.right.restrictionByCondition" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.object.right.restrictionByCondition; встречено: 2173</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="condition" type="t_Rights.object.right.restrictionByCondition.condition" nillable="true"/>
+        <xs:element name="field" type="t_Rights.object.right.restrictionByCondition.field" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.object.right.restrictionByCondition.condition">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.object.right.restrictionByCondition.condition; встречено: 2173</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.object.right.restrictionByCondition.field">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.object.right.restrictionByCondition.field; встречено: 1</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.object.right.value">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.object.right.value; встречено: 44665</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.restrictionTemplate" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.restrictionTemplate; встречено: 1175</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="condition" type="t_Rights.restrictionTemplate.condition" nillable="true"/>
+        <xs:element name="name" type="t_Rights.restrictionTemplate.name" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.restrictionTemplate.condition">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.restrictionTemplate.condition; встречено: 1175</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.restrictionTemplate.name">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.restrictionTemplate.name; встречено: 1175</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.setForAttributesByDefault">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.setForAttributesByDefault; встречено: 1058</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Rights.setForNewObjects">
+    <xs:annotation>
+      <xs:documentation>путь: Rights.setForNewObjects; встречено: 1058</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+</xs:schema>

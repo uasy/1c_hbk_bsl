@@ -1,0 +1,22 @@
+{
+  "$schema_version": "2.20",
+  "kind": "WebService",
+  "children_inline": {
+    "ChildObjects/Operation": {
+      "parser": "AttributeParser",
+      "member_kind": "operation",
+      "children_inline": {
+        "ChildObjects/Parameter": {
+          "parser": "AttributeParser",
+          "member_kind": "operation_parameter"
+        }
+      }
+    }
+  },
+  "node_files": {
+    "Ext/Module.bsl": {
+      "parser": "BslParser",
+      "type": "ServiceModule"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema_version": "2.20",
+  "kind": "SettingsStorage",
+  "children_inline": {
+    "Properties/DefaultLoadForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultSaveForm": {
+      "parser": "RefParser"
+    }
+  },
+  "children_external": {
+    "ChildObjects/Form": {
+      "folder": "Forms"
+    }
+  },
+  "node_files": {
+    "Ext/ManagerModule.bsl": {
+      "parser": "BslParser",
+      "type": "ManagerModule"
+    }
+  }
+}

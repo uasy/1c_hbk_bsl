@@ -1,0 +1,50 @@
+{
+  "$schema_version": "2.20",
+  "kind": "BusinessProcess",
+  "children_inline": {
+    "ChildObjects/Attribute": {
+      "parser": "AttributeParser",
+      "member_kind": "attribute"
+    },
+    "ChildObjects/TabularSection": {
+      "parser": "TabularSectionParser",
+      "member_kind": "tabular_section",
+      "children_inline": {
+        "ChildObjects/Attribute": {
+          "parser": "AttributeParser",
+          "member_kind": "ts_attribute"
+        }
+      }
+    },
+    "Properties/DefaultListForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultObjectForm": {
+      "parser": "RefParser"
+    },
+    "Properties/Task": {
+      "parser": "RefParser"
+    }
+  },
+  "children_external": {
+    "ChildObjects/Form": {
+      "folder": "Forms"
+    }
+  },
+  "node_files": {
+    "Ext/Flowchart.xml": {
+      "parser": "FlowchartParser"
+    },
+    "Ext/Help.xml": {
+      "parser": "HelpParser"
+    },
+    "Ext/ManagerModule.bsl": {
+      "parser": "BslParser",
+      "type": "ManagerModule"
+    },
+    "Ext/ObjectModule.bsl": {
+      "parser": "BslParser",
+      "type": "ObjectModule"
+    }
+  }
+}

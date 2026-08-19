@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Схема пространства имён http://v8.1c.ru/8.3/xcf/extrnprops
+  корневой элемент CommandInterface, поколение выгрузки 2.22.
+
+  ВНИМАНИЕ: этот формат СВОЕГО атрибута version может не нести —
+  тогда поколение унаследовано от описателя-родителя и означает
+  «в выгрузке какого поколения файл наблюдался», а НЕ версию этого
+  формата.
+
+  ПОРОЖДЕНО из корпуса выгрузок, не является официальной схемой 1С.
+  Дата порождения: 2026-08-09
+  Файлов в основе: 137, видов/веток: 1
+  Корней в корпусе: 2
+
+  ХАРАКТЕР АРТЕФАКТА — ОПИСАТЕЛЬНЫЙ, НЕ НОРМАТИВНЫЙ.
+  Схема фиксирует то, что встретилось в корпусе, а не то, что допускает
+  формат. Модель содержимого намеренно разрешительная (xs:choice без
+  порядка и кратностей). Применение:
+    можно  — находить поля, обнаруживать незнакомые элементы;
+    нельзя — отбраковывать файлы: законный, но не встретившийся в корпусе
+             элемент дал бы ложную ошибку.
+
+  Поддеревья чужих пространств имён (v8:, xr:, logform, DCS, predef…)
+  не раскрываются — у них собственные артефакты; здесь xs:any.
+
+  Регенерация входит в тесты: породить заново и сравнить с этим файлом.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://v8.1c.ru/8.3/xcf/extrnprops"
+           targetNamespace="http://v8.1c.ru/8.3/xcf/extrnprops"
+           elementFormDefault="qualified">
+
+  <xs:element name="CommandInterface" type="t_CommandInterface" nillable="true"/>
+
+  <xs:complexType name="t_CommandInterface" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface; встречено: 274</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CommandsOrder" type="t_CommandInterface.CommandsOrder" nillable="true"/>
+        <xs:element name="CommandsPlacement" type="t_CommandInterface.CommandsPlacement" nillable="true"/>
+        <xs:element name="CommandsVisibility" type="t_CommandInterface.CommandsVisibility" nillable="true"/>
+        <xs:element name="GroupsOrder" type="t_CommandInterface.GroupsOrder" nillable="true"/>
+        <xs:element name="SubsystemsOrder" type="t_CommandInterface.SubsystemsOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.CommandsOrder" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.CommandsOrder; встречено: 92</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Command" type="t_CommandInterface.CommandsOrder.Command" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.CommandsOrder.Command" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.CommandsOrder.Command; встречено: 1360</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CommandGroup" type="t_CommandInterface.CommandsOrder.Command.CommandGroup" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.CommandsOrder.Command.CommandGroup">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.CommandsOrder.Command.CommandGroup; встречено: 1360</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.CommandsPlacement" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.CommandsPlacement; встречено: 54</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Command" type="t_CommandInterface.CommandsPlacement.Command" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.CommandsPlacement.Command" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.CommandsPlacement.Command; встречено: 376</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CommandGroup" type="t_CommandInterface.CommandsPlacement.Command.CommandGroup" nillable="true"/>
+        <xs:element name="Placement" type="t_CommandInterface.CommandsPlacement.Command.Placement" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.CommandsPlacement.Command.CommandGroup">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.CommandsPlacement.Command.CommandGroup; встречено: 376</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.CommandsPlacement.Command.Placement">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.CommandsPlacement.Command.Placement; встречено: 376</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.CommandsVisibility" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.CommandsVisibility; встречено: 125</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Command" type="t_CommandInterface.CommandsVisibility.Command" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.CommandsVisibility.Command" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.CommandsVisibility.Command; встречено: 1198</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Visibility" type="t_CommandInterface.CommandsVisibility.Command.Visibility" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.CommandsVisibility.Command.Visibility" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.CommandsVisibility.Command.Visibility; встречено: 1198</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.3/xcf/readable}Common, {http://v8.1c.ru/8.3/xcf/readable}Value -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.GroupsOrder" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.GroupsOrder; встречено: 92</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Group" type="t_CommandInterface.GroupsOrder.Group" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.GroupsOrder.Group">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.GroupsOrder.Group; встречено: 225</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.SubsystemsOrder" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.SubsystemsOrder; встречено: 15</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Subsystem" type="t_CommandInterface.SubsystemsOrder.Subsystem" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_CommandInterface.SubsystemsOrder.Subsystem">
+    <xs:annotation>
+      <xs:documentation>путь: CommandInterface.SubsystemsOrder.Subsystem; встречено: 113</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,27 @@
+{
+  "$schema_version": "2.20",
+  "kind": "extrnprops.ExtPicture",
+  "node_files": {
+    "Picture.bmp": {
+      "parser": "NopParser"
+    },
+    "Picture.gif": {
+      "parser": "NopParser"
+    },
+    "Picture.ico": {
+      "parser": "NopParser"
+    },
+    "Picture.jpg": {
+      "parser": "NopParser"
+    },
+    "Picture.png": {
+      "parser": "NopParser"
+    },
+    "Picture.svg": {
+      "parser": "NopParser"
+    },
+    "Picture.zip": {
+      "parser": "NopParser"
+    }
+  }
+}

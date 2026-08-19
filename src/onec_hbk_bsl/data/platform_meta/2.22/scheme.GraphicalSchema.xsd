@@ -1,0 +1,3015 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Схема пространства имён http://v8.1c.ru/8.3/xcf/scheme
+  корневой элемент GraphicalSchema, поколение выгрузки 2.22.
+
+  ВНИМАНИЕ: этот формат СВОЕГО атрибута version может не нести —
+  тогда поколение унаследовано от описателя-родителя и означает
+  «в выгрузке какого поколения файл наблюдался», а НЕ версию этого
+  формата.
+
+  ПОРОЖДЕНО из корпуса выгрузок, не является официальной схемой 1С.
+  Дата порождения: 2026-08-09
+  Файлов в основе: 7, видов/веток: 1
+  Корней в корпусе: 2
+
+  ХАРАКТЕР АРТЕФАКТА — ОПИСАТЕЛЬНЫЙ, НЕ НОРМАТИВНЫЙ.
+  Схема фиксирует то, что встретилось в корпусе, а не то, что допускает
+  формат. Модель содержимого намеренно разрешительная (xs:choice без
+  порядка и кратностей). Применение:
+    можно  — находить поля, обнаруживать незнакомые элементы;
+    нельзя — отбраковывать файлы: законный, но не встретившийся в корпусе
+             элемент дал бы ложную ошибку.
+
+  Поддеревья чужих пространств имён (v8:, xr:, logform, DCS, predef…)
+  не раскрываются — у них собственные артефакты; здесь xs:any.
+
+  Регенерация входит в тесты: породить заново и сравнить с этим файлом.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://v8.1c.ru/8.3/xcf/scheme"
+           targetNamespace="http://v8.1c.ru/8.3/xcf/scheme"
+           elementFormDefault="qualified">
+
+  <!-- Схема НЕ самодостаточна: экземпляры ссылаются через xsi:type
+       на типы чужих пространств имён. Заглушки этих типов порождаются
+       рядом; настоящие определения — за пределами этого артефакта
+       (у каждого пространства будет свой). -->
+  <xs:import namespace="http://v8.1c.ru/8.3/xcf/readable" schemaLocation="stubs/v8.1c.ru_8.3_xcf_readable.xsd"/>
+
+  <xs:element name="GraphicalSchema" type="t_GraphicalSchema" nillable="true"/>
+
+  <xs:complexType name="t_GraphicalSchema" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema; встречено: 14</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_GraphicalSchema.BackColor" nillable="true"/>
+        <xs:element name="DrawGridMode" type="t_GraphicalSchema.DrawGridMode" nillable="true"/>
+        <xs:element name="GridEnabled" type="t_GraphicalSchema.GridEnabled" nillable="true"/>
+        <xs:element name="GridHorizontalStep" type="t_GraphicalSchema.GridHorizontalStep" nillable="true"/>
+        <xs:element name="GridVerticalStep" type="t_GraphicalSchema.GridVerticalStep" nillable="true"/>
+        <xs:element name="Items" type="t_GraphicalSchema.Items" nillable="true"/>
+        <xs:element name="PrintParameters" type="t_GraphicalSchema.PrintParameters" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.BackColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.BackColor; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.DrawGridMode">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.DrawGridMode; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.GridEnabled">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.GridEnabled; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.GridHorizontalStep">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.GridHorizontalStep; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.GridVerticalStep">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.GridVerticalStep; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Activity" type="t_GraphicalSchema.Items.Activity" nillable="true"/>
+        <xs:element name="Completion" type="t_GraphicalSchema.Items.Completion" nillable="true"/>
+        <xs:element name="Condition" type="t_GraphicalSchema.Items.Condition" nillable="true"/>
+        <xs:element name="ConnectionLine" type="t_GraphicalSchema.Items.ConnectionLine" nillable="true"/>
+        <xs:element name="Decoration" type="t_GraphicalSchema.Items.Decoration" nillable="true"/>
+        <xs:element name="Join" type="t_GraphicalSchema.Items.Join" nillable="true"/>
+        <xs:element name="Processing" type="t_GraphicalSchema.Items.Processing" nillable="true"/>
+        <xs:element name="Split" type="t_GraphicalSchema.Items.Split" nillable="true"/>
+        <xs:element name="Start" type="t_GraphicalSchema.Items.Start" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_GraphicalSchema.Items.Activity.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_GraphicalSchema.Items.Activity.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Events; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_GraphicalSchema.Items.Activity.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Events.Event">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Events.Event; встречено: 224</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AddressingAttributes" type="t_GraphicalSchema.Items.Activity.Properties.AddressingAttributes" nillable="true"/>
+        <xs:element name="BackColor" type="t_GraphicalSchema.Items.Activity.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_GraphicalSchema.Items.Activity.Properties.Border" nillable="true"/>
+        <xs:element name="Explanation" type="t_GraphicalSchema.Items.Activity.Properties.Explanation" nillable="true"/>
+        <xs:element name="Font" type="t_GraphicalSchema.Items.Activity.Properties.Font" nillable="true"/>
+        <xs:element name="Group" type="t_GraphicalSchema.Items.Activity.Properties.Group" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_GraphicalSchema.Items.Activity.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_GraphicalSchema.Items.Activity.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_GraphicalSchema.Items.Activity.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_GraphicalSchema.Items.Activity.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_GraphicalSchema.Items.Activity.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_GraphicalSchema.Items.Activity.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_GraphicalSchema.Items.Activity.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_GraphicalSchema.Items.Activity.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_GraphicalSchema.Items.Activity.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_GraphicalSchema.Items.Activity.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TaskDescription" type="t_GraphicalSchema.Items.Activity.Properties.TaskDescription" nillable="true"/>
+        <xs:element name="TextColor" type="t_GraphicalSchema.Items.Activity.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_GraphicalSchema.Items.Activity.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_GraphicalSchema.Items.Activity.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_GraphicalSchema.Items.Activity.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_GraphicalSchema.Items.Activity.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_GraphicalSchema.Items.Activity.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.AddressingAttributes" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.AddressingAttributes; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AddressingAttribute" type="t_GraphicalSchema.Items.Activity.Properties.AddressingAttributes.AddressingAttribute" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.AddressingAttributes.AddressingAttribute" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.AddressingAttributes.AddressingAttribute; встречено: 128</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Value" type="xs:anyType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="ref" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.AddressingAttributes.AddressingAttribute.Value">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.AddressingAttributes.AddressingAttribute.Value; встречено: 128</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.BackColor; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.Border; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.Explanation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.Explanation; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.Font; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.Group">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.Group; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.GroupNumber; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.HorizontalAlign; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.Hyperlink; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.LineColor; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.Location; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.Name; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.Picture; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.PictureLocation; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.PictureSize; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.TabOrder; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.TaskDescription">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.TaskDescription; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.TextColor; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.Title; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.ToolTip" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.ToolTip; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.Transparent; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.VerticalAlign; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Activity.Properties.ZOrder; встречено: 32</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_GraphicalSchema.Items.Completion.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_GraphicalSchema.Items.Completion.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Events; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_GraphicalSchema.Items.Completion.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Events.Event">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Events.Event; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_GraphicalSchema.Items.Completion.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_GraphicalSchema.Items.Completion.Properties.Border" nillable="true"/>
+        <xs:element name="Font" type="t_GraphicalSchema.Items.Completion.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_GraphicalSchema.Items.Completion.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_GraphicalSchema.Items.Completion.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_GraphicalSchema.Items.Completion.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_GraphicalSchema.Items.Completion.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_GraphicalSchema.Items.Completion.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_GraphicalSchema.Items.Completion.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_GraphicalSchema.Items.Completion.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_GraphicalSchema.Items.Completion.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_GraphicalSchema.Items.Completion.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_GraphicalSchema.Items.Completion.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_GraphicalSchema.Items.Completion.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_GraphicalSchema.Items.Completion.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_GraphicalSchema.Items.Completion.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_GraphicalSchema.Items.Completion.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_GraphicalSchema.Items.Completion.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_GraphicalSchema.Items.Completion.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.BackColor; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.Border; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.Font; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.GroupNumber; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.HorizontalAlign; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.Hyperlink; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.LineColor; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.Location; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.Name; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.Picture; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.PictureLocation; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.PictureSize; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.TabOrder; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.TextColor; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.Title; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.ToolTip" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.ToolTip; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.Transparent; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.VerticalAlign; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Completion.Properties.ZOrder; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_GraphicalSchema.Items.Condition.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_GraphicalSchema.Items.Condition.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Events; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_GraphicalSchema.Items.Condition.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Events.Event">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Events.Event; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_GraphicalSchema.Items.Condition.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_GraphicalSchema.Items.Condition.Properties.Border" nillable="true"/>
+        <xs:element name="FalsePortIndex" type="t_GraphicalSchema.Items.Condition.Properties.FalsePortIndex" nillable="true"/>
+        <xs:element name="Font" type="t_GraphicalSchema.Items.Condition.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_GraphicalSchema.Items.Condition.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_GraphicalSchema.Items.Condition.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_GraphicalSchema.Items.Condition.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_GraphicalSchema.Items.Condition.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_GraphicalSchema.Items.Condition.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_GraphicalSchema.Items.Condition.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_GraphicalSchema.Items.Condition.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_GraphicalSchema.Items.Condition.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_GraphicalSchema.Items.Condition.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_GraphicalSchema.Items.Condition.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_GraphicalSchema.Items.Condition.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_GraphicalSchema.Items.Condition.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_GraphicalSchema.Items.Condition.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_GraphicalSchema.Items.Condition.Properties.Transparent" nillable="true"/>
+        <xs:element name="TruePortIndex" type="t_GraphicalSchema.Items.Condition.Properties.TruePortIndex" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_GraphicalSchema.Items.Condition.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_GraphicalSchema.Items.Condition.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.BackColor; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.Border; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.FalsePortIndex">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.FalsePortIndex; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.Font; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.GroupNumber; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.HorizontalAlign; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.Hyperlink; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.LineColor; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.Location; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.Name; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.Picture; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.PictureLocation; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.PictureSize; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.TabOrder; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.TextColor; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.Title; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.ToolTip; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.Transparent; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.TruePortIndex">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.TruePortIndex; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.VerticalAlign; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Condition.Properties.ZOrder; встречено: 18</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Properties" type="t_GraphicalSchema.Items.ConnectionLine.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_GraphicalSchema.Items.ConnectionLine.Properties.BackColor" nillable="true"/>
+        <xs:element name="BeginArrow" type="t_GraphicalSchema.Items.ConnectionLine.Properties.BeginArrow" nillable="true"/>
+        <xs:element name="Connect" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect" nillable="true"/>
+        <xs:element name="DecorativeLine" type="t_GraphicalSchema.Items.ConnectionLine.Properties.DecorativeLine" nillable="true"/>
+        <xs:element name="EndArrow" type="t_GraphicalSchema.Items.ConnectionLine.Properties.EndArrow" nillable="true"/>
+        <xs:element name="Font" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_GraphicalSchema.Items.ConnectionLine.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_GraphicalSchema.Items.ConnectionLine.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="Line" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Line" nillable="true"/>
+        <xs:element name="LineColor" type="t_GraphicalSchema.Items.ConnectionLine.Properties.LineColor" nillable="true"/>
+        <xs:element name="ManualyMovedSegments" type="t_GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments" nillable="true"/>
+        <xs:element name="Name" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Name" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_GraphicalSchema.Items.ConnectionLine.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PivotPoints" type="t_GraphicalSchema.Items.ConnectionLine.Properties.PivotPoints" nillable="true"/>
+        <xs:element name="TabOrder" type="t_GraphicalSchema.Items.ConnectionLine.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_GraphicalSchema.Items.ConnectionLine.Properties.TextColor" nillable="true"/>
+        <xs:element name="TextLocation" type="t_GraphicalSchema.Items.ConnectionLine.Properties.TextLocation" nillable="true"/>
+        <xs:element name="Title" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_GraphicalSchema.Items.ConnectionLine.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_GraphicalSchema.Items.ConnectionLine.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_GraphicalSchema.Items.ConnectionLine.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.BackColor; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.BeginArrow">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.BeginArrow; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Connect; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="From" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.From" nillable="true"/>
+        <xs:element name="To" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.To" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.From" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Connect.From; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Item" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.From.Item" nillable="true"/>
+        <xs:element name="PortIndex" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.From.PortIndex" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.From.Item">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Connect.From.Item; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.From.PortIndex">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Connect.From.PortIndex; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.To" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Connect.To; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Item" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.To.Item" nillable="true"/>
+        <xs:element name="PortIndex" type="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.To.PortIndex" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.To.Item">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Connect.To.Item; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Connect.To.PortIndex">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Connect.To.PortIndex; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.DecorativeLine">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.DecorativeLine; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.EndArrow">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.EndArrow; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Font; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.GroupNumber; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.HorizontalAlign; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Hyperlink; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Line" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Line; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.LineColor; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments; встречено: 23</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Segment" type="t_GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments.Segment" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments.Segment" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments.Segment; встречено: 37</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="End" type="t_GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments.Segment.End" nillable="true"/>
+        <xs:element name="Start" type="t_GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments.Segment.Start" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="index" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments.Segment.End">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments.Segment.End; встречено: 37</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="x" type="xs:string"/>
+        <xs:attribute name="y" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments.Segment.Start">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.ManualyMovedSegments.Segment.Start; встречено: 37</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="x" type="xs:string"/>
+        <xs:attribute name="y" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Name; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.PictureLocation; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.PivotPoints" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.PivotPoints; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Point" type="t_GraphicalSchema.Items.ConnectionLine.Properties.PivotPoints.Point" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.PivotPoints.Point">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.PivotPoints.Point; встречено: 462</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="x" type="xs:string"/>
+        <xs:attribute name="y" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.TabOrder; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.TextColor; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.TextLocation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.TextLocation; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Title; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.ToolTip; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.Transparent; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.VerticalAlign; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.ConnectionLine.Properties.ZOrder; встречено: 110</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Properties" type="t_GraphicalSchema.Items.Decoration.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Angle" type="xs:anyType" nillable="true"/>
+        <xs:element name="BackColor" type="t_GraphicalSchema.Items.Decoration.Properties.BackColor" nillable="true"/>
+        <xs:element name="FlipMode" type="t_GraphicalSchema.Items.Decoration.Properties.FlipMode" nillable="true"/>
+        <xs:element name="Font" type="t_GraphicalSchema.Items.Decoration.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_GraphicalSchema.Items.Decoration.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_GraphicalSchema.Items.Decoration.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_GraphicalSchema.Items.Decoration.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_GraphicalSchema.Items.Decoration.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_GraphicalSchema.Items.Decoration.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_GraphicalSchema.Items.Decoration.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_GraphicalSchema.Items.Decoration.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_GraphicalSchema.Items.Decoration.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_GraphicalSchema.Items.Decoration.Properties.PictureSize" nillable="true"/>
+        <xs:element name="Shape" type="t_GraphicalSchema.Items.Decoration.Properties.Shape" nillable="true"/>
+        <xs:element name="TabOrder" type="t_GraphicalSchema.Items.Decoration.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_GraphicalSchema.Items.Decoration.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_GraphicalSchema.Items.Decoration.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_GraphicalSchema.Items.Decoration.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_GraphicalSchema.Items.Decoration.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_GraphicalSchema.Items.Decoration.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_GraphicalSchema.Items.Decoration.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.Angle">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.Angle; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.BackColor; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.FlipMode">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.FlipMode; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.Font; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.GroupNumber; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.HorizontalAlign; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.Hyperlink; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.LineColor; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.Location; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.Name; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.Picture; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.PictureLocation; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.PictureSize; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.Shape">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.Shape; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.TabOrder; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.TextColor; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.Title; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.ToolTip; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.Transparent; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.VerticalAlign; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Decoration.Properties.ZOrder; встречено: 9</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Properties" type="t_GraphicalSchema.Items.Join.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_GraphicalSchema.Items.Join.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_GraphicalSchema.Items.Join.Properties.Border" nillable="true"/>
+        <xs:element name="Font" type="t_GraphicalSchema.Items.Join.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_GraphicalSchema.Items.Join.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_GraphicalSchema.Items.Join.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_GraphicalSchema.Items.Join.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_GraphicalSchema.Items.Join.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_GraphicalSchema.Items.Join.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_GraphicalSchema.Items.Join.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_GraphicalSchema.Items.Join.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_GraphicalSchema.Items.Join.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_GraphicalSchema.Items.Join.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_GraphicalSchema.Items.Join.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_GraphicalSchema.Items.Join.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_GraphicalSchema.Items.Join.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_GraphicalSchema.Items.Join.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_GraphicalSchema.Items.Join.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_GraphicalSchema.Items.Join.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_GraphicalSchema.Items.Join.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.BackColor; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.Border; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.Font; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.GroupNumber; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.HorizontalAlign; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.Hyperlink; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.LineColor; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.Location; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.Name; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.Picture; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.PictureLocation; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.PictureSize; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.TabOrder; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.TextColor; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.Title">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.Title; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.ToolTip; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.Transparent; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.VerticalAlign; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Join.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Join.Properties.ZOrder; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_GraphicalSchema.Items.Processing.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_GraphicalSchema.Items.Processing.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Events; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_GraphicalSchema.Items.Processing.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Events.Event">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Events.Event; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_GraphicalSchema.Items.Processing.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_GraphicalSchema.Items.Processing.Properties.Border" nillable="true"/>
+        <xs:element name="Font" type="t_GraphicalSchema.Items.Processing.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_GraphicalSchema.Items.Processing.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_GraphicalSchema.Items.Processing.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_GraphicalSchema.Items.Processing.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_GraphicalSchema.Items.Processing.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_GraphicalSchema.Items.Processing.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_GraphicalSchema.Items.Processing.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_GraphicalSchema.Items.Processing.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_GraphicalSchema.Items.Processing.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_GraphicalSchema.Items.Processing.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_GraphicalSchema.Items.Processing.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_GraphicalSchema.Items.Processing.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_GraphicalSchema.Items.Processing.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_GraphicalSchema.Items.Processing.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_GraphicalSchema.Items.Processing.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_GraphicalSchema.Items.Processing.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_GraphicalSchema.Items.Processing.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.BackColor; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.Border; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.Font; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.GroupNumber; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.HorizontalAlign; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.Hyperlink; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.LineColor; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.Location; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.Name; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.Picture; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.PictureLocation; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.PictureSize; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.TabOrder; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.TextColor; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.Title; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.ToolTip; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.Transparent; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.VerticalAlign; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Processing.Properties.ZOrder; встречено: 8</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Properties" type="t_GraphicalSchema.Items.Split.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_GraphicalSchema.Items.Split.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_GraphicalSchema.Items.Split.Properties.Border" nillable="true"/>
+        <xs:element name="Font" type="t_GraphicalSchema.Items.Split.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_GraphicalSchema.Items.Split.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_GraphicalSchema.Items.Split.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_GraphicalSchema.Items.Split.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_GraphicalSchema.Items.Split.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_GraphicalSchema.Items.Split.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_GraphicalSchema.Items.Split.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_GraphicalSchema.Items.Split.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_GraphicalSchema.Items.Split.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_GraphicalSchema.Items.Split.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_GraphicalSchema.Items.Split.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_GraphicalSchema.Items.Split.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_GraphicalSchema.Items.Split.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_GraphicalSchema.Items.Split.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_GraphicalSchema.Items.Split.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_GraphicalSchema.Items.Split.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_GraphicalSchema.Items.Split.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.BackColor; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.Border; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.Font; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.GroupNumber; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.HorizontalAlign; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.Hyperlink; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.LineColor; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.Location; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.Name; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.Picture; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.PictureLocation; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.PictureSize; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.TabOrder; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.TextColor; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.Title">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.Title; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.ToolTip; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.Transparent; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.VerticalAlign; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Split.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Split.Properties.ZOrder; встречено: 3</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_GraphicalSchema.Items.Start.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_GraphicalSchema.Items.Start.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Events; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_GraphicalSchema.Items.Start.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Events.Event">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Events.Event; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_GraphicalSchema.Items.Start.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_GraphicalSchema.Items.Start.Properties.Border" nillable="true"/>
+        <xs:element name="Font" type="t_GraphicalSchema.Items.Start.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_GraphicalSchema.Items.Start.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_GraphicalSchema.Items.Start.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_GraphicalSchema.Items.Start.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_GraphicalSchema.Items.Start.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_GraphicalSchema.Items.Start.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_GraphicalSchema.Items.Start.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_GraphicalSchema.Items.Start.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_GraphicalSchema.Items.Start.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_GraphicalSchema.Items.Start.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_GraphicalSchema.Items.Start.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_GraphicalSchema.Items.Start.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_GraphicalSchema.Items.Start.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_GraphicalSchema.Items.Start.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_GraphicalSchema.Items.Start.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_GraphicalSchema.Items.Start.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_GraphicalSchema.Items.Start.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.BackColor; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.Border; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.Font; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.GroupNumber; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.HorizontalAlign; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.Hyperlink; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.LineColor; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.Location; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.Name; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.Picture; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.PictureLocation; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.PictureSize; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.TabOrder; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.TextColor; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.Title; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.ToolTip; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.Transparent; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.VerticalAlign; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.Items.Start.Properties.ZOrder; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.PrintParameters; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BlackAndWhite" type="t_GraphicalSchema.PrintParameters.BlackAndWhite" nillable="true"/>
+        <xs:element name="BottomMargin" type="t_GraphicalSchema.PrintParameters.BottomMargin" nillable="true"/>
+        <xs:element name="FitPageMode" type="t_GraphicalSchema.PrintParameters.FitPageMode" nillable="true"/>
+        <xs:element name="LeftMargin" type="t_GraphicalSchema.PrintParameters.LeftMargin" nillable="true"/>
+        <xs:element name="RightMargin" type="t_GraphicalSchema.PrintParameters.RightMargin" nillable="true"/>
+        <xs:element name="TopMargin" type="t_GraphicalSchema.PrintParameters.TopMargin" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.BlackAndWhite">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.PrintParameters.BlackAndWhite; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.BottomMargin">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.PrintParameters.BottomMargin; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.FitPageMode">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.PrintParameters.FitPageMode; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.LeftMargin">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.PrintParameters.LeftMargin; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.RightMargin">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.PrintParameters.RightMargin; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.TopMargin">
+    <xs:annotation>
+      <xs:documentation>путь: GraphicalSchema.PrintParameters.TopMargin; встречено: 7</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,58 @@
+{
+  "$schema_version": "2.20",
+  "kind": "ChartOfAccounts",
+  "children_inline": {
+    "ChildObjects/AccountingFlag": {
+      "parser": "AttributeParser",
+      "member_kind": "accounting_flag"
+    },
+    "ChildObjects/Attribute": {
+      "parser": "AttributeParser",
+      "member_kind": "attribute"
+    },
+    "ChildObjects/Command": {
+      "parser": "CommandParser",
+      "folder": "Commands"
+    },
+    "ChildObjects/ExtDimensionAccountingFlag": {
+      "parser": "AttributeParser",
+      "member_kind": "ext_dimension_accounting_flag"
+    },
+    "Properties/DefaultChoiceForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultListForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultObjectForm": {
+      "parser": "RefParser"
+    },
+    "Properties/ExtDimensionTypes": {
+      "parser": "RefParser"
+    }
+  },
+  "children_external": {
+    "ChildObjects/Form": {
+      "folder": "Forms"
+    },
+    "ChildObjects/Template": {
+      "folder": "Templates"
+    }
+  },
+  "node_files": {
+    "Ext/Help.xml": {
+      "parser": "HelpParser"
+    },
+    "Ext/ManagerModule.bsl": {
+      "parser": "BslParser",
+      "type": "ManagerModule"
+    },
+    "Ext/ObjectModule.bsl": {
+      "parser": "BslParser",
+      "type": "ObjectModule"
+    },
+    "Ext/Predefined.xml": {
+      "parser": "PredefinedParser"
+    }
+  }
+}

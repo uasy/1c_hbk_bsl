@@ -1,0 +1,14 @@
+{
+  "$schema_version": "2.20",
+  "kind": "ScheduledJob",
+  "children_inline": {
+    "Properties/MethodName": {
+      "parser": "RefParser"
+    }
+  },
+  "node_files": {
+    "Ext/Schedule.xml": {
+      "parser": "NopParser"
+    }
+  }
+}

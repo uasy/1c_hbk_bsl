@@ -1,0 +1,16 @@
+{
+  "$schema_version": "2.20",
+  "kind": "IntegrationService",
+  "children_inline": {
+    "ChildObjects/IntegrationServiceChannel": {
+      "parser": "AttributeParser",
+      "member_kind": "service_channel"
+    }
+  },
+  "node_files": {
+    "Ext/Module.bsl": {
+      "parser": "BslParser",
+      "type": "ServiceModule"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema_version": "2.20",
+  "kind": "extrnprops.Help",
+  "node_files": {
+    "_files": {
+      "parser": "NopParser"
+    },
+    "ru.html": {
+      "parser": "NopParser"
+    }
+  }
+}

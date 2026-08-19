@@ -1,0 +1,9 @@
+{
+  "$schema_version": "2.20",
+  "kind": "FunctionalOption",
+  "children_inline": {
+    "Properties/Location": {
+      "parser": "RefParser"
+    }
+  }
+}

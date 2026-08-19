@@ -1,0 +1,15 @@
+{
+  "$schema_version": "2.20",
+  "kind": "CommonTemplate",
+  "node_files": {
+    "Ext/Template.bin": {
+      "parser": "NopParser"
+    },
+    "Ext/Template.txt": {
+      "parser": "NopParser"
+    },
+    "Ext/Template.xml": {
+      "parser": "TemplateParser"
+    }
+  }
+}

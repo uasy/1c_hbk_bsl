@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Схема пространства имён http://v8.1c.ru/8.3/xcf/predef
+  корневой элемент PredefinedData, поколение выгрузки 2.20.
+
+  ВНИМАНИЕ: этот формат СВОЕГО атрибута version может не нести —
+  тогда поколение унаследовано от описателя-родителя и означает
+  «в выгрузке какого поколения файл наблюдался», а НЕ версию этого
+  формата.
+
+  ПОРОЖДЕНО из корпуса выгрузок, не является официальной схемой 1С.
+  Дата последнего пополнения: 2026-08-19
+
+  СХЕМА НАКАПЛИВАЕТСЯ. Прогон читает этот файл обратно в модель
+  наблюдений, объединяет с наблюдениями по новым выгрузкам и переписывает.
+  Прежние выгрузки для этого не нужны: источником прежних наблюдений
+  служит сама схема. Ранее записанное не удаляется; прогон, ничего не
+  добавивший, файла не меняет.
+
+  ХАРАКТЕР АРТЕФАКТА — ОПИСАТЕЛЬНЫЙ, НЕ НОРМАТИВНЫЙ.
+  Схема фиксирует то, что встретилось в корпусе, а не то, что допускает
+  формат. Модель содержимого намеренно разрешительная (xs:choice без
+  порядка и кратностей). Применение:
+    можно  — находить поля, обнаруживать незнакомые элементы;
+    нельзя — отбраковывать файлы: законный, но не встретившийся в корпусе
+             элемент дал бы ложную ошибку.
+
+  Поддеревья чужих пространств имён (v8:, xr:, logform, DCS, predef…)
+  не раскрываются — у них собственные артефакты; здесь xs:any.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://v8.1c.ru/8.3/xcf/predef"
+           targetNamespace="http://v8.1c.ru/8.3/xcf/predef"
+           elementFormDefault="qualified">
+
+  <xs:element name="PredefinedData" type="t_PredefinedData" nillable="true"/>
+
+  <!-- Типы своего пространства, названные через xsi:type. Импортировать
+       собственный targetNamespace нельзя, поэтому объявлены здесь. -->
+  <xs:complexType name="CalculationTypePredefinedItems" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="t_PredefinedData"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CatalogPredefinedItems" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="t_PredefinedData"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ChartOfAccountsPredefinedItems" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="t_PredefinedData"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PlanOfCharacteristicKindPredefinedItems" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="t_PredefinedData"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.AccountType">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.AccountType</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.AccountingFlags" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.AccountingFlags</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Flag" type="t_Item.AccountingFlags.Flag" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.ChildItems" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.ChildItems</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Item" type="t_Item.ChildItems.Item" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.Code">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.Code</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.Description">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.Description</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.ExtDimensionTypes" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.ExtDimensionTypes</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ExtDimensionType" type="t_Item.ExtDimensionTypes.ExtDimensionType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.IsFolder">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.IsFolder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.Name">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.Name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.OffBalance">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.OffBalance</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.Order">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.Order</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ChildItems.Item.Type" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: ChildItems.Item.Type</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}StringQualifiers, {http://v8.1c.ru/8.1/data/core}Type -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ExtDimensionType.AccountingFlags.Flag">
+    <xs:annotation>
+      <xs:documentation>контекст: ExtDimensionType.AccountingFlags.Flag</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ExtDimensionTypes.ExtDimensionType.AccountingFlags" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: ExtDimensionTypes.ExtDimensionType.AccountingFlags</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Flag" type="t_ExtDimensionType.AccountingFlags.Flag" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ExtDimensionTypes.ExtDimensionType.Turnover">
+    <xs:annotation>
+      <xs:documentation>контекст: ExtDimensionTypes.ExtDimensionType.Turnover</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Item.AccountingFlags.Flag">
+    <xs:annotation>
+      <xs:documentation>контекст: Item.AccountingFlags.Flag</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Item.ChildItems.Item" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Item.ChildItems.Item</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AccountType" type="t_ChildItems.Item.AccountType" nillable="true"/>
+        <xs:element name="AccountingFlags" type="t_ChildItems.Item.AccountingFlags" nillable="true"/>
+        <xs:element name="ChildItems" type="t_ChildItems.Item.ChildItems" nillable="true"/>
+        <xs:element name="Code" type="t_ChildItems.Item.Code" nillable="true"/>
+        <xs:element name="Description" type="t_ChildItems.Item.Description" nillable="true"/>
+        <xs:element name="ExtDimensionTypes" type="t_ChildItems.Item.ExtDimensionTypes" nillable="true"/>
+        <xs:element name="IsFolder" type="t_ChildItems.Item.IsFolder" nillable="true"/>
+        <xs:element name="Name" type="t_ChildItems.Item.Name" nillable="true"/>
+        <xs:element name="OffBalance" type="t_ChildItems.Item.OffBalance" nillable="true"/>
+        <xs:element name="Order" type="t_ChildItems.Item.Order" nillable="true"/>
+        <xs:element name="Type" type="t_ChildItems.Item.Type" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Item.ExtDimensionTypes.ExtDimensionType" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Item.ExtDimensionTypes.ExtDimensionType</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AccountingFlags" type="t_ExtDimensionTypes.ExtDimensionType.AccountingFlags" nillable="true"/>
+        <xs:element name="Turnover" type="t_ExtDimensionTypes.ExtDimensionType.Turnover" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Item" type="t_PredefinedData.Item" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AccountType" type="t_PredefinedData.Item.AccountType" nillable="true"/>
+        <xs:element name="AccountingFlags" type="t_PredefinedData.Item.AccountingFlags" nillable="true"/>
+        <xs:element name="ActionPeriodIsBase" type="t_PredefinedData.Item.ActionPeriodIsBase" nillable="true"/>
+        <xs:element name="ChildItems" type="t_PredefinedData.Item.ChildItems" nillable="true"/>
+        <xs:element name="Code" type="xs:anyType" nillable="true"/>
+        <xs:element name="Description" type="t_PredefinedData.Item.Description" nillable="true"/>
+        <xs:element name="Displaced" type="t_PredefinedData.Item.Displaced" nillable="true"/>
+        <xs:element name="ExtDimensionTypes" type="t_PredefinedData.Item.ExtDimensionTypes" nillable="true"/>
+        <xs:element name="ExtensionState" type="t_PredefinedData.Item.ExtensionState" nillable="true"/>
+        <xs:element name="IsFolder" type="t_PredefinedData.Item.IsFolder" nillable="true"/>
+        <xs:element name="Name" type="t_PredefinedData.Item.Name" nillable="true"/>
+        <xs:element name="OffBalance" type="t_PredefinedData.Item.OffBalance" nillable="true"/>
+        <xs:element name="Order" type="t_PredefinedData.Item.Order" nillable="true"/>
+        <xs:element name="Type" type="t_PredefinedData.Item.Type" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.AccountType">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.AccountType</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.AccountingFlags" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.AccountingFlags</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Flag" type="t_Item.AccountingFlags.Flag" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.ActionPeriodIsBase">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.ActionPeriodIsBase</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.ChildItems" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.ChildItems</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Item" type="t_Item.ChildItems.Item" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.Code">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.Code</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.Description">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.Description</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.Displaced">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.Displaced</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.ExtDimensionTypes" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.ExtDimensionTypes</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ExtDimensionType" type="t_Item.ExtDimensionTypes.ExtDimensionType" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.ExtensionState">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.ExtensionState</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.IsFolder">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.IsFolder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.Name">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.Name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.OffBalance">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.OffBalance</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.Order">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.Order</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_PredefinedData.Item.Type" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: PredefinedData.Item.Type</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}DateQualifiers, {http://v8.1c.ru/8.1/data/core}NumberQualifiers, {http://v8.1c.ru/8.1/data/core}StringQualifiers, {http://v8.1c.ru/8.1/data/core}Type -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,15 @@
+{
+  "$schema_version": "2.20",
+  "kind": "CommonCommand",
+  "children_inline": {
+    "Properties/Group": {
+      "parser": "RefParser"
+    }
+  },
+  "node_files": {
+    "Ext/CommandModule.bsl": {
+      "parser": "BslParser",
+      "type": "CommandModule"
+    }
+  }
+}

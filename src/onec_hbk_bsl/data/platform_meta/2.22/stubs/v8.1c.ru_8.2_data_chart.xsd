@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Заглушки типов пространства http://v8.1c.ru/8.2/data/chart.
+  Порождено из корпуса: перечислены только те типы, на которые
+  ссылается xsi:type в выгрузках. Содержимое НЕ описано —
+  заглушка нужна, чтобы xsi:type разрешался при проверке.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://v8.1c.ru/8.2/data/chart"
+           elementFormDefault="qualified">
+  <xs:complexType name="Chart" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+  <xs:complexType name="GanttChart" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+</xs:schema>

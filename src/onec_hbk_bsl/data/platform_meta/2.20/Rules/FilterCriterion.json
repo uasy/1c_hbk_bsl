@@ -1,0 +1,20 @@
+{
+  "$schema_version": "2.20",
+  "kind": "FilterCriterion",
+  "children_inline": {
+    "Properties/DefaultForm": {
+      "parser": "RefParser"
+    }
+  },
+  "children_external": {
+    "ChildObjects/Form": {
+      "folder": "Forms"
+    }
+  },
+  "node_files": {
+    "Ext/ManagerModule.bsl": {
+      "parser": "BslParser",
+      "type": "ManagerModule"
+    }
+  }
+}

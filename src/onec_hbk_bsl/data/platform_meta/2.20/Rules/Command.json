@@ -1,0 +1,10 @@
+{
+  "$schema_version": "2.20",
+  "kind": "Command",
+  "node_files": {
+    "Ext/CommandModule.bsl": {
+      "parser": "BslParser",
+      "type": "CommandModule"
+    }
+  }
+}

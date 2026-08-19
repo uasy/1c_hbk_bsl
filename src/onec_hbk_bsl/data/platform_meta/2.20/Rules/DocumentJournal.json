@@ -1,0 +1,34 @@
+{
+  "$schema_version": "2.20",
+  "kind": "DocumentJournal",
+  "children_inline": {
+    "ChildObjects/Column": {
+      "parser": "AttributeParser",
+      "member_kind": "column"
+    },
+    "ChildObjects/Command": {
+      "parser": "CommandParser",
+      "folder": "Commands"
+    },
+    "Properties/DefaultForm": {
+      "parser": "RefParser"
+    }
+  },
+  "children_external": {
+    "ChildObjects/Form": {
+      "folder": "Forms"
+    },
+    "ChildObjects/Template": {
+      "folder": "Templates"
+    }
+  },
+  "node_files": {
+    "Ext/Help.xml": {
+      "parser": "HelpParser"
+    },
+    "Ext/ManagerModule.bsl": {
+      "parser": "BslParser",
+      "type": "ManagerModule"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "$schema_version": "2.20",
+  "kind": "EventSubscription",
+  "children_inline": {
+    "Properties/Handler": {
+      "parser": "RefParser"
+    }
+  }
+}

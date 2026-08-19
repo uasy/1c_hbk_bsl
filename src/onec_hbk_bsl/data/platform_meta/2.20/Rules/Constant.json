@@ -1,0 +1,19 @@
+{
+  "$schema_version": "2.20",
+  "kind": "Constant",
+  "children_inline": {
+    "Properties/DefaultForm": {
+      "parser": "RefParser"
+    }
+  },
+  "node_files": {
+    "Ext/ManagerModule.bsl": {
+      "parser": "BslParser",
+      "type": "ManagerModule"
+    },
+    "Ext/ValueManagerModule.bsl": {
+      "parser": "BslParser",
+      "type": "ValueManagerModule"
+    }
+  }
+}

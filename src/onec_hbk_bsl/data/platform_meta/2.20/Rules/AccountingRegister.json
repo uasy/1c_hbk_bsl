@@ -1,0 +1,42 @@
+{
+  "$schema_version": "2.20",
+  "kind": "AccountingRegister",
+  "children_inline": {
+    "ChildObjects/Attribute": {
+      "parser": "AttributeParser",
+      "member_kind": "attribute"
+    },
+    "ChildObjects/Dimension": {
+      "parser": "AttributeParser",
+      "member_kind": "dimension"
+    },
+    "ChildObjects/Resource": {
+      "parser": "AttributeParser",
+      "member_kind": "resource"
+    },
+    "Properties/ChartOfAccounts": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultListForm": {
+      "parser": "RefParser"
+    }
+  },
+  "children_external": {
+    "ChildObjects/Form": {
+      "folder": "Forms"
+    }
+  },
+  "node_files": {
+    "Ext/Help.xml": {
+      "parser": "HelpParser"
+    },
+    "Ext/ManagerModule.bsl": {
+      "parser": "BslParser",
+      "type": "ManagerModule"
+    },
+    "Ext/RecordSetModule.bsl": {
+      "parser": "BslParser",
+      "type": "RecordSetModule"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema_version": "2.20",
+  "kind": "Task",
+  "children_inline": {
+    "ChildObjects/AddressingAttribute": {
+      "parser": "AttributeParser",
+      "member_kind": "addressing_attribute"
+    },
+    "ChildObjects/Attribute": {
+      "parser": "AttributeParser",
+      "member_kind": "attribute"
+    },
+    "ChildObjects/Command": {
+      "parser": "CommandParser",
+      "folder": "Commands"
+    },
+    "Properties/Addressing": {
+      "parser": "RefParser"
+    },
+    "Properties/CurrentPerformer": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultListForm": {
+      "parser": "RefParser"
+    },
+    "Properties/DefaultObjectForm": {
+      "parser": "RefParser"
+    },
+    "Properties/MainAddressingAttribute": {
+      "parser": "RefParser"
+    }
+  },
+  "children_external": {
+    "ChildObjects/Form": {
+      "folder": "Forms"
+    }
+  },
+  "node_files": {
+    "Ext/Help.xml": {
+      "parser": "HelpParser"
+    },
+    "Ext/ManagerModule.bsl": {
+      "parser": "BslParser",
+      "type": "ManagerModule"
+    },
+    "Ext/ObjectModule.bsl": {
+      "parser": "BslParser",
+      "type": "ObjectModule"
+    }
+  }
+}

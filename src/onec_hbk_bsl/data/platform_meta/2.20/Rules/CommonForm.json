@@ -1,0 +1,12 @@
+{
+  "$schema_version": "2.20",
+  "kind": "CommonForm",
+  "node_files": {
+    "Ext/Form.xml": {
+      "parser": "LogFormParser"
+    },
+    "Ext/Help.xml": {
+      "parser": "HelpParser"
+    }
+  }
+}

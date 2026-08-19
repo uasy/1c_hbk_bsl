@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Схема пространства имён http://v8.1c.ru/8.3/xcf/extrnprops
+  корневой элемент ExtPicture, поколение выгрузки 2.21.
+
+  ВНИМАНИЕ: этот формат СВОЕГО атрибута version может не нести —
+  тогда поколение унаследовано от описателя-родителя и означает
+  «в выгрузке какого поколения файл наблюдался», а НЕ версию этого
+  формата.
+
+  ПОРОЖДЕНО из корпуса выгрузок, не является официальной схемой 1С.
+  Дата порождения: 2026-08-09
+  Файлов в основе: 1741, видов/веток: 1
+  Корней в корпусе: 2
+
+  ХАРАКТЕР АРТЕФАКТА — ОПИСАТЕЛЬНЫЙ, НЕ НОРМАТИВНЫЙ.
+  Схема фиксирует то, что встретилось в корпусе, а не то, что допускает
+  формат. Модель содержимого намеренно разрешительная (xs:choice без
+  порядка и кратностей). Применение:
+    можно  — находить поля, обнаруживать незнакомые элементы;
+    нельзя — отбраковывать файлы: законный, но не встретившийся в корпусе
+             элемент дал бы ложную ошибку.
+
+  Поддеревья чужих пространств имён (v8:, xr:, logform, DCS, predef…)
+  не раскрываются — у них собственные артефакты; здесь xs:any.
+
+  Регенерация входит в тесты: породить заново и сравнить с этим файлом.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://v8.1c.ru/8.3/xcf/extrnprops"
+           targetNamespace="http://v8.1c.ru/8.3/xcf/extrnprops"
+           elementFormDefault="qualified">
+
+  <xs:element name="ExtPicture" type="t_ExtPicture" nillable="true"/>
+
+  <xs:complexType name="t_ExtPicture" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: ExtPicture; встречено: 3482</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Picture" type="t_ExtPicture.Picture" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ExtPicture.Picture" mixed="true">
+    <xs:annotation>
+      <xs:documentation>путь: ExtPicture.Picture; встречено: 1741</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.3/xcf/readable}Abs, {http://v8.1c.ru/8.3/xcf/readable}LoadTransparent, {http://v8.1c.ru/8.3/xcf/readable}TransparentPixel -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+</xs:schema>

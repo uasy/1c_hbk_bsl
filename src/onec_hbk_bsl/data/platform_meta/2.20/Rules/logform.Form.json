@@ -1,0 +1,1066 @@
+{
+  "$schema_version": "2.20",
+  "kind": "logform.Form",
+  "children_inline": {
+    "Attributes/Attribute": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "Type/Type",
+        "from": "Attributes/Attribute/Type"
+      },
+      "member_kind": "form_attribute"
+    },
+    "Attributes/Attribute/Columns/AdditionalColumns/Column": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "Type/Type",
+        "from": "Attributes/Attribute/Columns/AdditionalColumns/Column/Type"
+      },
+      "member_kind": "form_attribute"
+    },
+    "Attributes/Attribute/Columns/AdditionalColumns/Column/Edit/Value": {
+      "parser": "RefParser",
+      "ref_kind": "Edit"
+    },
+    "Attributes/Attribute/Columns/AdditionalColumns/Column/View/Value": {
+      "parser": "RefParser",
+      "ref_kind": "View"
+    },
+    "Attributes/Attribute/Columns/Column": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "Type/Type",
+        "from": "Attributes/Attribute/Columns/Column/Type"
+      },
+      "member_kind": "form_attribute"
+    },
+    "Attributes/Attribute/Columns/Column/Edit/Value": {
+      "parser": "RefParser",
+      "ref_kind": "Edit"
+    },
+    "Attributes/Attribute/Columns/Column/View/Value": {
+      "parser": "RefParser",
+      "ref_kind": "View"
+    },
+    "Attributes/Attribute/Edit/Value": {
+      "parser": "RefParser",
+      "ref_kind": "Edit"
+    },
+    "Attributes/Attribute/View/Value": {
+      "parser": "RefParser",
+      "ref_kind": "View"
+    },
+    "AutoCommandBar": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/Button": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/Button/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/ButtonGroup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "AutoCommandBar/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/ButtonGroup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/Popup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "AutoCommandBar/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/Popup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/SearchControlAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/SearchControlAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/SearchControlAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/SearchStringAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/SearchStringAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "AutoCommandBar/ChildItems/SearchStringAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/Attributes/Attribute": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "Type/Type",
+        "from": "BaseForm/Attributes/Attribute/Type"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/AutoCommandBar": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/AutoCommandBar/ChildItems/Button": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/AutoCommandBar/ChildItems/Button/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/AutoCommandBar/ChildItems/ButtonGroup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/AutoCommandBar/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/AutoCommandBar/ChildItems/ButtonGroup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Button": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Button/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/ButtonGroup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/ButtonGroup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/CheckBoxField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/CheckBoxField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/CheckBoxField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/ColumnGroup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/ColumnGroup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/CommandBar": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/CommandBar/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/InputField": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChoiceList/Item/Value/Value",
+        "from": "BaseForm/ChildItems/InputField/ChoiceList/Item/Value"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/InputField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/InputField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/LabelDecoration": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/LabelDecoration/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/LabelDecoration/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/LabelField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/LabelField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/LabelField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Page": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Page/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Pages": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Pages/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/PictureDecoration": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/PictureDecoration/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/PictureDecoration/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/PictureField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/PictureField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/PictureField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Popup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Popup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/ProgressBarField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/ProgressBarField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/ProgressBarField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/RadioButtonField": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChoiceList/Item/Value/Value",
+        "from": "BaseForm/ChildItems/RadioButtonField/ChoiceList/Item/Value"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/RadioButtonField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/RadioButtonField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/SearchStringAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/SearchStringAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/SearchStringAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/SpreadSheetDocumentField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/SpreadSheetDocumentField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/SpreadSheetDocumentField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/AutoCommandBar": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/SearchControlAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/SearchControlAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/SearchControlAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/SearchStringAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/SearchStringAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/SearchStringAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/ViewStatusAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/ViewStatusAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/Table/ViewStatusAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/UsualGroup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "BaseForm/ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "BaseForm/ChildItems/UsualGroup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Button": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Button/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Button/ExtendedTooltip/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/Button/UserVisible/Value": {
+      "parser": "RefParser",
+      "ref_kind": "UserVisible"
+    },
+    "ChildItems/ButtonGroup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/ButtonGroup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/CalendarField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/CalendarField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/CalendarField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/CalendarField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/ChartField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/ChartField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/ChartField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/ChartField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/CheckBoxField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/CheckBoxField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/CheckBoxField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/CheckBoxField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/CheckBoxField/ExtendedTooltip/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/ColumnGroup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/ColumnGroup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/CommandBar": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/CommandBar/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/CommandBar/UserVisible/Value": {
+      "parser": "RefParser",
+      "ref_kind": "UserVisible"
+    },
+    "ChildItems/FormattedDocumentField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/FormattedDocumentField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/FormattedDocumentField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/FormattedDocumentField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/GanttChartField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/GanttChartField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/GanttChartField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/GraphicalSchemaField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/GraphicalSchemaField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/GraphicalSchemaField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/GraphicalSchemaField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/GraphicalSchemaField/UserVisible/Value": {
+      "parser": "RefParser",
+      "ref_kind": "UserVisible"
+    },
+    "ChildItems/HTMLDocumentField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/HTMLDocumentField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/HTMLDocumentField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/HTMLDocumentField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/InputField": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChoiceList/Item/Value/Value",
+        "from": "ChildItems/InputField/ChoiceList/Item/Value"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/InputField/ChoiceParameterLinks/Link": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/InputField/ChoiceParameters/item": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "value/Value/Value",
+        "from": "ChildItems/InputField/ChoiceParameters/item/value/Value"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/InputField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/InputField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/InputField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/InputField/ExtendedTooltip/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/LabelDecoration": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/LabelDecoration/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/LabelDecoration/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/LabelDecoration/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/LabelDecoration/ExtendedTooltip/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/LabelDecoration/UserVisible/Value": {
+      "parser": "RefParser",
+      "ref_kind": "UserVisible"
+    },
+    "ChildItems/LabelField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/LabelField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/LabelField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/LabelField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/LabelField/ExtendedTooltip/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/PDFDocumentField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PDFDocumentField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PDFDocumentField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PDFDocumentField/ViewStatusAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PDFDocumentField/ViewStatusAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PDFDocumentField/ViewStatusAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Page": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/Page/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Pages": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/Pages/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/Pages/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PeriodField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PeriodField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PeriodField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PictureDecoration": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PictureDecoration/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PictureDecoration/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/PictureDecoration/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PictureDecoration/ExtendedTooltip/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/PictureField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PictureField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/PictureField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/PictureField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PictureField/ExtendedTooltip/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/PlannerField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/PlannerField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/PlannerField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/PlannerField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Popup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/Popup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/ProgressBarField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/ProgressBarField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/ProgressBarField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/RadioButtonField": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChoiceList/Item/Value/Value",
+        "from": "ChildItems/RadioButtonField/ChoiceList/Item/Value"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/RadioButtonField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/RadioButtonField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/RadioButtonField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/RadioButtonField/ExtendedTooltip/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/SearchControlAddition": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/SearchControlAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/SearchControlAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/SearchStringAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/SearchStringAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/SearchStringAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/SpreadSheetDocumentField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/SpreadSheetDocumentField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/SpreadSheetDocumentField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/SpreadSheetDocumentField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/AutoCommandBar": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/Table/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/ExtendedTooltip/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/Table/SearchControlAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/SearchControlAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/SearchControlAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/SearchStringAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/SearchStringAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/SearchStringAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/ViewStatusAddition": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/ViewStatusAddition/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/Table/ViewStatusAddition/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/TextDocumentField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/TextDocumentField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/TextDocumentField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/TextDocumentField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/TrackBarField": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/TrackBarField/ContextMenu": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/TrackBarField/Events/Event": {
+      "parser": "RefParser"
+    },
+    "ChildItems/TrackBarField/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/UsualGroup": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "ChildItems",
+        "from": "ChildItems"
+      },
+      "member_kind": "form_item"
+    },
+    "ChildItems/UsualGroup/ExtendedTooltip": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_item"
+    },
+    "ChildItems/UsualGroup/ExtendedTooltip/Events/Event": {
+      "parser": "RefParser"
+    },
+    "Commands/Command": {
+      "parser": "FormMemberParser",
+      "member_kind": "form_command"
+    },
+    "Commands/Command/Use/Value": {
+      "parser": "RefParser",
+      "ref_kind": "Use"
+    },
+    "Events/Event": {
+      "parser": "RefParser"
+    },
+    "Parameters/Parameter": {
+      "parser": "FormMemberParser",
+      "recursive": {
+        "through": "Type/Type",
+        "from": "Parameters/Parameter/Type"
+      },
+      "member_kind": "form_item"
+    }
+  },
+  "node_files": {
+    "Items": {
+      "parser": "NopParser"
+    },
+    "Module.bsl": {
+      "parser": "BslParser",
+      "type": "FormModule"
+    }
+  }
+}

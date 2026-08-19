@@ -1,0 +1,15 @@
+{
+  "$schema_version": "2.20",
+  "kind": "Form",
+  "node_files": {
+    "Ext/Form.bin": {
+      "parser": "NopParser"
+    },
+    "Ext/Form.xml": {
+      "parser": "LogFormParser"
+    },
+    "Ext/Help.xml": {
+      "parser": "HelpParser"
+    }
+  }
+}

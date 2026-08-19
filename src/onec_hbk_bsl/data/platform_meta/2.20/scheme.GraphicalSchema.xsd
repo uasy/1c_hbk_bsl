@@ -1,0 +1,2850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Схема пространства имён http://v8.1c.ru/8.3/xcf/scheme
+  корневой элемент GraphicalSchema, поколение выгрузки 2.20.
+
+  ВНИМАНИЕ: этот формат СВОЕГО атрибута version может не нести —
+  тогда поколение унаследовано от описателя-родителя и означает
+  «в выгрузке какого поколения файл наблюдался», а НЕ версию этого
+  формата.
+
+  ПОРОЖДЕНО из корпуса выгрузок, не является официальной схемой 1С.
+  Дата последнего пополнения: 2026-08-19
+
+  СХЕМА НАКАПЛИВАЕТСЯ. Прогон читает этот файл обратно в модель
+  наблюдений, объединяет с наблюдениями по новым выгрузкам и переписывает.
+  Прежние выгрузки для этого не нужны: источником прежних наблюдений
+  служит сама схема. Ранее записанное не удаляется; прогон, ничего не
+  добавивший, файла не меняет.
+
+  ХАРАКТЕР АРТЕФАКТА — ОПИСАТЕЛЬНЫЙ, НЕ НОРМАТИВНЫЙ.
+  Схема фиксирует то, что встретилось в корпусе, а не то, что допускает
+  формат. Модель содержимого намеренно разрешительная (xs:choice без
+  порядка и кратностей). Применение:
+    можно  — находить поля, обнаруживать незнакомые элементы;
+    нельзя — отбраковывать файлы: законный, но не встретившийся в корпусе
+             элемент дал бы ложную ошибку.
+
+  Поддеревья чужих пространств имён (v8:, xr:, logform, DCS, predef…)
+  не раскрываются — у них собственные артефакты; здесь xs:any.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://v8.1c.ru/8.3/xcf/scheme"
+           targetNamespace="http://v8.1c.ru/8.3/xcf/scheme"
+           elementFormDefault="qualified">
+
+  <xs:element name="GraphicalSchema" type="t_GraphicalSchema" nillable="true"/>
+
+  <xs:complexType name="t_Activity.Events.Event">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Events.Event</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.AddressingAttributes" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.AddressingAttributes</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AddressingAttribute" type="t_Properties.AddressingAttributes.AddressingAttribute" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.BackColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.Border</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.Explanation">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.Explanation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.Font</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.Group">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.Group</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.GroupNumber</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.HorizontalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.Hyperlink</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.LineColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.Location</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.Name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.Picture</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.PictureLocation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.PictureSize</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.TabOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.TaskDescription">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.TaskDescription</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.TextColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.Title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.ToolTip</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.Transparent</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.VerticalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Activity.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Activity.Properties.ZOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_AddressingAttributes.AddressingAttribute.Value">
+    <xs:annotation>
+      <xs:documentation>контекст: AddressingAttributes.AddressingAttribute.Value</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Events.Event">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Events.Event</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.BackColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.Border</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.Font</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.GroupNumber</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.HorizontalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.Hyperlink</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.LineColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.Location</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.Name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.Picture</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.PictureLocation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.PictureSize</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.TabOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.TextColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.Title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.ToolTip</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.Transparent</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.VerticalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Completion.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Completion.Properties.ZOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Events.Event">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Events.Event</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.BackColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.Border</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.FalsePortIndex">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.FalsePortIndex</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.Font</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.GroupNumber</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.HorizontalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.Hyperlink</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.LineColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.Location</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.Name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.Picture</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.PictureLocation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.PictureSize</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.TabOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.TextColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.Title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.ToolTip</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.Transparent</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.TruePortIndex">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.TruePortIndex</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.VerticalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Condition.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Condition.Properties.ZOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Connect.From.Item">
+    <xs:annotation>
+      <xs:documentation>контекст: Connect.From.Item</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Connect.From.PortIndex">
+    <xs:annotation>
+      <xs:documentation>контекст: Connect.From.PortIndex</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Connect.To.Item">
+    <xs:annotation>
+      <xs:documentation>контекст: Connect.To.Item</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Connect.To.PortIndex">
+    <xs:annotation>
+      <xs:documentation>контекст: Connect.To.PortIndex</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.BackColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.BeginArrow">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.BeginArrow</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.Connect" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.Connect</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="From" type="t_Properties.Connect.From" nillable="true"/>
+        <xs:element name="To" type="t_Properties.Connect.To" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.DecorativeLine">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.DecorativeLine</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.EndArrow">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.EndArrow</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.Font</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.GroupNumber</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.HorizontalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.Hyperlink</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.Line" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.Line</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.LineColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.ManualyMovedSegments" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.ManualyMovedSegments</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Segment" type="t_Properties.ManualyMovedSegments.Segment" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.Name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.PictureLocation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.PivotPoints" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.PivotPoints</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Point" type="t_Properties.PivotPoints.Point" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.TabOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.TextColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.TextLocation">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.TextLocation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.Title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.ToolTip</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.Transparent</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.VerticalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ConnectionLine.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: ConnectionLine.Properties.ZOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.Angle">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.Angle</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.BackColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.FlipMode">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.FlipMode</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.Font</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bold" type="xs:string"/>
+        <xs:attribute name="faceName" type="xs:string"/>
+        <xs:attribute name="height" type="xs:string"/>
+        <xs:attribute name="italic" type="xs:string"/>
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:attribute name="strikeout" type="xs:string"/>
+        <xs:attribute name="underline" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.GroupNumber</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.HorizontalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.Hyperlink</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.LineColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.Location</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.Name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.Picture" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.Picture</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.3/xcf/readable}Abs, {http://v8.1c.ru/8.3/xcf/readable}LoadTransparent -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.PictureLocation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.PictureSize</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.Shape">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.Shape</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.TabOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.TextColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.Title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.ToolTip</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.Transparent</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.VerticalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Decoration.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Decoration.Properties.ZOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_GraphicalSchema.BackColor" nillable="true"/>
+        <xs:element name="DrawGridMode" type="t_GraphicalSchema.DrawGridMode" nillable="true"/>
+        <xs:element name="GridEnabled" type="t_GraphicalSchema.GridEnabled" nillable="true"/>
+        <xs:element name="GridHorizontalStep" type="t_GraphicalSchema.GridHorizontalStep" nillable="true"/>
+        <xs:element name="GridVerticalStep" type="t_GraphicalSchema.GridVerticalStep" nillable="true"/>
+        <xs:element name="Items" type="t_GraphicalSchema.Items" nillable="true"/>
+        <xs:element name="PrintParameters" type="t_GraphicalSchema.PrintParameters" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.BackColor">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.BackColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.DrawGridMode">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.DrawGridMode</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.GridEnabled">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.GridEnabled</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.GridHorizontalStep">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.GridHorizontalStep</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.GridVerticalStep">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.GridVerticalStep</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.Items</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Activity" type="t_GraphicalSchema.Items.Activity" nillable="true"/>
+        <xs:element name="Completion" type="t_GraphicalSchema.Items.Completion" nillable="true"/>
+        <xs:element name="Condition" type="t_GraphicalSchema.Items.Condition" nillable="true"/>
+        <xs:element name="ConnectionLine" type="t_GraphicalSchema.Items.ConnectionLine" nillable="true"/>
+        <xs:element name="Decoration" type="t_GraphicalSchema.Items.Decoration" nillable="true"/>
+        <xs:element name="Processing" type="t_GraphicalSchema.Items.Processing" nillable="true"/>
+        <xs:element name="Start" type="t_GraphicalSchema.Items.Start" nillable="true"/>
+        <xs:element name="Switch" type="t_GraphicalSchema.Items.Switch" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Activity" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.Items.Activity</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_Items.Activity.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_Items.Activity.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Completion" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.Items.Completion</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_Items.Completion.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_Items.Completion.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Condition" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.Items.Condition</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_Items.Condition.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_Items.Condition.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.ConnectionLine" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.Items.ConnectionLine</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Properties" type="t_Items.ConnectionLine.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Decoration" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.Items.Decoration</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Properties" type="t_Items.Decoration.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Processing" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.Items.Processing</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_Items.Processing.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_Items.Processing.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Start" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.Items.Start</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_Items.Start.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_Items.Start.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.Items.Switch" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.Items.Switch</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Events" type="t_Items.Switch.Events" nillable="true"/>
+        <xs:element name="Properties" type="t_Items.Switch.Properties" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="uuid" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BlackAndWhite" type="t_GraphicalSchema.PrintParameters.BlackAndWhite" nillable="true"/>
+        <xs:element name="BottomMargin" type="t_GraphicalSchema.PrintParameters.BottomMargin" nillable="true"/>
+        <xs:element name="Collate" type="xs:anyType" nillable="true"/>
+        <xs:element name="Copies" type="t_GraphicalSchema.PrintParameters.Copies" nillable="true"/>
+        <xs:element name="FitPageMode" type="t_GraphicalSchema.PrintParameters.FitPageMode" nillable="true"/>
+        <xs:element name="LeftMargin" type="t_GraphicalSchema.PrintParameters.LeftMargin" nillable="true"/>
+        <xs:element name="PageOrientation" type="t_GraphicalSchema.PrintParameters.PageOrientation" nillable="true"/>
+        <xs:element name="Paper" type="xs:anyType" nillable="true"/>
+        <xs:element name="PaperSource" type="xs:anyType" nillable="true"/>
+        <xs:element name="RightMargin" type="t_GraphicalSchema.PrintParameters.RightMargin" nillable="true"/>
+        <xs:element name="TopMargin" type="t_GraphicalSchema.PrintParameters.TopMargin" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.BlackAndWhite">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.BlackAndWhite</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.BottomMargin">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.BottomMargin</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.Collate">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.Collate</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.Copies">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.Copies</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.FitPageMode">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.FitPageMode</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.LeftMargin">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.LeftMargin</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.PageOrientation">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.PageOrientation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.Paper">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.Paper</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.PaperSource">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.PaperSource</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.RightMargin">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.RightMargin</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_GraphicalSchema.PrintParameters.TopMargin">
+    <xs:annotation>
+      <xs:documentation>контекст: GraphicalSchema.PrintParameters.TopMargin</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Activity.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Activity.Events</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_Activity.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Activity.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Activity.Properties</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AddressingAttributes" type="t_Activity.Properties.AddressingAttributes" nillable="true"/>
+        <xs:element name="BackColor" type="t_Activity.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_Activity.Properties.Border" nillable="true"/>
+        <xs:element name="Explanation" type="t_Activity.Properties.Explanation" nillable="true"/>
+        <xs:element name="Font" type="t_Activity.Properties.Font" nillable="true"/>
+        <xs:element name="Group" type="t_Activity.Properties.Group" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_Activity.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_Activity.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_Activity.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_Activity.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_Activity.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_Activity.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_Activity.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_Activity.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_Activity.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_Activity.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TaskDescription" type="t_Activity.Properties.TaskDescription" nillable="true"/>
+        <xs:element name="TextColor" type="t_Activity.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_Activity.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_Activity.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_Activity.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_Activity.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_Activity.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Completion.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Completion.Events</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_Completion.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Completion.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Completion.Properties</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_Completion.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_Completion.Properties.Border" nillable="true"/>
+        <xs:element name="Font" type="t_Completion.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_Completion.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_Completion.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_Completion.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_Completion.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_Completion.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_Completion.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_Completion.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_Completion.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_Completion.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_Completion.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_Completion.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_Completion.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_Completion.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_Completion.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_Completion.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_Completion.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Condition.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Condition.Events</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_Condition.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Condition.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Condition.Properties</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_Condition.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_Condition.Properties.Border" nillable="true"/>
+        <xs:element name="FalsePortIndex" type="t_Condition.Properties.FalsePortIndex" nillable="true"/>
+        <xs:element name="Font" type="t_Condition.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_Condition.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_Condition.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_Condition.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_Condition.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_Condition.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_Condition.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_Condition.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_Condition.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_Condition.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_Condition.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_Condition.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_Condition.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_Condition.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_Condition.Properties.Transparent" nillable="true"/>
+        <xs:element name="TruePortIndex" type="t_Condition.Properties.TruePortIndex" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_Condition.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_Condition.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.ConnectionLine.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.ConnectionLine.Properties</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_ConnectionLine.Properties.BackColor" nillable="true"/>
+        <xs:element name="BeginArrow" type="t_ConnectionLine.Properties.BeginArrow" nillable="true"/>
+        <xs:element name="Connect" type="t_ConnectionLine.Properties.Connect" nillable="true"/>
+        <xs:element name="DecorativeLine" type="t_ConnectionLine.Properties.DecorativeLine" nillable="true"/>
+        <xs:element name="EndArrow" type="t_ConnectionLine.Properties.EndArrow" nillable="true"/>
+        <xs:element name="Font" type="t_ConnectionLine.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_ConnectionLine.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_ConnectionLine.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_ConnectionLine.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="Line" type="t_ConnectionLine.Properties.Line" nillable="true"/>
+        <xs:element name="LineColor" type="t_ConnectionLine.Properties.LineColor" nillable="true"/>
+        <xs:element name="ManualyMovedSegments" type="t_ConnectionLine.Properties.ManualyMovedSegments" nillable="true"/>
+        <xs:element name="Name" type="t_ConnectionLine.Properties.Name" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_ConnectionLine.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PivotPoints" type="t_ConnectionLine.Properties.PivotPoints" nillable="true"/>
+        <xs:element name="TabOrder" type="t_ConnectionLine.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_ConnectionLine.Properties.TextColor" nillable="true"/>
+        <xs:element name="TextLocation" type="t_ConnectionLine.Properties.TextLocation" nillable="true"/>
+        <xs:element name="Title" type="t_ConnectionLine.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_ConnectionLine.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_ConnectionLine.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_ConnectionLine.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_ConnectionLine.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Decoration.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Decoration.Properties</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Angle" type="xs:anyType" nillable="true"/>
+        <xs:element name="BackColor" type="t_Decoration.Properties.BackColor" nillable="true"/>
+        <xs:element name="FlipMode" type="t_Decoration.Properties.FlipMode" nillable="true"/>
+        <xs:element name="Font" type="t_Decoration.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_Decoration.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_Decoration.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_Decoration.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_Decoration.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_Decoration.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_Decoration.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_Decoration.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_Decoration.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_Decoration.Properties.PictureSize" nillable="true"/>
+        <xs:element name="Shape" type="t_Decoration.Properties.Shape" nillable="true"/>
+        <xs:element name="TabOrder" type="t_Decoration.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_Decoration.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_Decoration.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_Decoration.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_Decoration.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_Decoration.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_Decoration.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Processing.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Processing.Events</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_Processing.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Processing.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Processing.Properties</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_Processing.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_Processing.Properties.Border" nillable="true"/>
+        <xs:element name="Font" type="t_Processing.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_Processing.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_Processing.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_Processing.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_Processing.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_Processing.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_Processing.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_Processing.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_Processing.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_Processing.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_Processing.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_Processing.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_Processing.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_Processing.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_Processing.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_Processing.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_Processing.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Start.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Start.Events</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_Start.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Start.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Start.Properties</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_Start.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_Start.Properties.Border" nillable="true"/>
+        <xs:element name="Font" type="t_Start.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_Start.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_Start.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_Start.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_Start.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_Start.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_Start.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_Start.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_Start.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_Start.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_Start.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_Start.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_Start.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_Start.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_Start.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_Start.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_Start.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Switch.Events" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Switch.Events</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Event" type="t_Switch.Events.Event" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Items.Switch.Properties" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Items.Switch.Properties</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BackColor" type="t_Switch.Properties.BackColor" nillable="true"/>
+        <xs:element name="Border" type="t_Switch.Properties.Border" nillable="true"/>
+        <xs:element name="Case" type="t_Switch.Properties.Case" nillable="true"/>
+        <xs:element name="Font" type="t_Switch.Properties.Font" nillable="true"/>
+        <xs:element name="GroupNumber" type="t_Switch.Properties.GroupNumber" nillable="true"/>
+        <xs:element name="HorizontalAlign" type="t_Switch.Properties.HorizontalAlign" nillable="true"/>
+        <xs:element name="Hyperlink" type="t_Switch.Properties.Hyperlink" nillable="true"/>
+        <xs:element name="LineColor" type="t_Switch.Properties.LineColor" nillable="true"/>
+        <xs:element name="Location" type="t_Switch.Properties.Location" nillable="true"/>
+        <xs:element name="Name" type="t_Switch.Properties.Name" nillable="true"/>
+        <xs:element name="Picture" type="t_Switch.Properties.Picture" nillable="true"/>
+        <xs:element name="PictureLocation" type="t_Switch.Properties.PictureLocation" nillable="true"/>
+        <xs:element name="PictureSize" type="t_Switch.Properties.PictureSize" nillable="true"/>
+        <xs:element name="TabOrder" type="t_Switch.Properties.TabOrder" nillable="true"/>
+        <xs:element name="TextColor" type="t_Switch.Properties.TextColor" nillable="true"/>
+        <xs:element name="Title" type="t_Switch.Properties.Title" nillable="true"/>
+        <xs:element name="ToolTip" type="t_Switch.Properties.ToolTip" nillable="true"/>
+        <xs:element name="Transparent" type="t_Switch.Properties.Transparent" nillable="true"/>
+        <xs:element name="VerticalAlign" type="t_Switch.Properties.VerticalAlign" nillable="true"/>
+        <xs:element name="ZOrder" type="t_Switch.Properties.ZOrder" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_ManualyMovedSegments.Segment.End">
+    <xs:annotation>
+      <xs:documentation>контекст: ManualyMovedSegments.Segment.End</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="x" type="xs:string"/>
+        <xs:attribute name="y" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_ManualyMovedSegments.Segment.Start">
+    <xs:annotation>
+      <xs:documentation>контекст: ManualyMovedSegments.Segment.Start</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="x" type="xs:string"/>
+        <xs:attribute name="y" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Events.Event">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Events.Event</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.BackColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.Border</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.Font</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.GroupNumber</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.HorizontalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.Hyperlink</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.LineColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.Location</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.Name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.Picture</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.PictureLocation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.PictureSize</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.TabOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.TextColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.Title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.ToolTip</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.Transparent</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.VerticalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Processing.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Processing.Properties.ZOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Properties.AddressingAttributes.AddressingAttribute" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Properties.AddressingAttributes.AddressingAttribute</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Value" type="t_AddressingAttributes.AddressingAttribute.Value" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="ref" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Properties.Connect.From" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Properties.Connect.From</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Item" type="t_Connect.From.Item" nillable="true"/>
+        <xs:element name="PortIndex" type="t_Connect.From.PortIndex" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Properties.Connect.To" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Properties.Connect.To</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Item" type="t_Connect.To.Item" nillable="true"/>
+        <xs:element name="PortIndex" type="t_Connect.To.PortIndex" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Properties.ManualyMovedSegments.Segment" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Properties.ManualyMovedSegments.Segment</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="End" type="t_ManualyMovedSegments.Segment.End" nillable="true"/>
+        <xs:element name="Start" type="t_ManualyMovedSegments.Segment.Start" nillable="true"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="index" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Properties.PivotPoints.Point">
+    <xs:annotation>
+      <xs:documentation>контекст: Properties.PivotPoints.Point</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="x" type="xs:string"/>
+        <xs:attribute name="y" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Events.Event">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Events.Event</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.BackColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.Border</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.Font</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.GroupNumber</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.HorizontalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.Hyperlink</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.LineColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.Location</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.Name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.Picture</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.PictureLocation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.PictureSize</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.TabOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.TextColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.Title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.ToolTip</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.Transparent</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.VerticalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Start.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Start.Properties.ZOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Events.Event">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Events.Event</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.BackColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.BackColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.Border" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.Border</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/ui}style -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.Case" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.Case</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.2/data/graphscheme}backColor, {http://v8.1c.ru/8.2/data/graphscheme}description, {http://v8.1c.ru/8.2/data/graphscheme}name -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.Font">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.Font</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="kind" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.GroupNumber">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.GroupNumber</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.HorizontalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.HorizontalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.Hyperlink">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.Hyperlink</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.LineColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.LineColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.Location">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.Location</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="bottom" type="xs:string"/>
+        <xs:attribute name="left" type="xs:string"/>
+        <xs:attribute name="right" type="xs:string"/>
+        <xs:attribute name="top" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.Name">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.Name</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.Picture">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.Picture</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.PictureLocation">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.PictureLocation</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.PictureSize">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.PictureSize</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.TabOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.TabOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.TextColor">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.TextColor</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.Title" mixed="true">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.Title</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- чужие пространства имён: {http://v8.1c.ru/8.1/data/core}item -->
+        <xs:any namespace="##other" processContents="skip"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.ToolTip">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.ToolTip</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.Transparent">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.Transparent</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.VerticalAlign">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.VerticalAlign</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_Switch.Properties.ZOrder">
+    <xs:annotation>
+      <xs:documentation>контекст: Switch.Properties.ZOrder</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+</xs:schema>

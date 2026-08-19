@@ -1,0 +1,15 @@
+{
+  "$schema_version": "2.20",
+  "kind": "CommonAttribute",
+  "children_inline": {
+    "Properties/ConditionalSeparation": {
+      "parser": "RefParser"
+    },
+    "Properties/DataSeparationUse": {
+      "parser": "RefParser"
+    },
+    "Properties/DataSeparationValue": {
+      "parser": "RefParser"
+    }
+  }
+}
